@@ -33,7 +33,7 @@ export default async function RootLayout({
         <div className="flex pt-2 flex-col min-h-screen bg-white dark:bg-gray-900">
           <ExternalNavigation />
           <ClientLayout>{children}</ClientLayout>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </body>
     </html>

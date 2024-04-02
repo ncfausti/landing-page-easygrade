@@ -7,30 +7,6 @@ import Link from 'next/link';
 import LandingEmail from '@/components/landing-email';
 
 export default function Component() {
-  // const supabase = createClient(
-  //   process.env.NEXT_PUBLIC_SUPABASE_URL,
-  //   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  // );
-
-  // console.log(supabase);
-
-  // const [messageText, setMessageText] = useState('');
-  // const handleTextChange = (event) => {
-  //   setMessageText(event.target.value);
-  // };
-
-  // const insertRow = async () => {
-  //   const { data, error } = await supabase
-  //     .from('emails')
-  //     .insert([{ email: 'hello@world.com' }]);
-
-  //   if (error) {
-  //     console.error('Error inserting row:', error);
-  //   } else {
-  //     console.log('Row inserted:', data);
-  //   }
-  // };
-
   return (
     <>
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
@@ -78,7 +54,7 @@ export default function Component() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+      <section className="hidden w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -136,7 +112,7 @@ export default function Component() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      <section className="hidden w-full py-12 md:py-24 lg:py-32">
         <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
@@ -163,7 +139,7 @@ export default function Component() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 border-t">
+      <section className="hidden w-full py-12 md:py-24 lg:py-32 border-t">
         <div className="container px-4 md:px-6">
           <div className="grid gap-10 sm:px-10 md:gap-16 md:grid-cols-2">
             <div className="space-y-4">
