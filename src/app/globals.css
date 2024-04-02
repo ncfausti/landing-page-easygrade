@@ -7,6 +7,15 @@ body {
   width: 100%;
   font-family: sans-serif;
 }
+main {
+  background-color: rgb(103, 207, 183);
+}
+
+
+main h1 {
+  -webkit-text-stroke: 2px black; /* width and color */
+  color: white;
+}
 
 [data-nextjs-scroll-focus-boundary] {
   height: 100%;

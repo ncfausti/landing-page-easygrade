@@ -24,7 +24,7 @@ export default function Component() {
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                   EasyGrade
                 </h1>
-                <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
+                <p className="max-w-[600px] text-gray-900 md:text-xl dark:text-gray-400">
                   Homeworks made simple.
                 </p>
               </div>

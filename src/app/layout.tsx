@@ -2,7 +2,7 @@ import { ClientLayout } from './ClientLayout';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import { ExternalNavigation } from './Navbar';
-import Footer from '@/components/tailwind/Footer';
+// import Footer from '@/components/tailwind/Footer';
 
 const inter = Inter({
   subsets: ['latin'],
