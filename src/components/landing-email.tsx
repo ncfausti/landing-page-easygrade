@@ -4,7 +4,7 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 export default function LandingEmail() {

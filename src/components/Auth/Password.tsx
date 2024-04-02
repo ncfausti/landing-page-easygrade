@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
 import { T } from '@/components/ui/Typography';

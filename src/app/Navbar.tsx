@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+// import { Button } from '@/components/ui/Button';
 import { ExternalLinkIcon } from 'lucide-react';
 // const DynamicLoginNavLink = dynamic(
 //   () => import('./LoginNavLink').then((module) => module.LoginNavLink),
@@ -111,9 +111,9 @@ export const ExternalNavigation = () => {
           href="https://usenextbase.com"
           target="_blank"
         >
-          <Button className="inline-flex items-center gap-2 justify-center rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:from-blue-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <button className="inline-flex items-center gap-2 justify-center rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:from-blue-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             Premium Nextbase Starter Kits <ExternalLinkIcon />
-          </Button>
+          </button>
         </Link>
       </nav>
     </header>
