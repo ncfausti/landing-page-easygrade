@@ -54,60 +54,55 @@ export default function Component() {
           </div>
         </div>
       </section>
-      <section className="hidden w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+      <section className="w-full py-12 md:py-24 lg:py-32 dark:bg-gray-800">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">
-                New Features
-              </div>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Faster iteration. More innovation.
+                Faster generation. Improved feedback.
               </h2>
-              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                The platform for rapid progress. Let your team focus on shipping
-                features instead of managing infrastructure with automated
-                CI/CD, built-in testing, and integrated collaboration.
+              <p className="max-w-[900px] text-gray-50 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                Our platform allows teachers to focus on what they do
+                best–Teach! We take care of the rest.
               </p>
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-              <img
-                alt="Image"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-                height="310"
-                src="https://generated.vusercontent.net/placeholder.svg"
-                width="550"
-              />
               <div className="flex flex-col justify-center space-y-4">
                 <ul className="grid gap-6">
                   <li>
                     <div className="grid gap-1">
-                      <h3 className="text-xl font-bold">Collaboration</h3>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Make collaboration seamless with built-in code review
-                        tools.
+                      <h3 className="text-xl font-bold">Homework Generation</h3>
+                      <p className="text-gray-50 dark:text-gray-400">
+                        Generate homeworks with ease. No more manual assignment
+                        creation.
                       </p>
                     </div>
                   </li>
                   <li>
                     <div className="grid gap-1">
-                      <h3 className="text-xl font-bold">Automation</h3>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Automate your workflow with continuous integration.
+                      <h3 className="text-xl font-bold">Grading</h3>
+                      <p className="text-gray-50 dark:text-gray-400">
+                        Automate assigning grades to students.
                       </p>
                     </div>
                   </li>
                   <li>
                     <div className="grid gap-1">
-                      <h3 className="text-xl font-bold">Scale</h3>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Deploy to the cloud with a single click and scale with
-                        ease.
+                      <h3 className="text-xl font-bold">Feedback</h3>
+                      <p className="text-gray-50 dark:text-gray-400">
+                        Provide feedback to students with ease.
                       </p>
                     </div>
                   </li>
                 </ul>
               </div>
+              <img
+                alt="Image"
+                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+                height="310"
+                src="images/features.png"
+                width="550"
+              />
             </div>
           </div>
         </div>
