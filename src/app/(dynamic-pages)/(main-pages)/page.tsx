@@ -11,17 +11,17 @@ export default function Component() {
     <>
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+          <div className="grid gap-6 px-10 lg:grid-cols-[1fr_400px] lg:gap-4 xl:grid-cols-[1fr_600px]">
             <img
               alt="Hero"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+              className="mx-auto overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
               height="550"
               src="images/hero.png"
               width="550"
             />
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+            <div className="flex flex-col justify-center items-center space-y-4">
+              <div className="space-y-2 text-center">
+                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                   EasyGrade
                 </h1>
                 <p className="max-w-[600px] text-gray-900 md:text-xl dark:text-gray-400">
@@ -54,14 +54,14 @@ export default function Component() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 dark:bg-gray-800">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-yellow-500">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-white">
                 Faster generation. Improved feedback.
               </h2>
-              <p className="max-w-[900px] text-gray-50 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="max-w-[900px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 Our platform allows teachers to focus on what they do
                 best–Teach! We take care of the rest.
               </p>
@@ -71,8 +71,10 @@ export default function Component() {
                 <ul className="grid gap-6">
                   <li>
                     <div className="grid gap-1">
-                      <h3 className="text-xl font-bold">Homework Generation</h3>
-                      <p className="text-gray-50 dark:text-gray-400">
+                      <h3 className="text-2xl font-bold">
+                        Homework Generation
+                      </h3>
+                      <p className="text-black">
                         Generate homeworks with ease. No more manual assignment
                         creation.
                       </p>
@@ -80,17 +82,17 @@ export default function Component() {
                   </li>
                   <li>
                     <div className="grid gap-1">
-                      <h3 className="text-xl font-bold">Grading</h3>
-                      <p className="text-gray-50 dark:text-gray-400">
+                      <h3 className="text-2xl font-bold">Grading</h3>
+                      <p className="text-black">
                         Automate assigning grades to students.
                       </p>
                     </div>
                   </li>
                   <li>
                     <div className="grid gap-1">
-                      <h3 className="text-xl font-bold">Feedback</h3>
-                      <p className="text-gray-50 dark:text-gray-400">
-                        Provide feedback to students with ease.
+                      <h3 className="text-2xl font-bold">Feedback</h3>
+                      <p className="text-black">
+                        Provide personalized feedback to students with ease.
                       </p>
                     </div>
                   </li>
@@ -98,7 +100,7 @@ export default function Component() {
               </div>
               <img
                 alt="Image"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+                className="mx-auto overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
                 height="310"
                 src="images/features.png"
                 width="550"
