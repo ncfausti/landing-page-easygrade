@@ -81,13 +81,13 @@ export const ExternalNavigation = () => {
       <Link className="flex items-center justify-center" href="/">
         <MountainIcon className="h-6 w-6" />
         <span className="hidden lg:block ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-          Nextbase Open Source
+          EasyGrade
         </span>
         <span className="block lg:hidden ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           Nextbase
         </span>
       </Link>
-      <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
+      <nav className="ml-auto flex gap-4 sm:gap-6 items-center hidden">
         <Link
           className="text-sm hidden lg:block font-medium hover:underline underline-offset-4"
           href="#"

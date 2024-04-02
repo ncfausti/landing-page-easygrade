@@ -4,7 +4,7 @@ import Link from 'next/link';
 const Banner: React.FC = () => {
   return (
     <div className="bg-violet-500 text-white w-full py-4 text-center">
-      <p>
+      {/* <p>
         Checkout premium Nextbase starter templates with integrated
         authentication, payments and admin panel{' '}
         <Link
@@ -15,7 +15,7 @@ const Banner: React.FC = () => {
         >
           here
         </Link>
-      </p>
+      </p> */}
     </div>
   );
 };
