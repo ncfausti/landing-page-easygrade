@@ -62,7 +62,7 @@ export default function Component() {
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-white">
                 Faster generation. Improved feedback.
               </h2>
-              <p className="max-w-[900px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 Our platform allows teachers to focus on what they do
                 best–Teach! We take care of the rest.
               </p>
@@ -75,7 +75,7 @@ export default function Component() {
                       <h3 className="text-2xl font-bold">
                         Homework Generation
                       </h3>
-                      <p className="text-black">
+                      <p className="text-gray-800">
                         Generate homeworks with ease. No more manual assignment
                         creation.
                       </p>
@@ -84,7 +84,7 @@ export default function Component() {
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-2xl font-bold">Grading</h3>
-                      <p className="text-black">
+                      <p className="text-gray-800">
                         Automate assigning grades to students.
                       </p>
                     </div>
@@ -92,7 +92,7 @@ export default function Component() {
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-2xl font-bold">Feedback</h3>
-                      <p className="text-black">
+                      <p className="text-gray-800">
                         Provide personalized feedback to students with ease.
                       </p>
                     </div>
@@ -113,9 +113,12 @@ export default function Component() {
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
           <div className="space-y-2">
-            <h2 className="lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
+            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               Lesson plans made simple.
             </h2>
+            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              Generate customized lesson plans in seconds.
+            </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
             <img src="images/lesson-plan-arithmetic.png" alt="Lesson plan" />
@@ -138,9 +141,13 @@ export default function Component() {
             />
           </div>
           <div className="space-y-2">
-            <h2 className="lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
+            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               Effortless grading, personalized feedback.
             </h2>
+            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              Automatic grading of homeworks using your phone's camera, while
+              also providing personalized feedback to students.
+            </p>
           </div>
         </div>
       </section>

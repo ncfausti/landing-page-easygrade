@@ -168,3 +168,6 @@ h2, h3 {
 
 
 @tailwind variants;
+.container {
+  max-width: none;
+}
