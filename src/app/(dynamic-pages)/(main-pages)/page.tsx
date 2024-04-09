@@ -129,13 +129,13 @@ export default function Component() {
         <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
           <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end items-center">
             <img
-              className="w-2/3"
+              className="w-1/2"
               src="images/ocr-phone.png"
               alt="OCR for homeworks"
             />
             <ArrowRight />
             <img
-              className="w-2/3"
+              className="w-1/2"
               src="images/graded.png"
               alt="Graded homework assignment"
             />
