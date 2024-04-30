@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { uploadPhoto } from '../../../lib/sb';
 
 const CameraInput = () => {
   const videoRef = useRef(null);
@@ -27,7 +28,7 @@ const CameraInput = () => {
     };
   }, []);
 
-  const handleCapture = () => {
+  const handleCapture = async () => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
     if (canvas && video) {
@@ -39,6 +40,16 @@ const CameraInput = () => {
       // Optionally, you can convert the canvas to a data URL to save or process
       const imageDataUrl = canvas.toDataURL('image/png');
       console.log(imageDataUrl); // For demonstration purposes: log the data URL
+      // Get data URL and convert it to Blob
+      // const imageDataUrl = canvas.toDataURL('image/png');
+      const imageBlob = dataURLtoBlob(imageDataUrl);
+
+      // Convert Blob to File
+      const imageFile = blobToFile(imageBlob, 'captured-image.png');
+
+      // Use the file for further operations like uploading or saving
+      console.log('blobToFile', imageFile); // Logging to see the file properties
+      await uploadPhoto(imageFile);
     }
   };
 
@@ -51,5 +62,21 @@ const CameraInput = () => {
     </div>
   );
 };
+
+function dataURLtoBlob(dataurl) {
+  const arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]);
+
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+}
+function blobToFile(blob, fileName) {
+  return new File([blob], fileName, { type: blob.type });
+}
 
 export default CameraInput;
