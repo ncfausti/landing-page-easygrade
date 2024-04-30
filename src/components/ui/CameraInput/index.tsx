@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { uploadPhoto } from '../../../lib/sb';
+import { v4 as uuidv4 } from 'uuid';
 
 const CameraInput = () => {
   const videoRef = useRef(null);
@@ -96,7 +97,7 @@ const CameraInput = () => {
       const imageBlob = dataURLtoBlob(imageDataUrl);
 
       // Convert Blob to File
-      const imageFile = blobToFile(imageBlob, 'captured-image.png');
+      const imageFile = blobToFile(imageBlob, `${uuidv4()}.png`);
 
       // Use the file for further operations like uploading or saving
       console.log('blobToFile', imageFile); // Logging to see the file properties
