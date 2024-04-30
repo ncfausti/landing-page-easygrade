@@ -1,8 +1,8 @@
 // import { DocumentScanner } from 'opencv-document-scanner';
 // import dynamic from 'next/dynamic';
-'use client';
-import CameraInput from '@/components/ui/CameraInput';
-import ImageUpload from '@/components/ImageUpload';
+// 'use client';
+// import CameraInput from '@/components/ui/CameraInput';
+// import ImageUpload from '@/components/ImageUpload';
 
 // const useFileURL = async (fileUrl) => {
 //   try {
@@ -33,8 +33,9 @@ export default function Grade() {
     <>
       {/* <NonSSRCameraScanner /> */}
       {/* <FileUpload /> */}
-      <ImageUpload />
-      <CameraInput />
+      {/* <ImageUpload />
+      <CameraInput /> */}
+      <h1>Grade</h1>
     </>
   );
 }
