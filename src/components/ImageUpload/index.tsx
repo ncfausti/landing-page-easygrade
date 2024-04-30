@@ -6,14 +6,14 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 function ImageUpload() {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState<string>('');
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImageUrl(e.target.result);
+        setImageUrl(e.target.result as string);
       };
       reader.readAsDataURL(file);
       await uploadPhoto(file);
