@@ -56,7 +56,15 @@ const CameraInput = () => {
   return (
     <div>
       <h1>Camera Test</h1>
-      <video ref={videoRef} width="640" height="480" autoPlay></video>
+      <video
+        ref={videoRef}
+        width="640"
+        height="480"
+        autoPlay
+        id="video-preview"
+        playsInline
+        muted
+      ></video>
       <button onClick={handleCapture}>Capture</button>
       <canvas ref={canvasRef} style={{ display: 'block' }}></canvas>
     </div>

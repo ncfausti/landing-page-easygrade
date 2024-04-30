@@ -171,3 +171,7 @@ h2, h3 {
 .container {
   max-width: none;
 }
+
+#video-preview {
+  background-color:white;
+}

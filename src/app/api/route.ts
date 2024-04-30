@@ -13,7 +13,7 @@ export async function GET() {
           {
             type: 'image_url',
             image_url: {
-              url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg',
+              url: 'https://cdn-images-1.medium.com/v2/resize:fit:1600/1*0s18SQQ5yXHIjpYNpi3bAA@2x.jpeg',
             },
           },
         ],
