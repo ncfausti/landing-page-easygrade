@@ -27,7 +27,7 @@ const CameraInput = () => {
     };
 
     getDevices();
-  }, []);
+  }, [devices]);
 
   useEffect(() => {
     const startVideo = async () => {
