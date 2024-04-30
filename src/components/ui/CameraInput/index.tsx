@@ -1,9 +1,60 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { uploadPhoto } from '../../../lib/sb';
 
 const CameraInput = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const [devices, setDevices] = useState([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState('');
+  // const videoRef = useRef(null);
+
+  useEffect(() => {
+    const getDevices = async () => {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        console.log('devices', devices);
+        const videoDevices = devices.filter(
+          (device) => device.kind === 'videoinput'
+        );
+        setDevices(videoDevices);
+        if (videoDevices.length > 0) {
+          setSelectedDeviceId(videoDevices[0].deviceId);
+        }
+      } catch (error) {
+        console.error('Error accessing devices:', error);
+      }
+    };
+
+    getDevices();
+  }, []);
+
+  useEffect(() => {
+    const startVideo = async () => {
+      if (selectedDeviceId) {
+        const constraints = {
+          video: {
+            facingMode: { exact: 'environment' },
+          },
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        videoRef.current.srcObject = stream;
+      }
+    };
+
+    startVideo();
+
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [selectedDeviceId]);
+
+  const handleChange = (event) => {
+    setSelectedDeviceId(event.target.value);
+  };
 
   useEffect(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -56,6 +107,14 @@ const CameraInput = () => {
   return (
     <div>
       <h1>Camera Test</h1>
+      <select onChange={handleChange} value={selectedDeviceId}>
+        {devices.map((device, index) => (
+          <option key={device.deviceId} value={device.deviceId}>
+            {device.label || `Camera ${index + 1}`}
+          </option>
+        ))}
+      </select>
+      <video ref={videoRef} width="640" height="480" autoPlay></video>
       <video
         ref={videoRef}
         width="640"
@@ -88,3 +147,69 @@ function blobToFile(blob, fileName) {
 }
 
 export default CameraInput;
+
+// const CameraSelector = () => {
+//   const [devices, setDevices] = useState([]);
+//   const [selectedDeviceId, setSelectedDeviceId] = useState('');
+//   const videoRef = useRef(null);
+
+//   useEffect(() => {
+//     const getDevices = async () => {
+//       try {
+//         const devices = await navigator.mediaDevices.enumerateDevices();
+//         const videoDevices = devices.filter(
+//           (device) => device.kind === 'videoinput'
+//         );
+//         setDevices(videoDevices);
+//         if (videoDevices.length > 0) {
+//           setSelectedDeviceId(videoDevices[0].deviceId);
+//         }
+//       } catch (error) {
+//         console.error('Error accessing devices:', error);
+//       }
+//     };
+
+//     getDevices();
+//   }, []);
+
+//   useEffect(() => {
+//     const startVideo = async () => {
+//       if (selectedDeviceId) {
+//         const constraints = {
+//           video: {
+//             deviceId: { exact: selectedDeviceId },
+//           },
+//         };
+
+//         const stream = await navigator.mediaDevices.getUserMedia(constraints);
+//         videoRef.current.srcObject = stream;
+//       }
+//     };
+
+//     startVideo();
+
+//     return () => {
+//       if (videoRef.current && videoRef.current.srcObject) {
+//         videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+//       }
+//     };
+//   }, [selectedDeviceId]);
+
+//   const handleChange = (event) => {
+//     setSelectedDeviceId(event.target.value);
+//   };
+
+//   return (
+//     <div>
+//       <h1>Select Camera</h1>
+//       <select onChange={handleChange} value={selectedDeviceId}>
+//         {devices.map((device, index) => (
+//           <option key={device.deviceId} value={device.deviceId}>
+//             {device.label || `Camera ${index + 1}`}
+//           </option>
+//         ))}
+//       </select>
+//       <video ref={videoRef} width="640" height="480" autoPlay></video>
+//     </div>
+//   );
+// };
