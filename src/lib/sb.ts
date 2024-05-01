@@ -29,4 +29,5 @@ export async function uploadPhoto(file) {
   }
 
   console.log('File uploaded successfully', data);
+  return data;
 }

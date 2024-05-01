@@ -36,7 +36,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
           {
             type: 'image_url',
             image_url: {
-              // url: 'https://cdn-images-1.medium.com/v2/resize:fit:1600/1*0s18SQQ5yXHIjpYNpi3bAA@2x.jpeg',
               url: result,
             },
           },

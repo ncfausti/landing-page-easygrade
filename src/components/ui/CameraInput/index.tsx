@@ -96,14 +96,14 @@ const CameraInput = () => {
       canvas.height = videoHeight;
       context.drawImage(video, 0, 0, videoWidth, videoHeight);
       // Optionally, you can convert the canvas to a data URL to save or process
-      const imageDataUrl = canvas.toDataURL('image/png');
-      console.log(imageDataUrl); // For demonstration purposes: log the data URL
+      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+
       // Get data URL and convert it to Blob
       // const imageDataUrl = canvas.toDataURL('image/png');
       const imageBlob = dataURLtoBlob(imageDataUrl);
 
       // Convert Blob to File
-      const imageFile = blobToFile(imageBlob, `${uuidv4()}.png`);
+      const imageFile = blobToFile(imageBlob, `${uuidv4()}.jpg`);
 
       // Use the file for further operations like uploading or saving
       console.log('blobToFile', imageFile); // Logging to see the file properties
