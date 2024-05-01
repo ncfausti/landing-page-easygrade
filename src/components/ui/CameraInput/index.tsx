@@ -55,23 +55,23 @@ const CameraInput = () => {
         } catch (error) {
           console.error('Error accessing the camera:', error);
           // Stop any video streams if they are running
-          if (videoRef.current && videoRef.current.srcObject) {
-            videoRef.current.srcObject
-              .getTracks()
-              .forEach((track) => track.stop());
-          }
+          // if (videoRef.current && videoRef.current.srcObject) {
+          //   videoRef.current.srcObject
+          //     .getTracks()
+          //     .forEach((track) => track.stop());
+          // }
 
-          // Request video stream
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: 'user',
-              width: { exact: 1024 },
-              height: { exact: 1024 },
-            },
-          });
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
+          // // Request video stream
+          // const stream = await navigator.mediaDevices.getUserMedia({
+          //   video: {
+          //     facingMode: 'user',
+          //     width: { exact: 1024 },
+          //     height: { exact: 1024 },
+          //   },
+          // });
+          // if (videoRef.current) {
+          //   videoRef.current.srcObject = stream;
+          // }
         }
       }
     };
