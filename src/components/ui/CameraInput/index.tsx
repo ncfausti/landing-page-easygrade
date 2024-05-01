@@ -8,11 +8,7 @@ const CameraInput = () => {
   const [facingMode, setFacingMode] = useState('environment');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [gptResponseJson, setGptResponseJson] = useState(
-    JSON.parse(
-      `{"id":"chatcmpl-9JyHP0D6PhKqO7m2jC4LmAQD3DIBM","object":"chat.completion","created":1714546975,"model":"gpt-4-turbo-2024-04-09","choices":[{"index":0,"message":{"role":"assistant","content":"The image features a man with a slight smile, looking at the camera. He has curly hair and a beard, and is wearing a light gray T-shirt. In the background, there's a glimpse of a window with sunlight coming through, and a cabinet with wooden doors. The setting appears to be indoors, likely a room in a home or an apartment."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":778,"completion_tokens":72,"total_tokens":850},"system_fingerprint":"fp_5d12056990"}`
-    )
-  );
+  const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
 
   useEffect(() => {
     async function checkCameraAvailability() {
@@ -50,7 +46,7 @@ const CameraInput = () => {
             video: {
               facingMode: { exact: facingMode },
               width: { exact: 2048 },
-              height: { exact: 2048 },
+              height: { exact: 1536 },
             },
           });
           if (videoRef.current) {
@@ -166,7 +162,7 @@ const CameraInput = () => {
         >
           <CameraIcon />
         </button>
-        <button className="hidden pl-3" onClick={toggleCamera}>
+        <button className="pl-3" onClick={toggleCamera}>
           <ToggleIcon />
         </button>
       </div>
