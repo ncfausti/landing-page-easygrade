@@ -29,13 +29,5 @@ export default function Grade() {
   //   }
   // );
 
-  return (
-    <>
-      {/* <NonSSRCameraScanner /> */}
-      {/* <FileUpload /> */}
-      <ImageUpload />
-      <CameraInput />
-      <h1>Grade</h1>
-    </>
-  );
+  return <CameraInput />;
 }

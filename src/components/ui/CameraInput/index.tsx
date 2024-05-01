@@ -1,84 +1,88 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { uploadPhoto } from '../../../lib/sb';
 import { v4 as uuidv4 } from 'uuid';
+import { CameraIcon } from '../../../components/ui/Icons/Camera';
+import { ToggleIcon } from '../Icons/Toggle';
 
 const CameraInput = () => {
+  const [facingMode, setFacingMode] = useState('environment');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const [devices, setDevices] = useState([]);
-  const [selectedDeviceId, setSelectedDeviceId] = useState('');
-  // const videoRef = useRef(null);
-
   useEffect(() => {
-    const getDevices = async () => {
-      try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        console.log('devices', devices);
-        const videoDevices = devices.filter(
-          (device) => device.kind === 'videoinput'
-        );
-        setDevices(videoDevices);
-        if (videoDevices.length > 0) {
-          setSelectedDeviceId(videoDevices[0].deviceId);
-        }
-      } catch (error) {
-        console.error('Error accessing devices:', error);
+    async function checkCameraAvailability() {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoInputs = devices.filter(
+        (device) => device.kind === 'videoinput'
+      );
+
+      console.log(videoInputs);
+      const hasRearCamera = videoInputs.some((device) => {
+        return /back|rear|environment/i.test(device.label);
+      });
+
+      if (hasRearCamera) {
+        setFacingMode('environment'); // Set to rear camera if available
+      } else {
+        setFacingMode('user'); // Fallback to front camera
       }
-    };
 
-    getDevices();
-  }, [devices]);
+      startVideo(); // Then get the video stream
+    }
 
-  useEffect(() => {
     const startVideo = async () => {
-      if (selectedDeviceId) {
-        const constraints = {
-          video: {
-            facingMode: { exact: 'environment' },
-          },
-        };
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        try {
+          // Stop any video streams if they are running
+          if (videoRef.current && videoRef.current.srcObject) {
+            videoRef.current.srcObject
+              .getTracks()
+              .forEach((track) => track.stop());
+          }
 
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        videoRef.current.srcObject = stream;
-      }
-    };
-
-    startVideo();
-
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
-      }
-    };
-  }, [selectedDeviceId]);
-
-  const handleChange = (event) => {
-    setSelectedDeviceId(event.target.value);
-  };
-
-  useEffect(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
+          // Request video stream
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { exact: facingMode },
+              width: { exact: 2048 },
+              height: { exact: 2048 },
+            },
+          });
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error('Error accessing the camera:', error);
-        });
-    } else {
-      alert('Your browser does not support media devices.');
-    }
+          // Stop any video streams if they are running
+          if (videoRef.current && videoRef.current.srcObject) {
+            videoRef.current.srcObject
+              .getTracks()
+              .forEach((track) => track.stop());
+          }
+
+          // Request video stream
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: 'user',
+              width: { exact: 1024 },
+              height: { exact: 1024 },
+            },
+          });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        }
+      }
+    };
+
+    checkCameraAvailability();
 
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
         videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []);
+  }, [facingMode]);
 
   const handleCapture = async () => {
     const canvas = canvasRef.current;
@@ -105,28 +109,52 @@ const CameraInput = () => {
     }
   };
 
+  const toggleCamera = () => {
+    setFacingMode((prevMode) =>
+      prevMode === 'environment' ? 'user' : 'environment'
+    );
+  };
   return (
-    <div>
-      <h1>Camera Test</h1>
-      <select onChange={handleChange} value={selectedDeviceId}>
+    <div className="flex flex-col items-center">
+      {/* <select
+        className="hidden"
+        onChange={handleChange}
+        value={selectedDeviceId}
+      >
         {devices.map((device, index) => (
           <option key={device.deviceId} value={device.deviceId}>
             {device.label || `Camera ${index + 1}`}
           </option>
         ))}
-      </select>
-      <video ref={videoRef} width="640" height="480" autoPlay></video>
-      <video
-        ref={videoRef}
-        width="640"
-        height="480"
-        autoPlay
-        id="video-preview"
-        playsInline
-        muted
-      ></video>
-      <button onClick={handleCapture}>Capture</button>
-      <canvas ref={canvasRef} style={{ display: 'block' }}></canvas>
+      </select> */}
+      <div className="w-1/3 h-1/3 p-5">
+        <video
+          ref={videoRef}
+          width="2048"
+          height="1536"
+          autoPlay
+          id="video-preview"
+          playsInline
+          muted
+        ></video>
+      </div>
+      <canvas
+        className="w-1/5"
+        ref={canvasRef}
+        style={{ display: 'block' }}
+      ></canvas>
+
+      <div className="p-3">
+        <button
+          className="btn border-2 border-black rounded-full p-1"
+          onClick={handleCapture}
+        >
+          <CameraIcon />
+        </button>
+        <button className="hidden pl-3" onClick={toggleCamera}>
+          <ToggleIcon />
+        </button>
+      </div>
     </div>
   );
 };
@@ -148,69 +176,3 @@ function blobToFile(blob, fileName) {
 }
 
 export default CameraInput;
-
-// const CameraSelector = () => {
-//   const [devices, setDevices] = useState([]);
-//   const [selectedDeviceId, setSelectedDeviceId] = useState('');
-//   const videoRef = useRef(null);
-
-//   useEffect(() => {
-//     const getDevices = async () => {
-//       try {
-//         const devices = await navigator.mediaDevices.enumerateDevices();
-//         const videoDevices = devices.filter(
-//           (device) => device.kind === 'videoinput'
-//         );
-//         setDevices(videoDevices);
-//         if (videoDevices.length > 0) {
-//           setSelectedDeviceId(videoDevices[0].deviceId);
-//         }
-//       } catch (error) {
-//         console.error('Error accessing devices:', error);
-//       }
-//     };
-
-//     getDevices();
-//   }, []);
-
-//   useEffect(() => {
-//     const startVideo = async () => {
-//       if (selectedDeviceId) {
-//         const constraints = {
-//           video: {
-//             deviceId: { exact: selectedDeviceId },
-//           },
-//         };
-
-//         const stream = await navigator.mediaDevices.getUserMedia(constraints);
-//         videoRef.current.srcObject = stream;
-//       }
-//     };
-
-//     startVideo();
-
-//     return () => {
-//       if (videoRef.current && videoRef.current.srcObject) {
-//         videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
-//       }
-//     };
-//   }, [selectedDeviceId]);
-
-//   const handleChange = (event) => {
-//     setSelectedDeviceId(event.target.value);
-//   };
-
-//   return (
-//     <div>
-//       <h1>Select Camera</h1>
-//       <select onChange={handleChange} value={selectedDeviceId}>
-//         {devices.map((device, index) => (
-//           <option key={device.deviceId} value={device.deviceId}>
-//             {device.label || `Camera ${index + 1}`}
-//           </option>
-//         ))}
-//       </select>
-//       <video ref={videoRef} width="640" height="480" autoPlay></video>
-//     </div>
-//   );
-// };
