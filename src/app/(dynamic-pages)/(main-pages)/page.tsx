@@ -3,11 +3,14 @@
  * @see https://v0.dev/t/uVG77qDcbLd
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
+'use client';
 import { ArrowRight } from '@/components/ArrowRight';
-
+import { useRouter } from 'next/navigation';
 import LandingEmail from '@/components/landing-email';
 
 export default function Component() {
+  const router = useRouter();
+
   return (
     <>
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
@@ -51,6 +54,12 @@ export default function Component() {
                 </button> */}
                 <LandingEmail />
               </div>
+              <button
+                onClick={() => router.push('/grade')}
+                className="btn bg-white border-2 border-black rounded-full p-3"
+              >
+                Try Now
+              </button>
             </div>
           </div>
         </div>
