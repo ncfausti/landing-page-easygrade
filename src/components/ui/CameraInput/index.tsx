@@ -11,25 +11,25 @@ const CameraInput = () => {
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
 
   useEffect(() => {
-    async function checkCameraAvailability() {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoInputs = devices.filter(
-        (device) => device.kind === 'videoinput'
-      );
+    // async function checkCameraAvailability() {
+    //   const devices = await navigator.mediaDevices.enumerateDevices();
+    //   const videoInputs = devices.filter(
+    //     (device) => device.kind === 'videoinput'
+    //   );
 
-      console.log(videoInputs);
-      const hasRearCamera = videoInputs.some((device) => {
-        return /back|rear|environment/i.test(device.label);
-      });
+    //   console.log(videoInputs);
+    //   const hasRearCamera = videoInputs.some((device) => {
+    //     return /back|rear|environment/i.test(device.label);
+    //   });
 
-      if (hasRearCamera) {
-        setFacingMode('environment'); // Set to rear camera if available
-      } else {
-        setFacingMode('user'); // Fallback to front camera
-      }
+    //   if (hasRearCamera) {
+    //     setFacingMode('environment'); // Set to rear camera if available
+    //   } else {
+    //     setFacingMode('user'); // Fallback to front camera
+    //   }
 
-      startVideo(); // Then get the video stream
-    }
+    //   startVideo(); // Then get the video stream
+    // }
 
     const startVideo = async () => {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -76,7 +76,8 @@ const CameraInput = () => {
       }
     };
 
-    checkCameraAvailability();
+    // checkCameraAvailability();
+    startVideo();
 
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
