@@ -1,49 +1,33 @@
-import Image from 'next/image';
-
 const Footer = () => {
   return (
     <footer className="p-4 bg-gray-50 sm:p-6 dark:bg-slate-800">
       <div className="mx-auto md:container pt-16 md:pt-24">
-        <div className="md:flex md:justify-between pb-16 md:pb-24">
+        {/* <div className="md:flex md:justify-between pb-16 md:pb-24">
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
-              <Image
-                src={'/logos/acme-logo-dark.png'}
-                className="mr-3 h-8  dark:hidden block"
-                width={32}
-                height={32}
-                alt="NextBase Logo"
-              />
-              <Image
-                src={'/logos/acme-logo-light.png'}
-                className="mr-3 h-8 hidden dark:block"
-                width={32}
-                height={32}
-                alt="NextBase Logo"
-              />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                Acme
+                AssistTeacher
               </span>
             </a>
 
             <p className="mt-4 mb-8 text-gray-600 dark:text-gray-400">
-              Acme Inc. 123 Acme Street, London, UK, SW1A 1AA
+              AssistTeacher Inc. 128 Prinsep St, #01-01, Singapore 188655
             </p>
             <div className="mt-4 space-x-4 pt-4 border-t dark:border-slate-700 ">
               <a
-                href="https://discord.com/invite/RxNDVewS74"
+                href="#"
                 className="text-gray-600 dark:text-gray-400 hover:underline"
               >
                 Discord
               </a>
               <a
-                href="https://twitter.com/usenextbase"
+                href="#"
                 className="text-gray-600 dark:text-gray-400 hover:underline"
               >
                 Twitter
               </a>
               <a
-                href="https://www.linkedin.com/in/codewithbhargav/"
+                href="#"
                 className="text-gray-600 dark:text-gray-400 hover:underline"
               >
                 LinkedIn
@@ -57,8 +41,8 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="https://usenextbase.com" className="hover:underline">
-                    NextBase
+                  <a href="#" className="hover:underline">
+                    AssistTeacher
                   </a>
                 </li>
               </ul>
@@ -69,18 +53,12 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a
-                    href="https://github.com/imbhargav5"
-                    className="hover:underline "
-                  >
+                  <a href="#" className="hover:underline ">
                     Github
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://twitter.com/codewithbhargav"
-                    className="hover:underline"
-                  >
+                  <a href="#" className="hover:underline">
                     Twitter
                   </a>
                 </li>
@@ -92,25 +70,25 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="/login" className="hover:underline">
+                  <a href="#" className="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="/terms" className="hover:underline">
+                  <a href="#" className="hover:underline">
                     Terms &amp; Conditions
                   </a>
                 </li>
               </ul>
             </div>
           </div>
-        </div>
+        </div> */}
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2023{' '}
+            © 2024{' '}
             <a href="https://usenextbase.com" className="hover:underline">
-              Arni Creative Private Limited
+              AssistTeacher
             </a>
             . All Rights Reserved.
           </span>

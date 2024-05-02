@@ -25,7 +25,7 @@ export const metadata = {
   icons: {
     icon: '/images/logo-black-main.ico',
   },
-  title: 'EasyGrade',
+  title: 'AssistTeacher',
   description: 'Homework made simple.',
 };
 

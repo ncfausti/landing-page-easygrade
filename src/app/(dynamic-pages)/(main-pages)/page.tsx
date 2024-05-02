@@ -26,7 +26,7 @@ export default function Component() {
             <div className="flex flex-col justify-center items-center space-y-4">
               <div className="space-y-2 text-center">
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  EasyGrade
+                  AssistTeacher
                 </h1>
                 <p className="max-w-[600px] text-gray-900 md:text-xl dark:text-gray-400">
                   Homeworks made simple.

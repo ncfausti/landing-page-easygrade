@@ -2,7 +2,7 @@ import { ClientLayout } from './ClientLayout';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import { ExternalNavigation } from './Navbar';
-// import Footer from '@/components/tailwind/Footer';
+import Footer from '@/components/tailwind/Footer';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -17,7 +17,7 @@ const roboto_mono = Roboto_Mono({
 });
 
 export const metadata = {
-  title: 'Easy Learn',
+  title: 'AssistTeacher',
   description: 'Homework made simple',
 };
 
@@ -33,7 +33,7 @@ export default async function RootLayout({
         <div className="flex pt-2 flex-col min-h-screen bg-white dark:bg-gray-900">
           <ExternalNavigation />
           <ClientLayout>{children}</ClientLayout>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </body>
     </html>

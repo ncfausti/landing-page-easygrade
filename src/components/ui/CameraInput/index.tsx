@@ -12,26 +12,6 @@ const CameraInput = () => {
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
 
   useEffect(() => {
-    // async function checkCameraAvailability() {
-    //   const devices = await navigator.mediaDevices.enumerateDevices();
-    //   const videoInputs = devices.filter(
-    //     (device) => device.kind === 'videoinput'
-    //   );
-
-    //   console.log(videoInputs);
-    //   const hasRearCamera = videoInputs.some((device) => {
-    //     return /back|rear|environment/i.test(device.label);
-    //   });
-
-    //   if (hasRearCamera) {
-    //     setFacingMode('environment'); // Set to rear camera if available
-    //   } else {
-    //     setFacingMode('user'); // Fallback to front camera
-    //   }
-
-    //   startVideo(); // Then get the video stream
-    // }
-
     const startVideo = async () => {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         try {
@@ -55,29 +35,10 @@ const CameraInput = () => {
           }
         } catch (error) {
           console.error('Error accessing the camera:', error);
-          // Stop any video streams if they are running
-          // if (videoRef.current && videoRef.current.srcObject) {
-          //   videoRef.current.srcObject
-          //     .getTracks()
-          //     .forEach((track) => track.stop());
-          // }
-
-          // // Request video stream
-          // const stream = await navigator.mediaDevices.getUserMedia({
-          //   video: {
-          //     facingMode: 'user',
-          //     width: { exact: 1024 },
-          //     height: { exact: 1024 },
-          //   },
-          // });
-          // if (videoRef.current) {
-          //   videoRef.current.srcObject = stream;
-          // }
         }
       }
     };
 
-    // checkCameraAvailability();
     startVideo();
 
     return () => {
