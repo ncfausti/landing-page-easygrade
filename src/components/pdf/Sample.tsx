@@ -5,7 +5,7 @@ import { useResizeObserver } from '@wojtekmaj/react-hooks';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-
+import Spinner from './Spinner';
 import './Sample.css';
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
@@ -60,8 +60,10 @@ export default function Sample() {
   const MAX_PAGES = 50;
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
-
+  const [showSpinner, setShowSpinner] = useState(false);
   const handleClick = async () => {
+    setShowSpinner(true);
+
     const gptResponse = await fetch('/api/generate', {
       method: 'POST',
       body: refs[0].current.toDataURL('image/jpeg', 0.9),
@@ -69,9 +71,11 @@ export default function Sample() {
     const gptResponseJson = await gptResponse.json();
     console.log(gptResponseJson);
     setGptResponseJson(gptResponseJson);
+    setShowSpinner(false);
   };
 
-  const disableButton = loadedPages === 0 || loadedPages !== numPages;
+  const disableButton =
+    loadedPages === 0 || loadedPages !== numPages || showSpinner;
 
   return (
     <div>
@@ -109,14 +113,20 @@ export default function Sample() {
             Loaded Pages: {loadedPages} / {numPages}
           </h1>
         </div>
-        <button
-          disabled={disableButton}
-          className={`btn bg-white border-2 p-3 rounded-xl border-black ${!numPages ? 'hidden' : ''
-            }`}
-          onClick={handleClick}
-        >
-          Generate Homework
-        </button>
+        {!numPages && <p>Load a PDF to get started</p>}
+
+        {showSpinner && disableButton && <Spinner />}
+        {!disableButton && (
+          <div>
+            <button
+              disabled={disableButton}
+              className={'btn bg-white border-2 p-3 rounded-xl border-black'}
+              onClick={handleClick}
+            >
+              Generate Homework
+            </button>
+          </div>
+        )}
         {numPages && (
           <code className="bg-white p-3 m-3">
             {' '}
