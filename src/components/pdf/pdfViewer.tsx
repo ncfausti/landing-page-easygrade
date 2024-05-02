@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
 
@@ -8,7 +8,6 @@ function PDFViewer() {
     'pdfjs-dist/build/pdf.worker.min.js',
     import.meta.url
   ).toString();
-  // const canvasRef = useRef(null);
 
   const [numPages, setNumPages] = useState(null);
 
@@ -27,7 +26,6 @@ function PDFViewer() {
         ))}
         <Page pageNumber={1} />
       </Document>
-      {/* <canvas ref={canvasRef}></canvas> */}
     </div>
   );
 }

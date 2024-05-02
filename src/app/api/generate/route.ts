@@ -1,12 +1,7 @@
-import pdf2img from 'pdf-img-convert';
-import fs from 'fs';
+// import OpenAI from 'openai';
+// const openai = new OpenAI();
 
-import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-const openai = new OpenAI();
-
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET() {
   // POST: Parse request body into string
   // const { body } = req;
   // const reader = body.getReader();
@@ -32,10 +27,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
   // const outputImages1 = pdf2img.convert(
   //   'http://www.example.com/pdf_online.pdf'
   // );
-  const outputImages1 = await pdf2img.convert('http://localhost:3000/5_math_chapter1.pdf');
+  // const outputImages1 = await pdf2img.convert(
+  //   'http://localhost:3000/5_math_chapter1.pdf'
+  // );
 
   // From here, the images can be used for other stuff or just saved if that's required:
-  console.log(outputImages1);
+  // console.log(outputImages1);
   // outputImages1.then(function (outputImages) {
   //   for (let i = 0; i < outputImages.length; i++)
   //     fs.writeFile('output' + i + '.png', outputImages[i], function (error) {
@@ -45,26 +42,27 @@ export async function GET(req: NextRequest, res: NextResponse) {
   //     });
   // });
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4-turbo',
-    messages: [
-      {
-        role: 'user',
-        content: [
-          {
-            type: 'text',
-            text: `You are a Math Teacher. Generate homework questions based on this image.`,
-          },
-          {
-            type: 'image_url',
-            image_url: {
-              url: result,
-            },
-          },
-        ],
-      },
-    ],
-  });
+  // const response = await openai.chat.completions.create({
+  //   model: 'gpt-4-turbo',
+  //   messages: [
+  //     {
+  //       role: 'user',
+  //       content: [
+  //         {
+  //           type: 'text',
+  //           text: `You are a Math Teacher. Generate homework questions based on this image.`,
+  //         },
+  //         {
+  //           type: 'image_url',
+  //           image_url: {
+  //             url: 'result',
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // });
 
+  const response = '';
   return new Response(JSON.stringify(response), { status: 200 });
 }
