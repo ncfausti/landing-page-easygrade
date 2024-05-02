@@ -1,16 +1,15 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useResizeObserver } from '@wojtekmaj/react-hooks';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 import './Sample.css';
-import { parseBody } from '@/lib/utils';
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-import { set } from 'nprogress';
+// import { set } from 'nprogress';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -23,8 +22,6 @@ const options = {
 };
 
 const resizeObserverOptions = {};
-
-const maxWidth = 800;
 
 type PDFFile = string | File | null;
 
@@ -59,22 +56,10 @@ export default function Sample() {
     setNumPages(nextNumPages);
   }
 
+  const maxWidth = 800;
   const MAX_PAGES = 50;
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
-
-  // const generateHomeworks = async () => {
-  //   const response = await fetch('/api/generate', {
-  //     method: 'POST',
-  //     body: refs[0].current.toDataURL('image/jpeg', 0.9),
-  //   });
-  //   console.log(response);
-  //   return response;
-  // };
-
-  // const [homeworks, setHomeworks] = useState('');
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
-
-  // gptResponseJson.choices.map((c) => c.message.content);
 
   const handleClick = async () => {
     const gptResponse = await fetch('/api/generate', {
@@ -84,10 +69,9 @@ export default function Sample() {
     const gptResponseJson = await gptResponse.json();
     console.log(gptResponseJson);
     setGptResponseJson(gptResponseJson);
-
-    // console.log(response.json());
-    // setHomeworks(response.json());
   };
+
+  const disableButton = loadedPages === 0 || loadedPages !== numPages;
 
   return (
     <div>
@@ -109,7 +93,11 @@ export default function Sample() {
                   key={`page_${index + 1}`}
                   pageNumber={index + 1}
                   canvasRef={refs[index]}
-                  width={400}
+                  width={
+                    containerWidth
+                      ? Math.min(containerWidth, maxWidth)
+                      : maxWidth
+                  }
                   onRenderSuccess={() => setLoadedPages((prev) => prev + 1)}
                 />
               ))}
@@ -122,8 +110,8 @@ export default function Sample() {
           </h1>
         </div>
         <button
-          disabled={loadedPages === 0 || loadedPages !== numPages}
-          className={`btn bg-white border-2 p-3 rounded-xl border-black ${!numPages ? 'cursor-not-allowed' : 'cursor-pointer'
+          disabled={disableButton}
+          className={`btn bg-white border-2 p-3 rounded-xl border-black ${!numPages ? 'hidden' : ''
             }`}
           onClick={handleClick}
         >
