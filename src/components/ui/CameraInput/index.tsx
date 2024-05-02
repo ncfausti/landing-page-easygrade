@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { uploadPhoto } from '../../../lib/sb';
 import { v4 as uuidv4 } from 'uuid';
