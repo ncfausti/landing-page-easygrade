@@ -1,7 +1,12 @@
 import { NextRequest } from 'next/server';
 
-export async function GET() {
-  return new Response('Hello, world!');
+export async function GET(req: NextRequest) {
+  const { subject, grade } = Object.fromEntries(
+    req.nextUrl.searchParams.entries()
+  );
+
+  console.log({ subject, grade });
+  return new Response(JSON.stringify(subject + grade));
 }
 
 export async function POST(req: NextRequest) {

@@ -24,9 +24,39 @@ const options = {
 const resizeObserverOptions = {};
 
 type PDFFile = string | File | null;
+type Subject =
+  | 'English'
+  | 'Math'
+  | 'Social'
+  | 'Science'
+  | 'EVS'
+  | 'Chemistry'
+  | 'Physics'
+  | 'Biology'
+  | 'ICT'
+  | 'History'
+  | 'Geography'
+  | 'Civics';
+
+const subjects = [
+  'English',
+  'Math',
+  'Social',
+  'Science',
+  'EVS',
+  'Chemistry',
+  'Physics',
+  'Biology',
+  'ICT',
+  'History',
+  'Geography',
+  'Civics',
+];
 
 export default function Sample() {
   const [file, setFile] = useState<PDFFile>();
+  const [grade, setGrade] = useState<number>();
+  const [subject, setSubject] = useState<Subject>();
   const [numPages, setNumPages] = useState<number>(0);
   const [loadedPages, setLoadedPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
@@ -61,17 +91,30 @@ export default function Sample() {
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
   const [showSpinner, setShowSpinner] = useState(false);
-  const handleClick = async () => {
+  const handleClick = async (grade: string, subject: string) => {
     setShowSpinner(true);
-
-    const gptResponse = await fetch('/api/generate', {
-      method: 'POST',
-      body: refs[0].current.toDataURL('image/jpeg', 0.9),
-    });
+    console.log(grade, subject);
+    const gptResponse = await fetch(
+      `/api/generate?grade=${grade}&subject=${subject}`,
+      {
+        method: 'POST',
+        body: refs[0].current.toDataURL('image/jpeg', 0.9),
+      }
+    );
     const gptResponseJson = await gptResponse.json();
     console.log(gptResponseJson);
     setGptResponseJson(gptResponseJson);
     setShowSpinner(false);
+  };
+
+  const handleGradeSelect = (e) => {
+    console.log(e.target.value);
+    setGrade(e.target.value);
+  };
+
+  const handleSubjectSelect = (e) => {
+    console.log(e.target.value);
+    setSubject(e.target.value);
   };
 
   const disableButton =
@@ -81,6 +124,33 @@ export default function Sample() {
     <div>
       <div className="Example">
         <div className="Example__container">
+          <div>
+            <select className="p-3 m-3" onChange={(e) => handleGradeSelect(e)}>
+              <option value="1">1st Grade</option>
+              <option value="2">2nd Grade</option>
+              <option value="3">3rd Grade</option>
+              <option value="4">4th Grade</option>
+              <option value="5">5th Grade</option>
+              <option value="6">6th Grade</option>
+              <option value="7">7th Grade</option>
+              <option value="8">8th Grade</option>
+              <option value="9">9th Grade</option>
+              <option value="10">10th Grade</option>
+              <option value="11">11th Grade</option>
+              <option value="12">12th Grade</option>
+            </select>
+
+            <select
+              className="p-3 m-3"
+              onChange={(e) => handleSubjectSelect(e)}
+            >
+              {subjects.map((subject) => (
+                <option key={subject} value={subject}>
+                  {subject}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="Example__container__load">
             <label htmlFor="file">Load from pdf:</label>{' '}
             <input onChange={onFileChange} type="file" />
@@ -121,7 +191,7 @@ export default function Sample() {
             <button
               disabled={disableButton}
               className={'btn bg-white border-2 p-3 rounded-xl border-black'}
-              onClick={handleClick}
+              onClick={() => handleClick(grade, subject)}
             >
               Generate Homework
             </button>

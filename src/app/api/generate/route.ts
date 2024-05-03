@@ -5,10 +5,23 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI();
 
+export async function GET(req: NextRequest) {
+  const { subject, grade } = Object.fromEntries(
+    req.nextUrl.searchParams.entries()
+  );
+
+  console.log({ subject, grade });
+  return new Response(JSON.stringify(subject + grade));
+}
+
 export async function POST(req: NextRequest, res: NextResponse) {
   const { body } = req;
   const result = await parseBody(body);
-
+  const { subject, grade } = Object.fromEntries(
+    req.nextUrl.searchParams.entries()
+  );
+  const prompt = `You are a grade ${grade} ${subject} teacher. Generate homework questions based on this image.`;
+  console.log('Prompt: ', prompt);
   if (!result) {
     return new Response(JSON.stringify(res), { status: 400 });
   }
@@ -21,7 +34,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         content: [
           {
             type: 'text',
-            text: `You are a 5th grade teacher. Generate homework questions based on this image.`,
+            text: prompt,
           },
           {
             type: 'image_url',
