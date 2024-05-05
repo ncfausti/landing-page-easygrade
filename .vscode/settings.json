@@ -26,5 +26,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "cSpell.words": ["Reflio", "signup"]
+  "cSpell.words": ["Reflio", "signup"],
+  "workbench.colorTheme": "Visual Studio 2017 Light - C++"
 }
