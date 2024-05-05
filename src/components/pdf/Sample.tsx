@@ -55,8 +55,8 @@ const subjects = [
 
 export default function Sample() {
   const [file, setFile] = useState<PDFFile>();
-  const [grade, setGrade] = useState<number>();
-  const [subject, setSubject] = useState<Subject>();
+  const [grade, setGrade] = useState<number>(1);
+  const [subject, setSubject] = useState<Subject>('English');
   const [numPages, setNumPages] = useState<number>(0);
   const [loadedPages, setLoadedPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
@@ -197,7 +197,7 @@ export default function Sample() {
             </button>
           </div>
         )}
-        {numPages && (
+        {gptResponseJson.choices.length > 0 && (
           <code className="bg-white p-3 m-3">
             {' '}
             {gptResponseJson.choices.map((c) => c.message.content)}
