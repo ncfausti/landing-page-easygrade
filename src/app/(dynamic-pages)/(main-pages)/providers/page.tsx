@@ -12,46 +12,11 @@ import Image from 'next/image';
 export default function Component() {
   const router = useRouter();
 
-  // TeachAssist - Homework Management System
-
-  // Give your LMS the AI Edge with TeachAssist
-  // Stay ahead - Gain and retain more customers.
-
-  // Streamlined Homework Management: With TeacherAssist seamlessly integrated into your LMS,
-  // offer schools the ability to effortlessly generate adaptive homework assignments.
-  // Our tool simplifies the process, allowing teachers to create personalized tasks for
-  // any topic, grade, or subject with just two clicks. Plus, customizable templates
-  // featuring school logos add a professional touch to printed materials, enhancing brand visibility.
-
-  // Automated Grading Solutions: Revolutionize homework grading with TeacherAssist's OCR
-  // technology. By automating the grading process, our tool eliminates the time-consuming task
-  // of manual assessment. Students can scan completed worksheets, receiving instant feedback
-  // on their performance. This not only boosts learning outcomes by 75% but also reduces
-  // administrative burden, all without the need for devices – just a quick snapshot!
-
-  // Targeted Remedial Support: Addressing student learning gaps has never been easier.
-  // TeacherAssist analyzes homework performance data to generate tailored remedial worksheets
-  // aligned with school curricula. By providing personalized support, our tool ensures that
-  // every student receives the assistance they need to succeed. Additionally, advanced tasks
-  // challenge gifted students, fostering accelerated learning trajectories.
-
-  // Efficient Management Dashboards: Enhance LMS functionality with TeacherAssist's intuitive
-  // teacher dashboard. Empower educators to effortlessly track homework submissions, grades,
-  // and generate remedial assignments with a single click. By streamlining administrative
-  // tasks, our tool enables teachers to allocate more time to impactful teaching practices,
-  // ultimately driving academic success.
-
-  // Fuel Your Business Growth with TeacherAssist:
-  // With TeacherAssist as your ally, give AI wings to your LMS offerings. Drive differentiation,
-  // enhance customer satisfaction, and future-proof your business against industry shifts. By
-  // staying ahead of the curve with innovative solutions, you position your company as a leader
-  // in the education technology space, primed for sustained growth and success.
-
   // Nick - Pls add about API integration. I wouldn't know the right words to put that
 
   return (
     <>
-      <section className="w-full py-6 md:py-24 lg:py-32 xl:py-48">
+      <section className="w-full pt-6 md:pt-24 lg:pt-32 xl:pt-48">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 px-10 lg:grid-cols-[1fr_600px] lg:gap-4 xl:grid-cols-[1fr_800px]">
             <Image
@@ -105,16 +70,25 @@ export default function Component() {
             </div>
           </div>
         </div>
-        <div className="flex w-full justify-evenly pt-6 ">
-          <div className="bg-white border-2 border-black rounded-full p-3">
-            LMSs
-          </div>
-          <div className="bg-white border-2 border-black rounded-full p-3">
+        <div className="flex w-full justify-evenly pt-6 min-h-[200px] items-center font-bold">
+          <button
+            onClick={() => router.push('/providers')}
+            className="btn bg-white border-2 border-black rounded-full p-3"
+          >
+            Providers
+          </button>
+          <button
+            onClick={() => router.push('/')}
+            className="btn bg-white border-2 border-black rounded-full p-3"
+          >
             Schools
-          </div>
-          <div className="bg-white border-2 border-black rounded-full p-3">
+          </button>
+          <button
+            onClick={() => router.push('/grade')}
+            className="btn bg-white border-2 border-black rounded-full p-3"
+          >
             Students
-          </div>
+          </button>
         </div>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
@@ -124,24 +98,19 @@ export default function Component() {
               <h2 className="text-3xl sm:text-5xl">
                 Streamlined Homework Management
               </h2>
-              <p className="max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <h4 className="max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 With TeacherAssist seamlessly integrated into your LMS, offer
                 schools the ability to effortlessly generate adaptive homework
                 assignments.
-              </p>
+              </h4>
             </div>
-            {/*  Our tool simplifies the process, allowing teachers to create
-            personalized tasks for any topic, grade, or subject with just two clicks.
-            Plus, customizable templates featuring school logos add a professional
-            touch to printed materials, enhancing brand visibility.
-             */}
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
               <div className="flex flex-col justify-center space-y-4">
                 <ul className="grid gap-6">
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-2xl font-bold">Generate</h3>
-                      <p className="text-gray-800">
+                      <p className="text-gray-800 text-xl">
                         Offer schools the ability to effortlessly generate
                         adaptive homework assignments.
                       </p>
@@ -150,7 +119,7 @@ export default function Component() {
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-2xl font-bold">Simplify</h3>
-                      <p className="text-gray-800">
+                      <p className="text-gray-800  text-xl">
                         Allows teachers to create personalized tasks for any
                         topic, grade, or subject with just two clicks.
                       </p>
@@ -159,7 +128,7 @@ export default function Component() {
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-2xl font-bold">Customize</h3>
-                      <p className="text-gray-800">
+                      <p className="text-gray-800  text-xl">
                         Templates featuring school logos add a professional
                         touch to printed materials, enhancing brand visibility.
                       </p>
@@ -184,8 +153,14 @@ export default function Component() {
             <h2 className="text-center sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               Automated Grading Solutions
             </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Generate customized lesson plans in seconds.
+            <p className="text-center text-xl py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              Revolutionize homework grading with TeacherAssist's OCR
+              technology. By automating the grading process, our tool eliminates
+              the time-consuming task of manual assessment. Students can scan
+              completed worksheets, receiving instant feedback on their
+              performance. This not only boosts learning outcomes by 75% but
+              also reduces administrative burden, all without the need for
+              devices – just a quick snapshot!
             </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
@@ -218,10 +193,10 @@ export default function Component() {
             />
           </div>
           <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
+            <h2 className="text-center lg:leading-tighter text-3xl tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               Targeted Remedial Support
             </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            <p className="text-center text-xl py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
               Automatic grading of homeworks using your phone's camera, while
               also providing personalized feedback to students.
             </p>
@@ -229,51 +204,13 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-              Efficient Management Dashboards
-            </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Generate customized lesson plans in seconds.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-            <Image
-              width={500}
-              height={310}
-              src="/images/lesson-plan-arithmetic.png"
-              alt="Lesson plan"
-            />
-          </div>
-        </div>
-      </section>
-
       <section className="w-full py-12 md:py-24 lg:py-32 border-t">
         <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end items-center">
-            <Image
-              width={500}
-              height={310}
-              className="w-1/2"
-              src="/images/ocr-phone.png"
-              alt="OCR for homeworks"
-            />
-            <ArrowRight />
-            <Image
-              width={500}
-              height={310}
-              className="w-1/2"
-              src="/images/graded.png"
-              alt="Graded homework assignment"
-            />
-          </div>
           <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
+            <h2 className="text-center lg:leading-tighter text-3xl tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               Efficient Management Dashboards
             </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            <p className="text-center text-xl py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
               Enhance LMS functionality with TeacherAssist's intuitive teacher
               dashboard. Empower educators to effortlessly track homework
               submissions, grades, and generate remedial assignments with a
@@ -282,32 +219,33 @@ export default function Component() {
               practices, ultimately driving academic success.
             </p>
           </div>
+          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end items-center">
+            <Image
+              width={500}
+              height={310}
+              className="w-full"
+              src="/images/grades-dashboard.png"
+              alt="OCR for homeworks"
+            />
+          </div>
         </div>
       </section>
 
       <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-              Fuel Your Business Growth with TeacherAssist
-            </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              With TeacherAssist as your ally, give AI wings to your LMS
-              offerings. Drive differentiation, enhance customer satisfaction,
-              and future-proof your business against industry shifts. By staying
-              ahead of the curve with innovative solutions, you position your
-              company as a leader in the education technology space, primed for
-              sustained growth and success.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-            <Image
-              width={500}
-              height={310}
-              src="/images/lesson-plan-arithmetic.png"
-              alt="Lesson plan"
-            />
-          </div>
+        <div className="container flex flex-col items-center px-4 md:px-6 lg:gap-10">
+          <h2 className="text-center lg:leading-tighter text-3xl tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
+            Fuel Your Business Growth with TeacherAssist
+          </h2>
+          <p className="text-center py-2 text-2xl max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            With <strong>TeacherAssist</strong> as your ally, give AI wings to
+            your LMS offerings. Drive <strong>differentiation</strong>, enhance{' '}
+            <strong>customer satisfaction</strong>, and{' '}
+            <strong>future-proof</strong> your business against industry shifts.
+            By staying ahead of the curve with innovative solutions, you
+            position your company as a{' '}
+            <strong>leader in the education technology space</strong>, primed
+            for sustained growth and success.
+          </p>
         </div>
       </section>
     </>

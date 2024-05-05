@@ -108,15 +108,32 @@ export default function Component() {
           </div>
         </div>
         <div className="flex w-full justify-evenly pt-6 min-h-[200px] items-center font-bold">
-          <div className="bg-white border-2 border-black rounded-full p-3 px-6 h-full">
-            LMSs
-          </div>
-          <div className="bg-white border-2 border-black rounded-full p-3 px-6 h-full">
+          {/* <div className="bg-white border-2 border-black rounded-full p-3 px-6 h-full"> */}
+          <button
+            onClick={() => router.push('/providers')}
+            className="btn bg-white border-2 border-black rounded-full p-3"
+          >
+            Providers
+          </button>
+          <button
+            onClick={() => router.push('/')}
+            className="btn bg-white border-2 border-black rounded-full p-3"
+          >
+            Schools
+          </button>
+          <button
+            onClick={() => router.push('/grade')}
+            className="btn bg-white border-2 border-black rounded-full p-3"
+          >
+            Students
+          </button>
+          {/* </div> */}
+          {/* <div className="bg-white border-2 border-black rounded-full p-3 px-6 h-full">
             Schools
           </div>
           <div className="bg-white border-2 border-black rounded-full p-3 px-6 h-full">
             Students
-          </div>
+          </div> */}
         </div>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white">

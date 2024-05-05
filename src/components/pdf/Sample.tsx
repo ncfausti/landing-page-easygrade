@@ -157,7 +157,7 @@ export default function Sample() {
           </div>
           <div className="Example__container__document" ref={setContainerRef}>
             <Document
-              file={'grade5math.pdf'}
+              file={file}
               onLoadProgress={({ loaded, total }) => console.log(loaded, total)}
               onLoadSuccess={onDocumentLoadSuccess}
               options={options}
@@ -191,7 +191,7 @@ export default function Sample() {
             <button
               disabled={disableButton}
               className={'btn bg-white border-2 p-3 rounded-xl border-black'}
-              onClick={() => handleClick(grade, subject)}
+              onClick={() => handleClick(String(grade), subject)}
             >
               Generate Homework
             </button>
