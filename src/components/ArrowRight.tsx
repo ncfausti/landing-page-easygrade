@@ -5,7 +5,7 @@ export const ArrowRight = () => (
     viewBox="0 0 24 24"
     strokeWidth={3.5}
     stroke="currentColor"
-    className="w-16 h-16 text-white"
+    className="w-16 h-16 text-black"
   >
     <path
       strokeLinecap="round"
