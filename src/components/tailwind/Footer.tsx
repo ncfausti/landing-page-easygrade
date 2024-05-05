@@ -6,12 +6,12 @@ const Footer = () => {
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                AssistTeacher
+                TeacherAssist
               </span>
             </a>
 
             <p className="mt-4 mb-8 text-gray-600 dark:text-gray-400">
-              AssistTeacher Inc. 128 Prinsep St, #01-01, Singapore 188655
+              TeacherAssist Inc. 128 Prinsep St, #01-01, Singapore 188655
             </p>
             <div className="mt-4 space-x-4 pt-4 border-t dark:border-slate-700 ">
               <a
@@ -42,7 +42,7 @@ const Footer = () => {
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
-                    AssistTeacher
+                    TeacherAssist
                   </a>
                 </li>
               </ul>
@@ -88,7 +88,7 @@ const Footer = () => {
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2024{' '}
             <a href="https://usenextbase.com" className="hover:underline">
-              AssistTeacher
+              TeacherAssist
             </a>
             . All Rights Reserved.
           </span>

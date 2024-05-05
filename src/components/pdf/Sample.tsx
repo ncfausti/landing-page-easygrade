@@ -157,7 +157,7 @@ export default function Sample() {
           </div>
           <div className="Example__container__document" ref={setContainerRef}>
             <Document
-              file={file}
+              file={'grade5math.pdf'}
               onLoadProgress={({ loaded, total }) => console.log(loaded, total)}
               onLoadSuccess={onDocumentLoadSuccess}
               options={options}

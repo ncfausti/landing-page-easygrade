@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const { subject, grade } = Object.fromEntries(
     req.nextUrl.searchParams.entries()
   );
-  const prompt = `You are a grade ${grade} ${subject} teacher. Generate homework questions based on this image.`;
+  const prompt = `You are a grade ${grade} ${subject} teacher. Generate grade ${grade} ${subject} homework questions based on this image.`;
   console.log('Prompt: ', prompt);
   if (!result) {
     return new Response(JSON.stringify(res), { status: 400 });

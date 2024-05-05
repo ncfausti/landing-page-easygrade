@@ -5,20 +5,54 @@ html,
 body {
   height: 100%;
   width: 100%;
-  font-family: sans-serif;
+  font-family: "nunito", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 main {
-  background-color: rgb(103, 207, 183);
+  background-color: #7eaecd;
+}
+/* @font-face {  font-family: YAFcfiBJMjY-0;  src: url(fonts/c0011f49814fabeca5e5d07e85811cb7.woff2);  font-style: normal;  font-weight: 500;} */
+/* @font-face {
+  font-family: YAFcfiBJMjY-0;
+  src: url('/cooper_bt.woff2');
+  font-style: normal;
+  } */
+
+@font-face {
+  font-family: YAFcfiBJMjY-0;
+  src: url('/Cooper_BT500.woff2');
+  font-style: normal;
+  }
+h1, h2, h3, h4, h5 {
+  font-family: YAFcfiBJMjY-0;
+}
+
+h1 {
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h2, h3, h4, h5 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 
 
 main h1 {
-  -webkit-text-stroke: 2px black; /* width and color */
-  color: white;
+  /* -webkit-text-stroke: 2px black; */
+  color: black;
+  font-weight: 400;
+  font-size: 4rem;
+
+
 }
 h2, h3 {
-  -webkit-text-stroke: 1px #999;
-  color: white;
+  /* -webkit-text-stroke: 1px #999; */
+  color: black;
 
 }
 

@@ -17,7 +17,7 @@ const roboto_mono = Roboto_Mono({
 });
 
 export const metadata = {
-  title: 'AssistTeacher',
+  title: 'TeacherAssist',
   description: 'Homework made simple',
 };
 
@@ -28,7 +28,12 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
-      <head />
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://use.typekit.net/fpl1mbs.css"
+        ></link>
+      </head>
       <body>
         <div className="flex pt-2 flex-col min-h-screen bg-white dark:bg-gray-900">
           <ExternalNavigation />
