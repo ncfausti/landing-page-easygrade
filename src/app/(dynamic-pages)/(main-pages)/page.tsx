@@ -126,12 +126,12 @@ export default function Component() {
               <h2 className="max-w-[900px] text-3xl sm:text-5xl">
                 How we enable our teachers to personalise learning
               </h2>
-              <p className="max-w-[900px] text-gray-800 md:text-xl lg:text-base xl:text-xl dark:text-gray-400">
+              <h4 className="max-w-[900px] text-gray-800 md:text-xl lg:text-base xl:text-xl dark:text-gray-400">
                 In a class of 30 different kids without devices, personalization
                 becomes a huge challenge. Welcome to TeacherAssist, where
                 innovation meets education to revolutionize homework management
                 for schools!
-              </p>
+              </h4>
             </div>
             {/*  Our tool simplifies the process, allowing teachers to create
             personalized tasks for any topic, grade, or subject with just two clicks.
@@ -160,14 +160,11 @@ export default function Component() {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="homework">
-                    {/* <p className="text-gray-800"></p> */}
                     <div className="flex flex-col max-w-[1000px] justify-center space-y-6">
-                      <h3 className="text-2xl font-bold space-y-4">
-                        Effortless Homework Creation
-                      </h3>
-                      {/* Explore how TeacherAssist can empower your school community
-          </h2> */}
-                      <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
+                      <div className="flex flex-col items-center">
+                        <h3 className="text-2xl font-bold space-y-4">
+                          Effortless Homework Creation
+                        </h3>
                         <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                           Say goodbye to time-consuming homework planning!
                           TeacherAssist simplifies the process, allowing
@@ -181,30 +178,20 @@ export default function Component() {
                         <Image
                           width={500}
                           height={310}
+                          className="my-6"
                           src="/images/lesson-plan-arithmetic.png"
                           alt="Lesson plan"
                         />
                       </div>
                     </div>
-                    {/* <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-                      <Image
-                        width={500}
-                        height={310}
-                        src="/images/lesson-plan-arithmetic.png"
-                        alt="Lesson plan"
-                      />
-                    </div> */}
                   </TabsContent>
                   <TabsContent value="grading">
-                    <div className="flex flex-col max-w-[1000px] justify-center space-y-6">
-
-                      {/* Explore how TeacherAssist can empower your school community
-          </h2> */}
-                      <div className="flex flex-col min-[400px]:flex-row min-[400px]:items-center lg:justify-end">
-                        <p className="items-center w-1/2 py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                          <h3 className="text-2xl font-bold">
-                            Instant Feedback and Grading
-                          </h3>
+                    <div className="flex flex-col justify-center space-y-6">
+                      <div className="flex flex-col items-center">
+                        <h3 className="text-2xl font-bold space-y-4">
+                          Instant Feedback and Grading
+                        </h3>
+                        <p className="items-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                           Experience the power of automated grading with
                           TeacherAssist's OCR technology. Students simply scan
                           completed worksheets/notebooks receiving instant
@@ -212,269 +199,93 @@ export default function Component() {
                           learning outcomes by 75% but also reduces
                           administrative burden.
                         </p>
+                        <div className="flex items-center">
+                          <Image
+                            width={200}
+                            height={150}
+                            className=""
+                            src="/images/ocr-phone.png"
+                            alt="OCR for homeworks"
+                          />
+                          <ArrowRight />
+                          <Image
+                            width={200}
+                            height={150}
+                            className="my-6"
+                            src="/images/graded.png"
+                            alt="Graded homework assignment"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="remediation">
+                    <div className="flex flex-col justify-center space-y-6">
+                      <div className="flex flex-col items-center">
+                        <h3 className="text-2xl font-bold space-y-4">
+                          Targeted Remediation for Student Success
+                        </h3>
+                        <p className="items-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                          Addressing learning gaps has never been easier.
+                          TeacherAssist analyzes student performance data to
+                          generate personalized remedial worksheets aligned with
+                          curriculum objectives. By providing targeted support,
+                          our tool ensures that every student receives the
+                          assistance they need to thrive academically, promoting
+                          a culture of excellence within your school community.
+                        </p>
+                        <div className="flex items-center my-6">
+                          <Image
+                            width={200}
+                            height={150}
+                            className=""
+                            src="/images/ocr-phone.png"
+                            alt="OCR for homeworks"
+                          />
+                          <ArrowRight />
+                          <Image
+                            width={200}
+                            height={150}
+                            className=""
+                            src="/images/graded.png"
+                            alt="Graded homework assignment"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="reporting">
+                    <div className="flex flex-col max-w-[1000px] justify-center space-y-6">
+                      <div className="flex flex-col min-[400px]:items-center lg:justify-end">
+                        <h3 className="text-2xl font-bold">
+                          Efficient Monitoring and Reporting
+                        </h3>
+                        <p
+                          className="items-center py-4 max-w-[900px] text-gray-800
+                        md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 "
+                        >
+                          Keep track of homework submissions and grades
+                          effortlessly with TeacherAssist's comprehensive
+                          monitoring tools. Administrators gain valuable
+                          insights into student progress, enabling informed
+                          decision-making to support student success. With
+                          streamlined reporting capabilities, educators can
+                          easily communicate student progress to parents,
+                          fostering a collaborative learning environment.
+                        </p>
                         <Image
-                          width={200}
-                          height={150}
-                          className=""
-                          src="/images/ocr-phone.png"
-                          alt="OCR for homeworks"
-                        />
-                        <ArrowRight />
-                        <Image
-                          width={200}
-                          height={150}
-                          className=""
-                          src="/images/graded.png"
+                          width={500}
+                          height={210}
+                          className="my-6"
+                          src="/images/grades-dashboard.png"
                           alt="Graded homework assignment"
                         />
                       </div>
                     </div>
-
-                    {/* <p className="text-gray-800">
-                      Experience the power of automated grading with
-                      TeacherAssist's OCR technology. Students simply scan
-                      completed worksheets/notebooks receiving instant feedback
-                      on their homework. This not only boosts learning outcomes
-                      by 75% but also reduces administrative burden.
-                    </p>
-                  </TabsContent>
-                  <TabsContent value="remediation">
-                    <h3 className="text-2xl font-bold">
-                      Targeted Remediation for Student Success
-                    </h3>
-                    <p className="text-gray-800">
-                      Addressing learning gaps has never been easier.
-                      TeacherAssist analyzes student performance data to
-                      generate personalized remedial worksheets aligned with
-                      curriculum objectives. By providing targeted support, our
-                      tool ensures that every student receives the assistance
-                      they need to thrive academically, promoting a culture of
-                      excellence within your school community.
-                    </p> */}
-                  </TabsContent>
-                  <TabsContent value="reporting">
-                    <h3 className="text-2xl font-bold">
-                      Efficient Monitoring and Reporting
-                    </h3>
-                    <p className="text-gray-800">
-                      Keep track of homework submissions and grades effortlessly
-                      with TeacherAssist's comprehensive monitoring tools.
-                      Administrators gain valuable insights into student
-                      progress, enabling informed decision-making to support
-                      student success. With streamlined reporting capabilities,
-                      educators can easily communicate student progress to
-                      parents, fostering a collaborative learning environment.
-                    </p>
                   </TabsContent>
                 </Tabs>
-
-                <ul className="hidden grid gap-6">
-                  <li className="flex">
-                    <div className="grid gap-1">
-                      <h3 className="text-2xl font-bold">
-                        Effortless Homework Creation
-                      </h3>
-                      <p className="text-gray-800">
-                        Say goodbye to time-consuming homework planning!
-                        TeacherAssist simplifies the process, allowing teachers
-                        to generate adaptive assignments for any grade, subject,
-                        or topic in just two clicks. With customizable templates
-                        featuring your school logo, personalized printable
-                        homework tasks are created effortlessly, promoting
-                        student engagement and pride in their work.
-                      </p>
-                      <Image
-                        width={500}
-                        height={310}
-                        alt="Image"
-                        className="mx-auto overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-                        src="/images/features.png"
-                      />
-                    </div>
-                  </li>
-                  <li>
-                    <div className="grid gap-1">
-                      <h3 className="text-2xl font-bold">
-                        Instant Feedback and Grading
-                      </h3>
-                      <p className="text-gray-800">
-                        Experience the power of automated grading with
-                        TeacherAssist's OCR technology. Students simply scan
-                        completed worksheets/notebooks receiving instant
-                        feedback on their homework. This not only boosts
-                        learning outcomes by 75% but also reduces administrative
-                        burden.
-                      </p>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="grid gap-1">
-                      <h3 className="text-2xl font-bold">
-                        Targeted Remediation for Student Success
-                      </h3>
-                      <p className="text-gray-800">
-                        Templates featuring school logos add a professional
-                        touch to printed materials, enhancing brand visibility.
-                      </p>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="grid gap-1">
-                      <h3 className="text-2xl font-bold">
-                        Efficient Monitoring and Reporting
-                      </h3>
-                      <p className="text-gray-800">
-                        Keep track of homework submissions and grades
-                        effortlessly with TeacherAssist's comprehensive
-                        monitoring tools. Administrators gain valuable insights
-                        into student progress, enabling informed decision-making
-                        to support student success. With streamlined reporting
-                        capabilities, educators can easily communicate student
-                        progress to parents, fostering a collaborative learning
-                        environment.
-                      </p>
-                    </div>
-                  </li>
-                </ul>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        {/* <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="space-y-2">
-            <h2 className="text-center sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]"> */}
-        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-          <div className="flex flex-col justify-center space-y-4">
-            <h2>
-              Let's explore how TeacherAssist can empower your school community:
-            </h2>
-            {/* Explore how TeacherAssist can empower your school community
-          </h2> */}
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Generate customized lesson plans in seconds.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-            <Image
-              width={500}
-              height={310}
-              src="/images/lesson-plan-arithmetic.png"
-              alt="Lesson plan"
-            />
-          </div>
-        </div>
-      </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 border-t">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end items-center">
-            <Image
-              width={500}
-              height={310}
-              className="w-1/2"
-              src="/images/ocr-phone.png"
-              alt="OCR for homeworks"
-            />
-            <ArrowRight />
-            <Image
-              width={500}
-              height={310}
-              className="w-1/2"
-              src="/images/graded.png"
-              alt="Graded homework assignment"
-            />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-              Targeted Remedial Support
-            </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Automatic grading of homeworks using your phone's camera, while
-              also providing personalized feedback to students.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-              Efficient Management Dashboards
-            </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Generate customized lesson plans in seconds.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-            <Image
-              width={500}
-              height={310}
-              src="/images/lesson-plan-arithmetic.png"
-              alt="Lesson plan"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full py-12 md:py-24 lg:py-32 border-t">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end items-center">
-            <Image
-              width={500}
-              height={310}
-              className="w-1/2"
-              src="/images/ocr-phone.png"
-              alt="OCR for homeworks"
-            />
-            <ArrowRight />
-            <Image
-              width={500}
-              height={310}
-              className="w-1/2"
-              src="/images/graded.png"
-              alt="Graded homework assignment"
-            />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-              Efficient Management Dashboards
-            </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Enhance LMS functionality with TeacherAssist's intuitive teacher
-              dashboard. Empower educators to effortlessly track homework
-              submissions, grades, and generate remedial assignments with a
-              single click. By streamlining administrative tasks, our tool
-              enables teachers to allocate more time to impactful teaching
-              practices, ultimately driving academic success.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <div className="space-y-2">
-            <h2 className="text-center lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-              Fuel Your Business Growth with TeacherAssist
-            </h2>
-            <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              With TeacherAssist as your ally, give AI wings to your LMS
-              offerings. Drive differentiation, enhance customer satisfaction,
-              and future-proof your business against industry shifts. By staying
-              ahead of the curve with innovative solutions, you position your
-              company as a leader in the education technology space, primed for
-              sustained growth and success.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-            <Image
-              width={500}
-              height={310}
-              src="/images/lesson-plan-arithmetic.png"
-              alt="Lesson plan"
-            />
           </div>
         </div>
       </section>
