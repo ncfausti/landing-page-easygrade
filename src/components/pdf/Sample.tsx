@@ -7,9 +7,10 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import Spinner from './Spinner';
 import './Sample.css';
-
+import Chat from '../ui/Streaming/Chat';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 // import { set } from 'nprogress';
+import { useCompletion } from 'ai/react';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -61,6 +62,9 @@ export default function Sample() {
   const [loadedPages, setLoadedPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>();
+  const { completion } = useCompletion({
+    api: '/api/completion',
+  });
 
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
@@ -123,12 +127,17 @@ export default function Sample() {
   const disableButton =
     loadedPages === 0 || loadedPages !== numPages || showSpinner;
 
+  console.log(completion);
+
   return (
     <div>
       <div className="Example">
         <div className="Example__container">
           <div>
-            <select className="p-3 m-3" onChange={(e) => handleGradeSelect(e)}>
+            <select
+              className="p-3 m-3 rounded-md"
+              onChange={(e) => handleGradeSelect(e)}
+            >
               <option value="1">1st Grade</option>
               <option value="2">2nd Grade</option>
               <option value="3">3rd Grade</option>
@@ -144,7 +153,7 @@ export default function Sample() {
             </select>
 
             <select
-              className="p-3 m-3"
+              className="p-3 m-3 rounded-md"
               onChange={(e) => handleSubjectSelect(e)}
             >
               {subjects.map((subject) => (
@@ -223,7 +232,13 @@ export default function Sample() {
             {gptResponseJson.choices.map((c) => c.message.content)}
           </code>
         )}
+        Completion: <div>{completion}</div>
       </div>
+      <Chat
+        text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+        // images={refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)}
+        images={'https://nickfausti.com/img/profile.jpg'}
+      />
     </div>
   );
 }

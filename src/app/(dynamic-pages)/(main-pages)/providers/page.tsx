@@ -120,7 +120,7 @@ export default function Component() {
                 width={500}
                 height={310}
                 alt="Image"
-                className="mx-auto overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+                className="hidden md:block mx-auto overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
                 src="/images/features.png"
               />
             </div>
