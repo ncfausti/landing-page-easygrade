@@ -61,6 +61,7 @@ body {
 .Example__container__document .react-pdf__message {
   padding: 20px;
   color: white;
+  color: black;
 }
 .react-pdf__Thumbnail__page__canvas {
   max-width: 170px;

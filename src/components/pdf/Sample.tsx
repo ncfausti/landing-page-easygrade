@@ -155,7 +155,7 @@ export default function Sample() {
             </select>
           </div>
           <div className="Example__container__load">
-            <label htmlFor="file">Load from pdf:</label>{' '}
+            {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
             <input onChange={onFileChange} type="file" />
           </div>
           <div
@@ -197,9 +197,7 @@ export default function Sample() {
           </div>
         </div>
         <div>
-          <h1>
-            Loaded Pages: {loadedPages} / {numPages}
-          </h1>
+          Loaded Pages: {loadedPages} / {numPages}
         </div>
         {!numPages && <p>Load a PDF to get started</p>}
         {selectedPages.length > 0 && (

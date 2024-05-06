@@ -10,7 +10,7 @@ const CameraInput = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
-
+  const [useMobile, setUseMobile] = useState(false);
   useEffect(() => {
     const startVideo = async () => {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -35,6 +35,7 @@ const CameraInput = () => {
           }
         } catch (error) {
           console.error('Error accessing the camera:', error);
+          setUseMobile(true);
         }
       }
     };
@@ -98,37 +99,46 @@ const CameraInput = () => {
           </option>
         ))}
       </select> */}
-      <div className="w-1/3 h-1/3 p-5">
-        <video
-          ref={videoRef}
-          width="2048"
-          height="1536"
-          autoPlay
-          id="video-preview"
-          playsInline
-          muted
-        ></video>
-      </div>
-      <canvas
-        className="w-1/5"
-        ref={canvasRef}
-        style={{ display: 'block' }}
-      ></canvas>
-      <code className="bg-white p-5 font-bold w-2/3">
-        {gptResponseJson.choices.map((c) => c.message.content)}
-      </code>
+      {useMobile && (
+        <h3 className="mt-[300px]">
+          Please visit on mobile to use camera grading.
+        </h3>
+      )}
+      {!useMobile && (
+        <>
+          <div className="w-1/3 h-1/3 p-5">
+            <video
+              ref={videoRef}
+              width="2048"
+              height="1536"
+              autoPlay
+              id="video-preview"
+              playsInline
+              muted
+            ></video>
+          </div>
+          <canvas
+            className="w-1/5"
+            ref={canvasRef}
+            style={{ display: 'block' }}
+          ></canvas>
+          <code className="bg-white p-5 font-bold w-2/3">
+            {gptResponseJson.choices.map((c) => c.message.content)}
+          </code>
 
-      <div className="p-3">
-        <button
-          className="btn border-2 border-black rounded-full p-1"
-          onClick={handleCapture}
-        >
-          <CameraIcon />
-        </button>
-        <button className="pl-3" onClick={toggleCamera}>
-          <ToggleIcon />
-        </button>
-      </div>
+          <div className="p-3">
+            <button
+              className="btn border-2 border-black rounded-full p-1"
+              onClick={handleCapture}
+            >
+              <CameraIcon />
+            </button>
+            <button className="pl-3" onClick={toggleCamera}>
+              <ToggleIcon />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

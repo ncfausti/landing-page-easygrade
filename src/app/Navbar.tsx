@@ -1,6 +1,7 @@
 'use client';
 // import { Button } from '@/components/ui/Button';
 import { ExternalLinkIcon } from 'lucide-react';
+import Image from 'next/image';
 // const DynamicLoginNavLink = dynamic(
 //   () => import('./LoginNavLink').then((module) => module.LoginNavLink),
 //   {
@@ -81,7 +82,12 @@ export const ExternalNavigation = () => {
       <Link className="flex items-center justify-center" href="/">
         {/* <MountainIcon className="h-6 w-6" /> */}
         <span className="hidden lg:block ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-          TeacherAssist
+          <Image
+            src="/images/logo.png"
+            alt="TeacherAssist Logo"
+            width={200}
+            height={100}
+          />
         </span>
         <span className="block lg:hidden ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           TeacherAssist
