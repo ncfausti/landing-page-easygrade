@@ -236,8 +236,7 @@ export default function Sample() {
       </div>
       <Chat
         text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
-        // images={refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)}
-        images={'https://nickfausti.com/img/profile.jpg'}
+        images={refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)}
       />
     </div>
   );
