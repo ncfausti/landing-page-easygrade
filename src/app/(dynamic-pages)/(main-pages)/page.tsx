@@ -60,7 +60,7 @@ export default function Component() {
               </p>
 
               <button
-                onClick={() => router.push('/grade')}
+                onClick={() => router.push('/generate')}
                 className="btn bg-white border-2 border-black rounded-full p-3 font-bold"
               >
                 Try Now
