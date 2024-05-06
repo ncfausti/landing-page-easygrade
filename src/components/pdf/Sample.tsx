@@ -184,6 +184,7 @@ export default function Sample() {
                   onRenderSuccess={() => setLoadedPages((prev) => prev + 1)}
                   onItemClick={({ dest, pageIndex, pageNumber }) =>
                     setSelectedPages((prev) => {
+                      console.log(dest, pageIndex, pageNumber);
                       if (prev.includes(pageNumber)) {
                         return prev.filter((p) => p !== pageNumber);
                       }
