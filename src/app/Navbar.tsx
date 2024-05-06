@@ -77,7 +77,7 @@ import Link from 'next/link';
 
 export const ExternalNavigation = () => {
   return (
-    <header className="hidden container px-4 lg:px-6 h-14 flex items-center">
+    <header className="container px-4 lg:px-6 h-14 flex items-center bg-main">
       <Link className="flex items-center justify-center" href="/">
         {/* <MountainIcon className="h-6 w-6" /> */}
         <span className="hidden lg:block ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -87,28 +87,23 @@ export const ExternalNavigation = () => {
           TeacherAssist
         </span>
       </Link>
-      <nav className="ml-auto flex gap-4 sm:gap-6 items-center hidden">
+      <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
         <Link
           className="text-sm hidden lg:block font-medium hover:underline underline-offset-4"
-          href="#"
+          href="/providers"
         >
-          Features
+          Providers
         </Link>
         <Link
           className="text-sm hidden lg:block font-medium hover:underline underline-offset-4"
-          href="#"
+          href="/"
         >
-          Pricing
+          Schools
         </Link>
-        <Link
-          className="text-sm hidden lg:block font-medium hover:underline underline-offset-4"
-          href="#"
-        >
-          About
-        </Link>
+
         <Link
           className="text-sm font-medium hover:underline underline-offset-4"
-          href="https://usenextbase.com"
+          href="/generate"
           target="_blank"
         >
           <button className="inline-flex items-center gap-2 justify-center rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:from-blue-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useRef, useState } from 'react';
 import { useResizeObserver } from '@wojtekmaj/react-hooks';
-import { pdfjs, Document, Page } from 'react-pdf';
+import { pdfjs, Document, Thumbnail } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import Spinner from './Spinner';
@@ -73,6 +73,8 @@ export default function Sample() {
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 
   function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setNumPages(0);
+    setLoadedPages(0);
     const { files } = event.target;
 
     if (files && files[0]) {
@@ -88,6 +90,7 @@ export default function Sample() {
 
   const maxWidth = 800;
   const MAX_PAGES = 50;
+  const [selectedPages, setSelectedPages] = useState<number[]>([]);
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
   const [showSpinner, setShowSpinner] = useState(false);
@@ -155,7 +158,10 @@ export default function Sample() {
             <label htmlFor="file">Load from pdf:</label>{' '}
             <input onChange={onFileChange} type="file" />
           </div>
-          <div className="Example__container__document" ref={setContainerRef}>
+          <div
+            className="border rounded-md Example__container__document bg-gray-100"
+            ref={setContainerRef}
+          >
             <Document
               file={file}
               onLoadProgress={({ loaded, total }) => console.log(loaded, total)}
@@ -163,9 +169,12 @@ export default function Sample() {
               options={options}
             >
               {Array.from(new Array(numPages), (el, index) => (
-                <Page
+                <Thumbnail
                   key={`page_${index + 1}`}
                   pageNumber={index + 1}
+                  className={
+                    selectedPages.includes(index + 1) ? 'selected-page' : ''
+                  }
                   canvasRef={refs[index]}
                   width={
                     containerWidth
@@ -173,6 +182,14 @@ export default function Sample() {
                       : maxWidth
                   }
                   onRenderSuccess={() => setLoadedPages((prev) => prev + 1)}
+                  onItemClick={({ dest, pageIndex, pageNumber }) =>
+                    setSelectedPages((prev) => {
+                      if (prev.includes(pageNumber)) {
+                        return prev.filter((p) => p !== pageNumber);
+                      }
+                      return [...prev, pageNumber];
+                    })
+                  }
                 />
               ))}
             </Document>
@@ -184,7 +201,11 @@ export default function Sample() {
           </h1>
         </div>
         {!numPages && <p>Load a PDF to get started</p>}
-
+        {selectedPages.length > 0 && (
+          <div>
+            <h1>Selected Pages: {selectedPages.join(', ')}</h1>
+          </div>
+        )}
         {showSpinner && disableButton && <Spinner />}
         {!disableButton && (
           <div>

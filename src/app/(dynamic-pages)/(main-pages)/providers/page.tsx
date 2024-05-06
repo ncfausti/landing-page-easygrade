@@ -12,11 +12,11 @@ import Image from 'next/image';
 export default function Component() {
   const router = useRouter();
 
-  // Nick - Pls add about API integration. I wouldn't know the right words to put that
+  // TODO: Nick - Pls add about API integration. I wouldn't know the right words to put that
 
   return (
     <>
-      <section className="w-full pt-6 md:pt-24 lg:pt-32 xl:pt-48">
+      <section className="w-full py-3 md:py-24">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 px-10 lg:grid-cols-[1fr_600px] lg:gap-4 xl:grid-cols-[1fr_800px]">
             <Image
@@ -69,26 +69,6 @@ export default function Component() {
               </button>
             </div>
           </div>
-        </div>
-        <div className="flex w-full justify-evenly pt-6 min-h-[200px] items-center font-bold">
-          <button
-            onClick={() => router.push('/providers')}
-            className="btn bg-white border-2 border-black rounded-full p-3"
-          >
-            Providers
-          </button>
-          <button
-            onClick={() => router.push('/')}
-            className="btn bg-white border-2 border-black rounded-full p-3"
-          >
-            Schools
-          </button>
-          <button
-            onClick={() => router.push('/grade')}
-            className="btn bg-white border-2 border-black rounded-full p-3"
-          >
-            Students
-          </button>
         </div>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
