@@ -117,118 +117,127 @@ export default function Sample() {
     loadedPages === 0 || loadedPages !== numPages || showSpinner;
 
   return (
-    <div className="Example flex">
-      <div id="sidebar" className="sidebar flex">
-        <Select onValueChange={(e) => handleGradeSelect(e)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Grade" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="1">1st Grade</SelectItem>
-            <SelectItem value="2">2nd Grade</SelectItem>
-            <SelectItem value="3">3rd Grade</SelectItem>
-            <SelectItem value="4">4th Grade</SelectItem>
-            <SelectItem value="5">5th Grade</SelectItem>
-            <SelectItem value="6">6th Grade</SelectItem>
-            <SelectItem value="7">7th Grade</SelectItem>
-            <SelectItem value="8">8th Grade</SelectItem>
-            <SelectItem value="9">9th Grade</SelectItem>
-            <SelectItem value="10">10th Grade</SelectItem>
-            <SelectItem value="11">11th Grade</SelectItem>
-            <SelectItem value="12">12th Grade</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select onValueChange={(e) => handleSubjectSelect(e)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Subject" />
-          </SelectTrigger>
-          <SelectContent>
-            {subjects.map((subject) => (
-              <SelectItem key={subject} value={subject}>
-                {subject}
-              </SelectItem>
-            ))}
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="Example__container">
-        <div className="Example__container__load">
-          {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
-          <input onChange={onFileChange} type="file" />
+    <div className="flex">
+      <div
+        id="generate-sidebar"
+        className="sidebar flex flex-col items-center justify-between w-1/5 min-h-[800px] bg-gray-100"
+      >
+        <div className="flex justify-evenly  py-6 w-full">
+          <Select onValueChange={(e) => handleGradeSelect(e)}>
+            <SelectTrigger className="w-1/3">
+              <SelectValue placeholder="Grade" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">1st Grade</SelectItem>
+              <SelectItem value="2">2nd Grade</SelectItem>
+              <SelectItem value="3">3rd Grade</SelectItem>
+              <SelectItem value="4">4th Grade</SelectItem>
+              <SelectItem value="5">5th Grade</SelectItem>
+              <SelectItem value="6">6th Grade</SelectItem>
+              <SelectItem value="7">7th Grade</SelectItem>
+              <SelectItem value="8">8th Grade</SelectItem>
+              <SelectItem value="9">9th Grade</SelectItem>
+              <SelectItem value="10">10th Grade</SelectItem>
+              <SelectItem value="11">11th Grade</SelectItem>
+              <SelectItem value="12">12th Grade</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select onValueChange={(e) => handleSubjectSelect(e)}>
+            <SelectTrigger className="w-1/3">
+              <SelectValue placeholder="Subject" />
+            </SelectTrigger>
+            <SelectContent>
+              {subjects.map((subject) => (
+                <SelectItem key={subject} value={subject}>
+                  {subject}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-        <div
-          className="border rounded-md Example__container__document bg-gray-100"
-          ref={setContainerRef}
-        >
-          <Document
-            file={file}
-            onLoadProgress={({ loaded, total }) => console.log(loaded, total)}
-            onLoadSuccess={onDocumentLoadSuccess}
-            options={options}
+
+        <Chat
+          text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+          images={
+            refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)
+          }
+        />
+      </div>
+      <div id="generate-main" className="w-3/5">
+        <div className="Example__container">
+          <div className="Example__container__load">
+            {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
+            <input onChange={onFileChange} type="file" />
+          </div>
+          <div
+            className="border rounded-md Example__container__document bg-gray-100"
+            ref={setContainerRef}
           >
-            {Array.from(new Array(numPages), (el, index) => (
-              <Thumbnail
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                className={
-                  selectedPages.includes(index + 1) ? 'selected-page' : ''
-                }
-                canvasRef={refs[index]}
-                width={
-                  containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth
-                }
-                onRenderSuccess={() => setLoadedPages((prev) => prev + 1)}
-                onItemClick={({ dest, pageIndex, pageNumber }) =>
-                  setSelectedPages((prev) => {
-                    console.log(dest, pageIndex);
-                    if (prev.includes(pageNumber)) {
-                      return prev.filter((p) => p !== pageNumber);
-                    }
-                    return [...prev, pageNumber];
-                  })
-                }
-              />
-            ))}
-          </Document>
+            <Document
+              file={file}
+              onLoadProgress={({ loaded, total }) => console.log(loaded, total)}
+              onLoadSuccess={onDocumentLoadSuccess}
+              options={options}
+            >
+              {Array.from(new Array(numPages), (el, index) => (
+                <Thumbnail
+                  key={`page_${index + 1}`}
+                  pageNumber={index + 1}
+                  className={
+                    selectedPages.includes(index + 1) ? 'selected-page' : ''
+                  }
+                  canvasRef={refs[index]}
+                  width={
+                    containerWidth
+                      ? Math.min(containerWidth, maxWidth)
+                      : maxWidth
+                  }
+                  onRenderSuccess={() => setLoadedPages((prev) => prev + 1)}
+                  onItemClick={({ dest, pageIndex, pageNumber }) =>
+                    setSelectedPages((prev) => {
+                      console.log(dest, pageIndex);
+                      if (prev.includes(pageNumber)) {
+                        return prev.filter((p) => p !== pageNumber);
+                      }
+                      return [...prev, pageNumber];
+                    })
+                  }
+                />
+              ))}
+            </Document>
+          </div>
         </div>
-      </div>
-      <div>
-        Loaded Pages: {loadedPages} / {numPages}
-      </div>
-      {!numPages && <p>Load a PDF to get started</p>}
-      {selectedPages.length > 0 && (
         <div>
-          <h1>Selected Pages: {selectedPages.join(', ')}</h1>
+          Loaded Pages: {loadedPages} / {numPages}
         </div>
-      )}
-      {showSpinner && disableButton && <Spinner />}
-      {!disableButton && (
-        <div>
-          <button
-            disabled={disableButton}
-            className={
-              'hidden btn bg-white border-2 p-3 rounded-xl border-black'
-            }
-            onClick={() => handleClick(String(grade), subject)}
-          >
-            Generate Homework
-          </button>
-        </div>
-      )}
-      {gptResponseJson.choices.length > 0 && (
-        <p className="bg-white p-3 m-3  ">
-          {' '}
-          {gptResponseJson.choices.map((c) => c.message.content)}
-        </p>
-      )}
-      Completion: <div className="drop-shadow-lg ">{completion}</div>
-      <Chat
-        text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
-        images={refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)}
-      />
+        {!numPages && <p>Load a PDF to get started</p>}
+        {selectedPages.length > 0 && (
+          <div>
+            <h1>Selected Pages: {selectedPages.join(', ')}</h1>
+          </div>
+        )}
+        {showSpinner && disableButton && <Spinner />}
+        {!disableButton && (
+          <div>
+            <button
+              disabled={disableButton}
+              className={
+                'hidden btn bg-white border-2 p-3 rounded-xl border-black'
+              }
+              onClick={() => handleClick(String(grade), subject)}
+            >
+              Generate Homework
+            </button>
+          </div>
+        )}
+        {gptResponseJson.choices.length > 0 && (
+          <p className="bg-white p-3 m-3  ">
+            {' '}
+            {gptResponseJson.choices.map((c) => c.message.content)}
+          </p>
+        )}
+        Completion: <div className="drop-shadow-lg ">{completion}</div>
+      </div>
     </div>
   );
 }
