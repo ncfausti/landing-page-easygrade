@@ -10,7 +10,7 @@ import './Sample.css';
 import Chat from '../ui/Streaming/Chat';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 // import { set } from 'nprogress';
-import { useCompletion } from 'ai/react';
+// import { useCompletion } from 'ai/react';
 import {
   Select,
   SelectContent,
@@ -55,9 +55,9 @@ export default function Sample() {
   const [loadedPages, setLoadedPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>();
-  const { completion } = useCompletion({
-    api: '/api/completion',
-  });
+  // const { completion } = useCompletion({
+  //   api: '/api/completion',
+  // });
 
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
@@ -116,15 +116,20 @@ export default function Sample() {
   const disableButton =
     loadedPages === 0 || loadedPages !== numPages || showSpinner;
 
+  const [completion, setCompletion] = useState('');
+
+  const handleCompletionChanged = (completion: string) => {
+    setCompletion(completion);
+  };
   return (
     <div className="flex">
       <div
         id="generate-sidebar"
         className="sidebar flex flex-col items-center justify-between w-1/5 min-h-[800px] bg-gray-100"
       >
-        <div className="flex justify-evenly  py-6 w-full">
+        <div className="flex justify-evenly py-6 w-full">
           <Select onValueChange={(e) => handleGradeSelect(e)}>
-            <SelectTrigger className="w-1/3">
+            <SelectTrigger className="mx-2">
               <SelectValue placeholder="Grade" />
             </SelectTrigger>
             <SelectContent>
@@ -143,7 +148,7 @@ export default function Sample() {
             </SelectContent>
           </Select>
           <Select onValueChange={(e) => handleSubjectSelect(e)}>
-            <SelectTrigger className="w-1/3">
+            <SelectTrigger className="mx-2">
               <SelectValue placeholder="Subject" />
             </SelectTrigger>
             <SelectContent>
@@ -157,6 +162,7 @@ export default function Sample() {
         </div>
 
         <Chat
+          setCompletion={handleCompletionChanged}
           text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
           images={
             refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)
@@ -236,7 +242,15 @@ export default function Sample() {
             {gptResponseJson.choices.map((c) => c.message.content)}
           </p>
         )}
-        Completion: <div className="drop-shadow-lg ">{completion}</div>
+        Completion:{' '}
+        <div className="drop-shadow-lg ">
+          <p className="bg-white m-12 p-3 drop-shadow-lg">
+            {completion &&
+              `Name: _______________ Section : ________________  Date: ___________________`}
+            <br className="leading-5"></br>
+            {completion}
+          </p>
+        </div>
       </div>
     </div>
   );
