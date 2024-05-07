@@ -1,7 +1,7 @@
 'use client';
 
 import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { insertPrivateItemAction } from '@/data/user/privateItems';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';

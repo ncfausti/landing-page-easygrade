@@ -1,17 +1,7 @@
 'use client';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cn } from '@/lib/utils';
-import { Announcement } from '@/components/announcement';
-import { ExamplesNav } from '@/components/examples-nav';
-import {
-  PageActions,
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from '@/components/page-header';
-import { buttonVariants } from '@/registry/new-york/ui/button';
-import Link from 'next/link';
+
 
 // Create a client
 const queryClient = new QueryClient();

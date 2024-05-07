@@ -6,7 +6,7 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/HoverCard';
 import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 function capitalize(word: string) {
   const lower = word.toLowerCase();

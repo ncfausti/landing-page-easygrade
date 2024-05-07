@@ -16,7 +16,7 @@ export default function Component() {
 
   return (
     <>
-      <section className="w-full py-3 md:py-24">
+      <section className="w-full py-3 md:py-24 bg-main">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 px-10 lg:grid-cols-[1fr_600px] lg:gap-4 xl:grid-cols-[1fr_800px]">
             <Image
@@ -28,10 +28,10 @@ export default function Component() {
             />
             <div className="flex flex-col justify-center items-center space-y-4">
               <div className="space-y-2 text-center">
-                <h1 className="">Teacher Assist</h1>
-                <p className="max-w-[400px] font-bold text-gray-900 md:text-xl dark:text-gray-400">
+                <h1 className="text-5xl">Teacher Assist</h1>
+                <h3 className="max-w-[400px] font-bold text-gray-900 md:text-xl dark:text-gray-400">
                   Homework Management System
-                </p>
+                </h3>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 {/* <Link
@@ -63,7 +63,7 @@ export default function Component() {
               </p>
               <button
                 onClick={() => router.push('/generate')}
-                className="btn bg-white border-2 border-black rounded-full p-3"
+                className="btn font-bold bg-white border-2 border-black rounded-full p-3"
               >
                 Try Now
               </button>
@@ -127,7 +127,7 @@ export default function Component() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-main">
         <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
           <div className="space-y-2">
             <h2 className="text-center sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">

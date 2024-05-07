@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
-import { ScrollArea, ScrollBar } from "@/registry/new-york/ui/scroll-area"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 const examples = [
   {
@@ -50,7 +50,7 @@ const examples = [
   },
 ]
 
-interface ExamplesNavProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ExamplesNavProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function ExamplesNav({ className, ...props }: ExamplesNavProps) {
   const pathname = usePathname()
