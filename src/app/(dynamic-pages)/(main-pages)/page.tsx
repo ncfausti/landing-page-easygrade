@@ -27,7 +27,7 @@ export default function Component() {
             />
             <div className="flex flex-col justify-center items-center space-y-4">
               <div className="space-y-2 text-center">
-                <h1 className="">Teacher Assist</h1>
+                <h1 className="text-5xl">Teacher Assist</h1>
                 <h2 className="max-w-[400px] font-bold text-gray-900 md:text-xl dark:text-gray-400">
                   Cut administrative costs by 30%.
                 </h2>
