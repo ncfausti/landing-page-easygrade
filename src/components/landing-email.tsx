@@ -13,8 +13,6 @@ export default function LandingEmail() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
 
-  console.log(supabase);
-
   const [messageText, setMessageText] = useState('');
   const handleTextChange = (event) => {
     setMessageText(event.target.value);

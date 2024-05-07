@@ -7,13 +7,12 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export async function uploadPhoto(file) {
   // Sign in anonymously
   // const { user, error: signInError } = await supabase.auth.signIn();
-  const { data: user, error } = await supabase.auth.signInAnonymously();
+  const { error } = await supabase.auth.signInAnonymously();
 
   if (error) {
     console.error('Error signing in:', error);
     return;
   }
-  console.log(user);
 
   // Upload photo to storage
   const { data, error: uploadError } = await supabase.storage

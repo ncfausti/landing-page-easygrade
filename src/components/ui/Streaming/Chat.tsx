@@ -24,7 +24,7 @@ export default function Chat(props: { text: string; images: string }) {
       />
       <button
         style={{ marginTop: '-35px' }}
-        className="btn fixed left-3 bg-white border-2 p-3 rounded-xl border-black"
+        className="btn bg-white border-2 p-3 rounded-xl border-black"
         type="submit"
       >
         GenerateHomework

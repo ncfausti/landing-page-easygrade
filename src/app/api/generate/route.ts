@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
     req.nextUrl.searchParams.entries()
   );
 
-  console.log({ subject, grade });
   return new Response(JSON.stringify(subject + grade));
 }
 
@@ -23,7 +22,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     req.nextUrl.searchParams.entries()
   );
   const promptText = `You are a grade ${grade} ${subject} teacher. Generate grade ${grade} ${subject} homework questions based on this image. Use plaintext only. Separate questions with a new line. RETURN QUESTIONS ONLY.`;
-  console.log('Prompt: ', promptText);
 
   if (!result) {
     return new Response(JSON.stringify(res), { status: 400 });
@@ -51,7 +49,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     ],
   });
 
-  console.log('stream text called...');
   return new StreamingTextResponse(response.toAIStream());
 
   // const response = await openai.chat.completions.create({

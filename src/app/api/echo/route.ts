@@ -5,7 +5,6 @@ export async function GET(req: NextRequest) {
     req.nextUrl.searchParams.entries()
   );
 
-  console.log({ subject, grade });
   return new Response(JSON.stringify(subject + grade));
 }
 

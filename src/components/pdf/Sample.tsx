@@ -11,6 +11,13 @@ import Chat from '../ui/Streaming/Chat';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 // import { set } from 'nprogress';
 import { useCompletion } from 'ai/react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -24,21 +31,7 @@ const options = {
 
 const resizeObserverOptions = {};
 
-type PDFFile = string | File | null;
-type Subject =
-  | 'English'
-  | 'Math'
-  | 'Social'
-  | 'Science'
-  | 'EVS'
-  | 'Chemistry'
-  | 'Physics'
-  | 'Biology'
-  | 'ICT'
-  | 'History'
-  | 'Geography'
-  | 'Civics';
-
+import type { PDFFile, Subject } from './types';
 const subjects = [
   'English',
   'Math',
@@ -112,50 +105,56 @@ export default function Sample() {
     setShowSpinner(false);
   };
 
-  const handleGradeSelect = (e) => {
-    setGrade(e.target.value);
+  const handleGradeSelect = (grade) => {
+    setGrade(grade);
   };
 
-  const handleSubjectSelect = (e) => {
-    setSubject(e.target.value);
+  const handleSubjectSelect = (subject) => {
+    setSubject(subject);
   };
 
   const disableButton =
     loadedPages === 0 || loadedPages !== numPages || showSpinner;
 
   return (
-    <div className="Example">
-      <div className="Example__container">
-        <div>
-          <select
-            className="p-3 m-3 rounded-md"
-            onChange={(e) => handleGradeSelect(e)}
-          >
-            <option value="1">1st Grade</option>
-            <option value="2">2nd Grade</option>
-            <option value="3">3rd Grade</option>
-            <option value="4">4th Grade</option>
-            <option value="5">5th Grade</option>
-            <option value="6">6th Grade</option>
-            <option value="7">7th Grade</option>
-            <option value="8">8th Grade</option>
-            <option value="9">9th Grade</option>
-            <option value="10">10th Grade</option>
-            <option value="11">11th Grade</option>
-            <option value="12">12th Grade</option>
-          </select>
-
-          <select
-            className="p-3 m-3 rounded-md"
-            onChange={(e) => handleSubjectSelect(e)}
-          >
+    <div className="Example flex">
+      <div id="sidebar" className="sidebar flex">
+        <Select onValueChange={(e) => handleGradeSelect(e)}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Grade" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="1">1st Grade</SelectItem>
+            <SelectItem value="2">2nd Grade</SelectItem>
+            <SelectItem value="3">3rd Grade</SelectItem>
+            <SelectItem value="4">4th Grade</SelectItem>
+            <SelectItem value="5">5th Grade</SelectItem>
+            <SelectItem value="6">6th Grade</SelectItem>
+            <SelectItem value="7">7th Grade</SelectItem>
+            <SelectItem value="8">8th Grade</SelectItem>
+            <SelectItem value="9">9th Grade</SelectItem>
+            <SelectItem value="10">10th Grade</SelectItem>
+            <SelectItem value="11">11th Grade</SelectItem>
+            <SelectItem value="12">12th Grade</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select onValueChange={(e) => handleSubjectSelect(e)}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Subject" />
+          </SelectTrigger>
+          <SelectContent>
             {subjects.map((subject) => (
-              <option key={subject} value={subject}>
+              <SelectItem key={subject} value={subject}>
                 {subject}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-        </div>
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="system">System</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="Example__container">
         <div className="Example__container__load">
           {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
           <input onChange={onFileChange} type="file" />

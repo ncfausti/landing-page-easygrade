@@ -18,7 +18,6 @@ async function authenticateImplicitWithAdc() {
     projectId,
   });
   const [buckets] = await storage.getBuckets();
-  console.log('Buckets:');
 
   for (const bucket of buckets) {
     console.log(`- ${bucket.name}`);
