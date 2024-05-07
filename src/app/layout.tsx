@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import { ExternalNavigation } from './Navbar';
 import Footer from '@/components/tailwind/Footer';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -40,6 +41,7 @@ export default async function RootLayout({
           <ClientLayout>{children}</ClientLayout>
           <Footer />
         </div>
+        <SpeedInsights />
       </body>
     </html>
   );
