@@ -10,29 +10,45 @@ import {
 } from '@/components/ui/hover-card';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 
 import { CodeViewer } from './components/code-viewer';
 import { MaxLengthSelector } from './components/maxlength-selector';
-import { ModelSelector } from './components/model-selector';
+// import { SubjectSelector } from './components/subject-selector';
 import { PresetActions } from './components/preset-actions';
 import { PresetSave } from './components/preset-save';
 import { PresetSelector } from './components/preset-selector';
 import { PresetShare } from './components/preset-share';
 import { TemperatureSelector } from './components/temperature-selector';
-import { TopPSelector } from './components/top-p-selector';
-import { models, types } from './data/models';
+// import { TopPSelector } from './components/top-p-selector';
+// import { subjects, types } from './data/subjects';
 import { presets } from './data/presets';
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+const subjects = [
+  'English',
+  'Math',
+  'Social',
+  'Science',
+  'EVS',
+  'Chemistry',
+  'Physics',
+  'Biology',
+  'ICT',
+  'History',
+  'Geography',
+  'Civics',
+];
 export const metadata: Metadata = {
-  title: 'Playground',
-  description: 'The OpenAI Playground built using the components.',
+  title: 'Homework Lab',
+  description:
+    'TeacherAssist Homework Lab - tools for teachers and students to create and manage homework assignments.',
 };
 
 export default function PlaygroundPage() {
@@ -56,7 +72,7 @@ export default function PlaygroundPage() {
       </div>
       <div className="hidden h-full flex-col md:flex">
         <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
-          <h2 className="text-lg font-semibold">Playground</h2>
+          <h2 className="text-lg font-semibold">Homework</h2>
           <div className="ml-auto flex w-full space-x-2 sm:justify-end">
             <PresetSelector presets={presets} />
             <PresetSave />
@@ -249,10 +265,22 @@ export default function PlaygroundPage() {
                     </TabsTrigger>
                   </TabsList>
                 </div>
-                <ModelSelector types={types} models={models} />
-                <TemperatureSelector defaultValue={[0.56]} />
+                {/* <SubjectSelector types={types} models={subjects} /> */}
+                <Select>
+                  <SelectTrigger className="mx-2">
+                    <SelectValue placeholder="Subject" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {subjects.map((subject) => (
+                      <SelectItem key={subject} value={subject}>
+                        {subject}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <TemperatureSelector defaultValue={[4]} />
                 <MaxLengthSelector defaultValue={[256]} />
-                <TopPSelector defaultValue={[0.9]} />
+                {/* <TopPSelector defaultValue={[0.9]} /> */}
               </div>
               <div className="md:order-1">
                 <TabsContent value="complete" className="mt-0 border-0 p-0">
