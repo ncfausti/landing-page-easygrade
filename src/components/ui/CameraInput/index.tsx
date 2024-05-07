@@ -69,14 +69,12 @@ const CameraInput = () => {
       const imageFile = blobToFile(imageBlob, `${uuidv4()}.jpg`);
 
       // Use the file for further operations like uploading or saving
-      console.log('blobToFile', imageFile); // Logging to see the file properties
       await uploadPhoto(imageFile);
       const gptResponse = await fetch('/api', {
         method: 'POST',
         body: imageDataUrl,
       });
       const gptResponseJson = await gptResponse.json();
-      console.log(gptResponseJson);
       setGptResponseJson(gptResponseJson);
     }
   };

@@ -22,7 +22,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const { subject, grade } = Object.fromEntries(
     req.nextUrl.searchParams.entries()
   );
-  const promptText = `You are a grade ${grade} ${subject} teacher. Generate grade ${grade} ${subject} homework questions based on this image. Use plaintext only. Separate questions with a new line.`;
+  const promptText = `You are a grade ${grade} ${subject} teacher. Generate grade ${grade} ${subject} homework questions based on this image. Use plaintext only. Separate questions with a new line. RETURN QUESTIONS ONLY.`;
   console.log('Prompt: ', promptText);
 
   if (!result) {
