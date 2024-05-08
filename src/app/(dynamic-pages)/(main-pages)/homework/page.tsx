@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
@@ -45,13 +47,26 @@ const subjects = [
   'Geography',
   'Civics',
 ];
-export const metadata: Metadata = {
-  title: 'Homework Lab',
-  description:
-    'TeacherAssist Homework Lab - tools for teachers and students to create and manage homework assignments.',
-};
+// export const metadata: Metadata = {
+//   title: 'Homework Lab',
+//   description:
+//     'TeacherAssist Homework Lab - tools for teachers and students to create and manage homework assignments.',
+// };
+import type { Subject } from '@/components/pdf/types';
 
 export default function PlaygroundPage() {
+  const [grade, setGrade] = useState(5);
+  const [subject, setSubject] = useState<Subject>('English');
+
+  const handleGradeSelect = (grade) => {
+    console.log(grade);
+    setGrade(grade);
+  };
+  const handleSubjectSelect = (subject) => {
+    console.log(subject);
+    setSubject(subject);
+  };
+
   return (
     <>
       <div className="md:hidden">
@@ -265,8 +280,8 @@ export default function PlaygroundPage() {
                     </TabsTrigger>
                   </TabsList>
                 </div>
-                {/* <SubjectSelector types={types} models={subjects} /> */}
-                <Select>
+                {/* Subject Select */}
+                <Select onValueChange={(e) => handleSubjectSelect(e)}>
                   <SelectTrigger className="mx-2">
                     <SelectValue placeholder="Subject" />
                   </SelectTrigger>
@@ -278,7 +293,11 @@ export default function PlaygroundPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                <TemperatureSelector defaultValue={[4]} />
+                {/* Grade level select */}
+                <TemperatureSelector
+                  defaultValue={[grade]}
+                  onChangeCallback={handleGradeSelect}
+                />
                 <MaxLengthSelector defaultValue={[256]} />
                 {/* <TopPSelector defaultValue={[0.9]} /> */}
               </div>

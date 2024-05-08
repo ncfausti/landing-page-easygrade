@@ -6,11 +6,10 @@ import { pdfjs, Document, Thumbnail } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import Spinner from './Spinner';
-import './Sample.css';
+import './Upload.css';
 import Chat from '../ui/Streaming/Chat';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-// import { set } from 'nprogress';
-// import { useCompletion } from 'ai/react';
+
 import {
   Select,
   SelectContent,
@@ -23,7 +22,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
   import.meta.url
 ).toString();
-// import { Homework } from '@/components/pdf/create/Homework';
 const options = {
   cMapUrl: '/cmaps/',
   standardFontDataUrl: '/standard_fonts/',

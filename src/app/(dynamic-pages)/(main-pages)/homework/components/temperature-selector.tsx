@@ -13,13 +13,19 @@ import { Slider } from '@/components/ui/slider';
 
 interface TemperatureSelectorProps {
   defaultValue: SliderProps['defaultValue'];
+  onChangeCallback: (value: number) => void;
 }
 
 export function TemperatureSelector({
   defaultValue,
+  onChangeCallback,
 }: TemperatureSelectorProps) {
   const [value, setValue] = React.useState(defaultValue);
 
+  const handleChange = (value: number[]) => {
+    setValue(value);
+    onChangeCallback(value[0]);
+  };
   return (
     <div className="grid gap-2 pt-2">
       <HoverCard openDelay={200}>
@@ -36,7 +42,7 @@ export function TemperatureSelector({
               max={12}
               defaultValue={value}
               step={1}
-              onValueChange={setValue}
+              onValueChange={handleChange}
               className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
               aria-label="Temperature"
             />
