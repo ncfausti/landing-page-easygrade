@@ -1,6 +1,5 @@
 'use client';
-import { useState } from 'react';
-import { Metadata } from 'next';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
 
@@ -33,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import Chat from '@/components/ui/Streaming/Chat';
 const subjects = [
   'English',
   'Math',
@@ -56,7 +56,8 @@ import type { Subject } from '@/components/pdf/types';
 
 export default function PlaygroundPage() {
   const [grade, setGrade] = useState(5);
-  const [subject, setSubject] = useState<Subject>('English');
+  const [subject, setSubject] = useState<Subject>('Math');
+  const [completion, setCompletion] = useState('');
 
   const handleGradeSelect = (grade) => {
     console.log(grade);
@@ -66,6 +67,10 @@ export default function PlaygroundPage() {
     console.log(subject);
     setSubject(subject);
   };
+
+  const MAX_PAGES = 50;
+  const [selectedPages, setSelectedPages] = useState<number[]>([]);
+  const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
 
   return (
     <>
@@ -283,7 +288,7 @@ export default function PlaygroundPage() {
                 {/* Subject Select */}
                 <Select onValueChange={(e) => handleSubjectSelect(e)}>
                   <SelectTrigger className="mx-2">
-                    <SelectValue placeholder="Subject" />
+                    <SelectValue placeholder={subject} />
                   </SelectTrigger>
                   <SelectContent>
                     {subjects.map((subject) => (
@@ -307,9 +312,19 @@ export default function PlaygroundPage() {
                     <Textarea
                       placeholder="Write a homework for a 5th grade student on the topic of 'The Solar System'."
                       className="min-h-[400px] flex-1 p-4 md:min-h-[700px] lg:min-h-[700px]"
+                      value={completion}
                     />
                     <div className="flex items-center space-x-2">
-                      <Button>Submit</Button>
+                      {/* <Button>Submit</Button> */}
+                      <Chat
+                        setCompletion={setCompletion}
+                        text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+                        images={
+                          // refs[0].current &&
+                          // refs[0].current.toDataURL('image/jpeg', 0.9)
+                          'https://nickfausti.com/img/profile.jpg'
+                        }
+                      />
                       <Button variant="secondary">
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />
@@ -327,7 +342,15 @@ export default function PlaygroundPage() {
                       <div className="rounded-md border bg-muted"></div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Button>Submit</Button>
+                      {/* <Button>Submit</Button> */}
+                      <Chat
+                        setCompletion={setCompletion}
+                        text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+                        images={
+                          refs[0].current &&
+                          refs[0].current.toDataURL('image/jpeg', 0.9)
+                        }
+                      />
                       <Button variant="secondary">
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />
@@ -358,7 +381,15 @@ export default function PlaygroundPage() {
                       <div className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]" />
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Button>Submit</Button>
+                      {/* <Button>Submit</Button> */}
+                      <Chat
+                        setCompletion={setCompletion}
+                        text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+                        images={
+                          refs[0].current &&
+                          refs[0].current.toDataURL('image/jpeg', 0.9)
+                        }
+                      />
                       <Button variant="secondary">
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />

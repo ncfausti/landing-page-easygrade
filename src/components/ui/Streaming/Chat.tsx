@@ -38,12 +38,6 @@ export default function Chat(props: {
       >
         GenerateHomework
       </button>
-      {/* <p className="bg-white m-12 p-3 drop-shadow-lg">
-        {completion &&
-          `Name: _______________ Section : ________________  Date: ___________________`}
-        <br className="leading-5"></br>
-        {completion}
-      </p> */}
     </form>
   );
 }
