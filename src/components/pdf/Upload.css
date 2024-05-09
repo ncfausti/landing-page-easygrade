@@ -21,9 +21,9 @@ body {
   margin: 0;
 } */
 
-/* .Example__container {
+.Example__container {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   margin: 10px 0;
   padding: 10px;
@@ -39,6 +39,7 @@ body {
   height: 30%;
   max-width: calc(100% - 2em);
   margin: 1em 0;
+  display: flex;
 }
 
 .Example__container__document .react-pdf__Document {
@@ -56,8 +57,11 @@ body {
   padding: 20px;
   color: white;
   color: black;
-} */
+}
 
+.react-pdf__message {
+  display: none;
+}
 .react-pdf__Thumbnail__page__canvas {
   max-width: 170px;
   max-height: 220px;

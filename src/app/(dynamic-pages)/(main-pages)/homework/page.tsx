@@ -1,7 +1,18 @@
 'use client';
-import { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+
 import Image from 'next/image';
 import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
+import { pdfjs, Document, Thumbnail } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url
+).toString();
+const options = {
+  cMapUrl: '/cmaps/',
+  standardFontDataUrl: '/standard_fonts/',
+};
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,6 +24,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/Textarea';
+import { useResizeObserver } from '@wojtekmaj/react-hooks';
 
 import { CodeViewer } from './components/code-viewer';
 import { MaxLengthSelector } from './components/maxlength-selector';
@@ -52,12 +64,44 @@ const subjects = [
 //   description:
 //     'TeacherAssist Homework Lab - tools for teachers and students to create and manage homework assignments.',
 // };
-import type { Subject } from '@/components/pdf/types';
+import type { PDFFile, Subject } from '@/components/pdf/types';
+const resizeObserverOptions = {};
 
 export default function PlaygroundPage() {
   const [grade, setGrade] = useState(5);
   const [subject, setSubject] = useState<Subject>('Math');
   const [completion, setCompletion] = useState('');
+  const [file, setFile] = useState<PDFFile>();
+  const [numPages, setNumPages] = useState<number>(0);
+  const [loadedPages, setLoadedPages] = useState<number>(0);
+  const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
+  const [containerWidth, setContainerWidth] = useState<number>();
+
+  const onResize = useCallback<ResizeObserverCallback>((entries) => {
+    const [entry] = entries;
+
+    if (entry) {
+      setContainerWidth(entry.contentRect.width);
+    }
+  }, []);
+
+  useResizeObserver(containerRef, resizeObserverOptions, onResize);
+
+  function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setNumPages(0);
+    setLoadedPages(0);
+    const { files } = event.target;
+
+    if (files && files[0]) {
+      setFile(files[0] || null);
+    }
+  }
+
+  function onDocumentLoadSuccess({
+    numPages: nextNumPages,
+  }: PDFDocumentProxy): void {
+    setNumPages(nextNumPages);
+  }
 
   const handleGradeSelect = (grade) => {
     console.log(grade);
@@ -68,6 +112,7 @@ export default function PlaygroundPage() {
     setSubject(subject);
   };
 
+  const maxWidth = 100;
   const MAX_PAGES = 50;
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
@@ -315,16 +360,75 @@ export default function PlaygroundPage() {
                       value={completion}
                     />
                     <div className="flex items-center space-x-2">
-                      {/* <Button>Submit</Button> */}
                       <Chat
                         setCompletion={setCompletion}
                         text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
                         images={
-                          // refs[0].current &&
-                          // refs[0].current.toDataURL('image/jpeg', 0.9)
-                          'https://nickfausti.com/img/profile.jpg'
+                          refs[0].current &&
+                          refs[0].current.toDataURL('image/jpeg', 0.9)
                         }
                       />
+                      <div className="Example__container">
+                        <div className="Example__container__load">
+                          {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
+                          <input onChange={onFileChange} type="file" />
+                        </div>
+                        <div
+                          className="border rounded-md Example__container__document bg-gray-100"
+                          ref={setContainerRef}
+                        >
+                          <Document
+                            file={file}
+                            onLoadProgress={({ loaded, total }) =>
+                              console.log(loaded, total)
+                            }
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            options={options}
+                          >
+                            {Array.from(new Array(numPages), (el, index) => (
+                              <Thumbnail
+                                key={`page_${index + 1}`}
+                                pageNumber={index + 1}
+                                className={
+                                  selectedPages.includes(index + 1)
+                                    ? 'selected-page'
+                                    : ''
+                                }
+                                canvasRef={refs[index]}
+                                width={
+                                  containerWidth
+                                    ? Math.min(containerWidth, maxWidth)
+                                    : maxWidth
+                                }
+                                onRenderSuccess={() =>
+                                  setLoadedPages((prev) => prev + 1)
+                                }
+                                onItemClick={({
+                                  dest,
+                                  pageIndex,
+                                  pageNumber,
+                                }) =>
+                                  setSelectedPages((prev) => {
+                                    console.log(dest, pageIndex);
+                                    if (prev.includes(pageNumber)) {
+                                      return prev.filter(
+                                        (p) => p !== pageNumber
+                                      );
+                                    }
+                                    return [...prev, pageNumber];
+                                  })
+                                }
+                              />
+                            ))}
+                          </Document>
+                        </div>
+                      </div>
+                      <div>
+                        Loaded Pages: {loadedPages} / {numPages}
+                      </div>
+
+                      {/* <Button>Submit</Button> */}
+
                       <Button variant="secondary">
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />

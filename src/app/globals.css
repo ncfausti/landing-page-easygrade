@@ -264,3 +264,8 @@ h2, h3 {
   background-color:white;
 }
 
+
+.react-pdf__Document {
+  display: flex;
+  justify-content: center;
+}

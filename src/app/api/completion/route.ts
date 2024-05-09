@@ -6,6 +6,8 @@ export async function POST(req: NextRequest) {
   const { prompt } = await req.json();
   const { text, images } = JSON.parse(prompt);
 
+  // console.log(images);
+
   const result = await streamText({
     model: openai('gpt-4-turbo'),
     messages: [
