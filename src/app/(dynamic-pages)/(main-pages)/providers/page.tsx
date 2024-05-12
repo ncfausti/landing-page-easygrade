@@ -62,7 +62,7 @@ export default function Component() {
                 Stay ahead - Gain and retain more customers.
               </p>
               <button
-                onClick={() => router.push('/generate')}
+                onClick={() => router.push('/homework')}
                 className="btn font-bold bg-white border-2 border-black rounded-full p-3"
               >
                 Try Now

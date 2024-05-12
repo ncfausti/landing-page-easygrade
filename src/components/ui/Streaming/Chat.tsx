@@ -1,7 +1,6 @@
 'use client';
 import { useEffect } from 'react';
 import { useCompletion } from 'ai/react';
-import FileUpload from '@/components/ui/FileUpload';
 
 export default function Chat(props: {
   text: string;
@@ -15,38 +14,35 @@ export default function Chat(props: {
     });
 
   useEffect(() => {
+    if (images) {
+      console.log('useEffect: ', images.length);
+    }
     setInput(JSON.stringify({ text, images: images }));
   }, [text, images]);
 
   useEffect(() => {
     if (completion) {
-      // call the setCompletion function from the parent component
       props.setCompletion(completion);
     }
   }, [completion]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* {input} === the object of prompt and base 64imageurl */}
-      {/* {input} */}
-      <input
-        type="hidden"
-        name="prompt"
-        value={input}
-        onChange={handleInputChange}
-        id="input"
-      />
-      {/* <FileUpload /> */}
-      <button
-        style={{ marginTop: '-35px' }}
-        className="btn bg-white border-2 p-3 rounded-xl border-black"
-        type="submit"
-      >
-        GenHomework
-      </button>
-    </form>
+    <div className="w-full">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="hidden"
+          name="prompt"
+          value={input}
+          onChange={handleInputChange}
+          id="input"
+        />
+        <button
+          className=" w-full btn bg-white border-2 p-3 mt-3 rounded-xl border-black"
+          type="submit"
+        >
+          Generate
+        </button>
+      </form>
+    </div>
   );
 }
-
-// the file upload is just a way to get the file location, right?
-// what does handleInputChange do?
