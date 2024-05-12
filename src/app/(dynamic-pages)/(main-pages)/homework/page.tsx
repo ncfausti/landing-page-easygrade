@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useRef, useState } from 'react';
-
+import FileUpload from '@/components/ui/FileUpload';
 import Image from 'next/image';
 import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
 import { pdfjs, Document, Thumbnail } from 'react-pdf';
@@ -87,11 +87,14 @@ export default function PlaygroundPage() {
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 
-  function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+  function onFileChange(files): void {
     setNumPages(0);
     setLoadedPages(0);
-    const { files } = event.target;
+    alert(files);
+    // const { files } = event.target;
 
+    // console.log(file);
+    // setFile(file);
     if (files && files[0]) {
       setFile(files[0] || null);
     }
@@ -100,6 +103,8 @@ export default function PlaygroundPage() {
   function onDocumentLoadSuccess({
     numPages: nextNumPages,
   }: PDFDocumentProxy): void {
+    console.log('numpages: ', nextNumPages, numPages);
+    alert('success');
     setNumPages(nextNumPages);
   }
 
@@ -149,7 +154,7 @@ export default function PlaygroundPage() {
           </div>
         </div>
         <Separator />
-        <Tabs defaultValue="complete" className="flex-1">
+        <Tabs defaultValue="edit" className="flex-1">
           <div className="container h-full py-6">
             <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
               <div className="hidden flex-col space-y-4 sm:flex md:order-2">
@@ -360,6 +365,7 @@ export default function PlaygroundPage() {
                       value={completion}
                     />
                     <div className="flex items-center space-x-2">
+                      chat:
                       <Chat
                         setCompletion={setCompletion}
                         text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
@@ -369,10 +375,12 @@ export default function PlaygroundPage() {
                         }
                       />
                       <div className="Example__container">
-                        <div className="Example__container__load">
-                          {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
+                        HELLLLOOOOO
+                        {/* <div className="Example__container__load">
                           <input onChange={onFileChange} type="file" />
-                        </div>
+                        </div> */}
+                        <FileUpload onFileChange={onFileChange} />
+                        {/* hw/page.tsx says file: {file && file[0].name} */}
                         <div
                           className="border rounded-md Example__container__document bg-gray-100"
                           ref={setContainerRef}
@@ -426,13 +434,11 @@ export default function PlaygroundPage() {
                       <div>
                         Loaded Pages: {loadedPages} / {numPages}
                       </div>
-
-                      {/* <Button>Submit</Button> */}
-
-                      <Button variant="secondary">
+                      <Button>Generate</Button>
+                      {/* <Button variant="secondary">
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </TabsContent>
@@ -447,6 +453,7 @@ export default function PlaygroundPage() {
                     </div>
                     <div className="flex items-center space-x-2">
                       {/* <Button>Submit</Button> */}
+
                       <Chat
                         setCompletion={setCompletion}
                         text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
@@ -455,10 +462,10 @@ export default function PlaygroundPage() {
                           refs[0].current.toDataURL('image/jpeg', 0.9)
                         }
                       />
-                      <Button variant="secondary">
+                      {/* <Button variant="secondary">
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </TabsContent>
@@ -470,16 +477,75 @@ export default function PlaygroundPage() {
                           <Label htmlFor="input">Input</Label>
                           <Textarea
                             id="input"
-                            placeholder="Write a homework assignment about e/acc"
+                            placeholder="Write a homework assignment about..."
                             className="flex-1 lg:min-h-[580px]"
+                            value={completion}
                           />
+                          <div className="Example__container">
+                            <div className="hidden Example__container__load">
+                              {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
+                              <input onChange={onFileChange} type="file" />
+                            </div>
+                            <div
+                              className="border rounded-md Example__container__document bg-gray-100"
+                              ref={setContainerRef}
+                            >
+                              <Document
+                                file={file}
+                                onLoadProgress={({ loaded, total }) =>
+                                  console.log(loaded, total)
+                                }
+                                onLoadSuccess={onDocumentLoadSuccess}
+                                options={options}
+                              >
+                                {Array.from(
+                                  new Array(numPages),
+                                  (el, index) => (
+                                    <Thumbnail
+                                      key={`page_${index + 1}`}
+                                      pageNumber={index + 1}
+                                      className={
+                                        selectedPages.includes(index + 1)
+                                          ? 'selected-page'
+                                          : ''
+                                      }
+                                      canvasRef={refs[index]}
+                                      width={
+                                        containerWidth
+                                          ? Math.min(containerWidth, maxWidth)
+                                          : maxWidth
+                                      }
+                                      onRenderSuccess={() =>
+                                        setLoadedPages((prev) => prev + 1)
+                                      }
+                                      onItemClick={({
+                                        dest,
+                                        pageIndex,
+                                        pageNumber,
+                                      }) =>
+                                        setSelectedPages((prev) => {
+                                          console.log(dest, pageIndex);
+                                          if (prev.includes(pageNumber)) {
+                                            return prev.filter(
+                                              (p) => p !== pageNumber
+                                            );
+                                          }
+                                          return [...prev, pageNumber];
+                                        })
+                                      }
+                                    />
+                                  )
+                                )}
+                              </Document>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex flex-col space-y-2">
-                          <Label htmlFor="instructions">Instructions</Label>
-                          <Textarea
+                        <div className="flex flex-col">
+                          {/* <Textarea
                             id="instructions"
                             placeholder="Fix the grammar."
-                          />
+                          /> */}
+                          <FileUpload onFileChange={onFileChange} />
                         </div>
                       </div>
                       <div className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]" />
@@ -494,10 +560,10 @@ export default function PlaygroundPage() {
                           refs[0].current.toDataURL('image/jpeg', 0.9)
                         }
                       />
-                      <Button variant="secondary">
+                      {/* <Button variant="secondary">
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </TabsContent>

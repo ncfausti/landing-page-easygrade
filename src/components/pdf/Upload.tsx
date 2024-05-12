@@ -47,7 +47,7 @@ const subjects = [
   'Civics',
 ];
 
-export default function Sample() {
+export default function Upload() {
   const [file, setFile] = useState<PDFFile>();
   const [grade, setGrade] = useState<number>(1);
   const [subject, setSubject] = useState<Subject>('English');
@@ -121,8 +121,12 @@ export default function Sample() {
   const handleCompletionChanged = (completion: string) => {
     setCompletion(completion);
   };
+
+  console.log();
   return (
     <div className="flex">
+      {refs[0].current &&
+        refs[0].current.toDataURL('image/jpeg', 0.9).slice(0, 40)}
       <div
         id="generate-sidebar"
         className="sidebar flex flex-col items-center justify-between w-1/5 min-h-[800px] bg-gray-100"
