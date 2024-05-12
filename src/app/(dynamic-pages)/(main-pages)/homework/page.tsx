@@ -139,8 +139,8 @@ export default function PlaygroundPage() {
       <div className="hidden h-full flex-col md:flex">
         <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
           <h2 className="text-lg font-semibold">Homework</h2>
-          <div className="ml-auto flex w-full space-x-2 sm:justify-end">
-            <PresetSelector presets={presets} />
+          <div className="hidden ml-auto flex w-full space-x-2 sm:justify-end">
+            {/* <PresetSelector presets={presets} /> */}
             <PresetSave />
             <div className="hidden space-x-2 md:flex">
               <CodeViewer />
@@ -169,7 +169,7 @@ export default function PlaygroundPage() {
                     </HoverCardContent>
                   </HoverCard>
                   <TabsList className="grid grid-cols-3">
-                    <TabsTrigger value="complete">
+                    <TabsTrigger disabled value="complete">
                       <span className="sr-only">Complete</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +235,7 @@ export default function PlaygroundPage() {
                         ></rect>
                       </svg>
                     </TabsTrigger>
-                    <TabsTrigger value="insert">
+                    <TabsTrigger disabled value="insert">
                       <span className="sr-only">Insert</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -446,7 +446,7 @@ export default function PlaygroundPage() {
 
                       <Chat
                         setCompletion={setCompletion}
-                        text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+                        text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions based on all images provided.`}
                         images={
                           refs[0].current &&
                           refs[0].current.toDataURL('image/jpeg', 0.9)
@@ -464,12 +464,11 @@ export default function PlaygroundPage() {
                           <Textarea
                             id="input"
                             placeholder="Write a homework assignment about..."
-                            className="flex-1 lg:min-h-[580px]"
+                            className="flex-1"
                             value={completion}
                           />
                           <div className="Example__container">
                             <div className="hidden Example__container__load">
-                              {/* <label htmlFor="file">Load from pdf:</label>{' '} */}
                               <input onChange={onFileChange} type="file" />
                             </div>
                             <div
