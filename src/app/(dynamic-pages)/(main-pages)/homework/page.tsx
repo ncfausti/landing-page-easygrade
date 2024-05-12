@@ -28,10 +28,8 @@ import { CodeViewer } from './components/code-viewer';
 import { MaxLengthSelector } from './components/maxlength-selector';
 import { PresetActions } from './components/preset-actions';
 import { PresetSave } from './components/preset-save';
-import { PresetSelector } from './components/preset-selector';
 import { PresetShare } from './components/preset-share';
 import { TemperatureSelector } from './components/temperature-selector';
-import { presets } from './data/presets';
 import {
   Select,
   SelectContent,
