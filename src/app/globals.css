@@ -269,3 +269,8 @@ h2, h3 {
   display: flex;
   justify-content: center;
 }
+
+#nav-logo-text {
+  font-family: "inter-variable", sans-serif;
+  font-variation-settings: "slnt" 0, "wght" 400;
+}

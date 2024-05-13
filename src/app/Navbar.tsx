@@ -78,19 +78,26 @@ import Link from 'next/link';
 
 export const ExternalNavigation = () => {
   return (
-    <header className="container px-4 lg:px-6 h-14 flex items-center">
+    <header className="container px-4 lg:px-6 h-24 mt-4 flex items-center">
       <Link className="flex items-center justify-center" href="/">
         {/* <MountainIcon className="h-6 w-6" /> */}
         <span className="hidden lg:block ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           <Image
-            src="/images/logo.png"
-            alt="TeacherAssist Logo"
-            width={200}
+            src="/images/logo-nav.png"
+            alt="AssistTeacher Logo"
+            width={100}
             height={100}
+            className="inline-block"
           />
+          <span
+            id="nav-logo-text"
+            className="text-[#1A3CB8] text-3xl mx-2 font-bold"
+          >
+            AssistTeacher
+          </span>
         </span>
         <span className="block lg:hidden ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-          TeacherAssist
+          AssistTeacher
         </span>
       </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
@@ -109,11 +116,11 @@ export const ExternalNavigation = () => {
 
         <Link
           className="text-sm font-medium hover:underline underline-offset-4"
-          href="/generate"
+          href="/homework"
           target="_blank"
         >
-          <button className="inline-flex items-center gap-2 justify-center rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:from-blue-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            TeacherAssist <ExternalLinkIcon />
+          <button className="hidden inline-flex items-center gap-2 justify-center rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:from-blue-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Preview <ExternalLinkIcon />
           </button>
         </Link>
       </nav>

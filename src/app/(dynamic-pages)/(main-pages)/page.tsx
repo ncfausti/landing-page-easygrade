@@ -27,7 +27,7 @@ export default function Component() {
             />
             <div className="flex flex-col justify-center items-center space-y-4">
               <div className="space-y-2 text-center">
-                <h1 className="text-5xl">Teacher Assist</h1>
+                <h1 className="text-5xl">AssistTeacher</h1>
                 <h2 className="max-w-[400px] font-bold text-gray-900 md:text-xl dark:text-gray-400">
                   Cut administrative costs by 30%.
                 </h2>
@@ -119,7 +119,7 @@ export default function Component() {
             <div className="space-y-2">
               <div className="flex flex-col justify-center space-y-4">
                 <h2 className="hidden">
-                  Let's explore how TeacherAssist can empower your school
+                  Let's explore how AssistTeacher can empower your school
                   community:
                 </h2>
                 <Tabs defaultValue="homework" className="w-full text-xl">
@@ -145,7 +145,7 @@ export default function Component() {
                         </h3>
                         <p className="text-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                           Say goodbye to time-consuming homework planning!
-                          TeacherAssist simplifies the process, allowing
+                          AssistTeacher simplifies the process, allowing
                           teachers to generate adaptive assignments for any
                           grade, subject, or topic in just two clicks. With
                           customizable templates featuring your school logo,
@@ -171,7 +171,7 @@ export default function Component() {
                         </h3>
                         <p className="items-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                           Experience the power of automated grading with
-                          TeacherAssist's OCR technology. Students simply scan
+                          AssistTeacher's OCR technology. Students simply scan
                           completed worksheets/notebooks receiving instant
                           feedback on their homework. This not only boosts
                           learning outcomes by 75% but also reduces
@@ -205,7 +205,7 @@ export default function Component() {
                         </h3>
                         <p className="items-center py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                           Addressing learning gaps has never been easier.
-                          TeacherAssist analyzes student performance data to
+                          AssistTeacher analyzes student performance data to
                           generate personalized remedial worksheets aligned with
                           curriculum objectives. By providing targeted support,
                           our tool ensures that every student receives the
