@@ -78,7 +78,7 @@ import Link from 'next/link';
 
 export const ExternalNavigation = () => {
   return (
-    <header className="container px-4 lg:px-6 h-24 mt-4 flex items-center">
+    <header className="container px-4 lg:px-6 h-16 mt-4 flex items-center">
       <Link className="flex items-center justify-center" href="/">
         {/* <MountainIcon className="h-6 w-6" /> */}
         <span className="hidden lg:block ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -89,10 +89,7 @@ export const ExternalNavigation = () => {
             height={100}
             className="inline-block"
           />
-          <span
-            id="nav-logo-text"
-            className="text-[#1A3CB8] text-3xl mx-2 font-bold"
-          >
+          <span id="nav-logo-text" className=" text-[#1A3CB8] text-2xl mx-2">
             AssistTeacher
           </span>
         </span>
