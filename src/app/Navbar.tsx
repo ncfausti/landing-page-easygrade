@@ -85,13 +85,13 @@ export const ExternalNavigation = () => {
           <Image
             src="/images/logo-nav.png"
             alt="AssistTeacher Logo"
-            width={100}
-            height={100}
+            width={250}
+            height={175}
             className="inline-block"
           />
-          <span id="nav-logo-text" className=" text-[#1A3CB8] text-2xl mx-2">
+          {/* <span id="nav-logo-text" className=" text-[#1A3CB8] text-2xl mx-2">
             AssistTeacher
-          </span>
+          </span> */}
         </span>
         <span className="block lg:hidden ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           AssistTeacher
