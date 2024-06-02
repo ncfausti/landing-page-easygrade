@@ -301,7 +301,9 @@ export default function Page() {
                         className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]"
                       >
                         {/* <DocumentPreview text={completion} /> */}
-                        <PDFPreview />
+                        <PDFPreview
+                          questions={['Hello world', 'how are you?']}
+                        />
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
