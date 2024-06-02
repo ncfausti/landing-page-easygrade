@@ -32,12 +32,12 @@ export default function Chat(props: {
         <input
           type="hidden"
           name="prompt"
-          value={input}
+          value={input} // JSON.stringify({ text, images[] or pdf })
           onChange={handleInputChange}
           id="input"
         />
         <button
-          className=" w-full btn bg-white border-2 p-3 mt-3 rounded-xl border-black"
+          className="cursor-pointer w-full btn bg-white border-2 p-3 mt-3 rounded-xl border-black"
           type="submit"
         >
           Generate

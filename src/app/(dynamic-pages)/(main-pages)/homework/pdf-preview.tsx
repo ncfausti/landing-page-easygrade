@@ -8,6 +8,13 @@ import {
   StyleSheet,
 } from '@react-pdf/renderer';
 // import Image from 'next/image';
+
+interface Question {
+  question: string;
+  type: string;
+  choices: string[];
+}
+
 const styles = StyleSheet.create({
   body: {
     paddingTop: 35,
@@ -54,27 +61,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'grey',
   },
+  mc: {
+    fontSize: 8,
+    lineHeight: 0.5,
+  },
 });
 
-export const PDFPreview = ({ questions }: { questions: string[] }) => {
+export const PDFPreview = ({ questions }: { questions: Question[] }) => {
   return (
     <PDFViewer>
       <Document>
         <Page style={styles.body}>
-          <Text style={styles.title}>Don Quijote de la Mancha</Text>
-          <Text style={styles.author}>Miguel de Cervantes</Text>
+          <Text style={styles.title}>Homework 1</Text>
+          <Text style={styles.author}>{new Date().toDateString()}</Text>
           {/* <Image style={styles.image} src="/images/quijote1.jpg" /> */}
-          <Text style={styles.subtitle}>
-            Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo
-            D. Quijote de la Mancha
-          </Text>
+          <Text style={styles.subtitle}></Text>
           {questions.map((q) => (
             <>
-              <Text style={styles.subtitle} break>
-                Capítulo II: Que trata de la primera salida que de su tierra
-                hizo el ingenioso Don Quijote
-              </Text>
-              <Text style={styles.text}>{q}</Text>
+              <Text style={styles.subtitle}>{q.question}</Text>
+              {q.choices
+                ? q.choices.map((answer) => (
+                  <Text style={styles.text}>{answer}</Text>
+                ))
+                : ' '}
             </>
           ))}
 

@@ -57,7 +57,7 @@ const Page = () => {
             type="number"
             value={numberOfClasses}
             onChange={(e) => {
-              const newNumberOfClasses = e.target.value;
+              const newNumberOfClasses = parseInt(e.target.value);
               setNumberOfClasses(newNumberOfClasses);
               const newStudentsInClasses = [...studentsInClasses];
               if (newNumberOfClasses > studentsInClasses.length) {

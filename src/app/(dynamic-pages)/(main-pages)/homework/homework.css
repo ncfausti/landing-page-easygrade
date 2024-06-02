@@ -8,12 +8,12 @@ canvas {
   display: none;
 }
 .react-pdf__Thumbnail__page__canvas {
-  max-width: 170px;
-  max-height: 220px;
+  max-width: 540px;
+  max-height: 700px;
 }
-.Example__container__document {
-  min-height: 250px;
-}
+/* .Example__container__document {
+  min-height: 700px;
+} */
 
 /* .container {
   display: flex;
@@ -82,4 +82,8 @@ canvas {
     top: 0;
     width: 100%;
   }
+}
+
+.selected-page {
+  border: 3px solid #007bff;
 }

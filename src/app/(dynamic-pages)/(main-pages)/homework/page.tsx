@@ -12,7 +12,6 @@ const options = {
   standardFontDataUrl: '/standard_fonts/',
 };
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-import { Button } from '@/components/ui/button';
 import {
   HoverCard,
   HoverCardContent,
@@ -21,7 +20,6 @@ import {
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Textarea } from '@/components/ui/Textarea';
 import { useResizeObserver } from '@wojtekmaj/react-hooks';
 import { CodeViewer } from './components/code-viewer';
 import { MaxLengthSelector } from './components/maxlength-selector';
@@ -43,28 +41,15 @@ import { EditIcon } from '@/components/ui/Icons/Edit';
 import './homework.css';
 import { subjects } from './constants';
 
-// export const metadata: Metadata = {
+// const metadata: Metadata = {
 //   title: 'Homework Lab',
 //   description:
-//     'TeacherAssist Homework Lab - tools for teachers and students to create and manage homework assignments.',
+//     'AssistTeacher Homework Lab - Tools for teachers and students to create and manage homework assignments.',
 // };
 import { PDFPreview } from './pdf-preview';
 import type { PDFFile, Subject } from '@/components/pdf/types';
+import DifficultySelector from './components/difficulty-selector';
 const resizeObserverOptions = {};
-
-const DocumentPreview = ({ text }) => {
-  return (
-    <div className="document-preview">
-      <div id="printableDiv" className="page bg-muted">
-        {text.split('\n').map((line, index) => (
-          <p key={index} className="">
-            {line}
-          </p>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 export default function Page() {
   const [grade, setGrade] = useState(5);
@@ -76,6 +61,7 @@ export default function Page() {
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>();
   console.log(containerWidth);
+  console.log(loadedPages);
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
 
@@ -114,12 +100,14 @@ export default function Page() {
   const MAX_PAGES = 50;
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
-  const [text, setText] = useState(`Hello world.\n Here is your homework.\n`);
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
+  const trycatch = (fn, arg) => {
+    try {
+      return fn(arg);
+    } catch (e) {
+      return [];
+    }
   };
-
   return (
     <>
       <div className="md:hidden">
@@ -203,10 +191,45 @@ export default function Page() {
                   defaultValue={[grade]}
                   onChangeCallback={handleGradeSelect}
                 />
-                <MaxLengthSelector defaultValue={[256]} />
+                <MaxLengthSelector
+                  defaultValue={[7]}
+                  maxValue={20}
+                  title="No. of MCQs:"
+                />
+                <MaxLengthSelector
+                  defaultValue={[3]}
+                  maxValue={10}
+                  title="No. of subjective:"
+                />
+                <DifficultySelector />
                 <Chat
                   setCompletion={setCompletion}
-                  text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+                  text={`You are a grade ${grade} ${subject}. Generate
+                  grade ${grade} ${subject} homework questions and answers based on the
+                  attached images.
+
+                  There should be exactly ${10} questions and answers returned.
+                  ${5} questions should be multiple choice. ${5} questions
+                  should be short answer. For math questions use appropriate
+                  symbols, not words. E.g. "+" not "plus" and "-" not "minus". The format should be JSON.
+                  DO NOT RETURN ANYTHING ELSE, ONLY THE JSON OBJECT.
+
+                  JSON object format:
+                  [
+                      {
+                        "question": "What is the capital of France?",
+                        "answer": "Paris",
+                        "type": "multiple choice",
+                        "choices": ["Paris", "London", "Berlin", "Madrid"]
+                      },
+                      {
+                        "question": "150 + 300",
+                        "answer": "450",
+                        "type": "short answer",
+                        "choices": []
+                      }
+                    ]
+                  `}
                   images={
                     refs[0].current &&
                     refs[0].current.toDataURL('image/jpeg', 0.9)
@@ -220,26 +243,26 @@ export default function Page() {
                     <div className="grid h-full gap-6 lg:grid-cols-2">
                       <div className="flex flex-col space-y-4">
                         <div className="flex flex-1 flex-col space-y-2">
-                          <Label htmlFor="input">Response:</Label>
-                          <Textarea
+                          <Label htmlFor="input">Upload preview:</Label>
+                          {/* <Textarea
                             id="input"
-                            placeholder="Write a homework assignment about..."
+                            placeholder="Question and answers will appear here."
                             className="flex-1"
                             onChange={handleTextChange}
                             value={completion}
-                          />
-                          <textarea
+                          /> */}
+                          {/* <textarea
                             className="text-area"
                             value={text}
                             onChange={handleTextChange}
                             placeholder="Enter text here"
-                          />
-                          <div className="Example__container">
-                            <div className="hidden Example__container__load">
+                          /> */}
+                          <div className="Example__container min-h-[400px] lg:min-h-[700px] ">
+                            <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
                               <input onChange={onFileChange} type="file" />
                             </div>
                             <div
-                              className="border rounded-md Example__container__document bg-gray-100"
+                              className="border rounded-md Example__container__document bg-gray-100 min-h-[400px] lg:min-h-[700px] "
                               ref={setContainerRef}
                             >
                               <Document
@@ -294,15 +317,20 @@ export default function Page() {
                             placeholder="Fix the grammar."
                           /> */}
                           <FileUpload onFileChange={onFileChange} />
+                          {selectedPages.length === 1 && (
+                            <span>{`${selectedPages.length} page selected`}</span>
+                          )}
+                          {selectedPages.length >= 2 && (
+                            <span>{`${selectedPages.length} pages selected`}</span>
+                          )}
                         </div>
                       </div>
                       <div
                         id="pdf-preview-container"
                         className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]"
                       >
-                        {/* <DocumentPreview text={completion} /> */}
                         <PDFPreview
-                          questions={['Hello world', 'how are you?']}
+                          questions={trycatch(JSON.parse, completion)}
                         />
                       </div>
                     </div>

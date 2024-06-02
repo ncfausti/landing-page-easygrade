@@ -1,22 +1,28 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import { SliderProps } from "@radix-ui/react-slider"
+import * as React from 'react';
+import { SliderProps } from '@radix-ui/react-slider';
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
+} from '@/components/ui/hover-card';
+import { Label } from '@/components/ui/label';
+import { Slider } from '@/components/ui/slider';
 
 interface MaxLengthSelectorProps {
-  defaultValue: SliderProps["defaultValue"]
+  defaultValue: SliderProps['defaultValue'];
+  maxValue: number;
+  title: string;
 }
 
-export function MaxLengthSelector({ defaultValue }: MaxLengthSelectorProps) {
-  const [value, setValue] = React.useState(defaultValue)
+export function MaxLengthSelector({
+  defaultValue,
+  maxValue = 10,
+  title,
+}: MaxLengthSelectorProps) {
+  const [value, setValue] = React.useState(defaultValue);
 
   return (
     <div className="grid gap-2 pt-2">
@@ -24,19 +30,19 @@ export function MaxLengthSelector({ defaultValue }: MaxLengthSelectorProps) {
         <HoverCardTrigger asChild>
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
-              <Label htmlFor="maxlength">Maximum Length</Label>
+              <Label htmlFor="maxlength">{title}</Label>
               <span className="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
                 {value}
               </span>
             </div>
             <Slider
               id="maxlength"
-              max={4000}
+              max={maxValue}
               defaultValue={value}
-              step={10}
+              step={1}
               onValueChange={setValue}
               className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
-              aria-label="Maximum Length"
+              aria-label="Difficulty"
             />
           </div>
         </HoverCardTrigger>
@@ -51,5 +57,5 @@ export function MaxLengthSelector({ defaultValue }: MaxLengthSelectorProps) {
         </HoverCardContent>
       </HoverCard>
     </div>
-  )
+  );
 }
