@@ -22,11 +22,11 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useResizeObserver } from '@wojtekmaj/react-hooks';
 import { CodeViewer } from './components/code-viewer';
-import { MaxLengthSelector } from './components/maxlength-selector';
+import { QuestionRatioSelector } from './components/question-ratio-selector';
 import { PresetActions } from './components/preset-actions';
 import { PresetSave } from './components/preset-save';
 import { PresetShare } from './components/preset-share';
-import { TemperatureSelector } from './components/temperature-selector';
+import { GradeSelector } from './components/grade-selector';
 import {
   Select,
   SelectContent,
@@ -53,15 +53,15 @@ const resizeObserverOptions = {};
 
 export default function Page() {
   const [grade, setGrade] = useState(5);
+  const [subjNum, setSubjNum] = useState(7);
+  const [mcqNum, setMcqNum] = useState(3);
   const [subject, setSubject] = useState<Subject>('Math');
   const [completion, setCompletion] = useState('');
   const [file, setFile] = useState<PDFFile>();
   const [numPages, setNumPages] = useState<number>(0);
-  const [loadedPages, setLoadedPages] = useState<number>(0);
+  const [, setLoadedPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState<number>();
-  console.log(containerWidth);
-  console.log(loadedPages);
+  const [, setContainerWidth] = useState<number>();
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
 
@@ -74,7 +74,7 @@ export default function Page() {
 
   function onFileChange(files): void {
     setNumPages(0);
-    setLoadedPages(0);
+    // setLoadedPages(0);
     if (files && files[0]) {
       setFile(files[0] || null);
     }
@@ -88,12 +88,19 @@ export default function Page() {
   }
 
   const handleGradeSelect = (grade) => {
-    console.log(grade);
     setGrade(grade);
   };
   const handleSubjectSelect = (subject) => {
-    console.log(subject);
     setSubject(subject);
+  };
+  const handleMCQSelect = (mcqNum: number) => {
+    console.log(mcqNum);
+    setMcqNum(mcqNum);
+  };
+  const handleSubjectiveSelect = (subjNum: number) => {
+    console.log(subjNum);
+
+    setSubjNum(subjNum);
   };
 
   const widthToSendToOpenAI = 500;
@@ -108,6 +115,8 @@ export default function Page() {
       return [];
     }
   };
+
+  const totalQuestions = mcqNum + subjNum;
   return (
     <>
       <div className="md:hidden">
@@ -187,19 +196,21 @@ export default function Page() {
                   </SelectContent>
                 </Select>
                 {/* Grade level select */}
-                <TemperatureSelector
+                <GradeSelector
                   defaultValue={[grade]}
                   onChangeCallback={handleGradeSelect}
                 />
-                <MaxLengthSelector
+                <QuestionRatioSelector
                   defaultValue={[7]}
                   maxValue={20}
                   title="No. of MCQs:"
+                  onChangeCallback={handleMCQSelect}
                 />
-                <MaxLengthSelector
+                <QuestionRatioSelector
                   defaultValue={[3]}
                   maxValue={10}
                   title="No. of subjective:"
+                  onChangeCallback={handleSubjectiveSelect}
                 />
                 <DifficultySelector />
                 <Chat
@@ -208,8 +219,8 @@ export default function Page() {
                   grade ${grade} ${subject} homework questions and answers based on the
                   attached images.
 
-                  There should be exactly ${10} questions and answers returned.
-                  ${5} questions should be multiple choice. ${5} questions
+                  There should be exactly ${totalQuestions} questions and answers returned.
+                  ${mcqNum} questions should be multiple choice. ${subjNum} questions
                   should be short answer. For math questions use appropriate
                   symbols, not words. E.g. "+" not "plus" and "-" not "minus". The format should be JSON.
                   DO NOT RETURN ANYTHING ELSE, ONLY THE JSON OBJECT.
