@@ -56,19 +56,25 @@ export function RadioGroupForm() {
                     <FormControl>
                       <RadioGroupItem value="hots" />
                     </FormControl>
-                    <FormLabel className="font-normal">HOTS</FormLabel>
+                    <FormLabel className="font-normal cursor-pointer">
+                      HOTS
+                    </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
                       <RadioGroupItem value="mixed" />
                     </FormControl>
-                    <FormLabel className="font-normal">Mixed</FormLabel>
+                    <FormLabel className="font-normal cursor-pointer">
+                      Mixed
+                    </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
                       <RadioGroupItem value="lots" />
                     </FormControl>
-                    <FormLabel className="font-normal">LOTS</FormLabel>
+                    <FormLabel className="font-normal cursor-pointer">
+                      LOTS
+                    </FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
