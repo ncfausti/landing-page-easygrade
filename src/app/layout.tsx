@@ -4,7 +4,7 @@ import './globals.css';
 import { ExternalNavigation } from './Navbar';
 import Footer from '@/components/tailwind/Footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-
+import { Navbar } from './Navbar';
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -38,6 +38,7 @@ export default async function RootLayout({
       <body>
         <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
           <ExternalNavigation />
+          <Navbar />
           <ClientLayout>{children}</ClientLayout>
           <Footer />
         </div>
