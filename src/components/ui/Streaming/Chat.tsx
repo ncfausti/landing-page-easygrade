@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useCompletion } from 'ai/react';
 import Loading from '@/components/Loading';
 
@@ -28,7 +28,7 @@ export default function Chat(props: {
   // (even if not sent, i.e. toDataURL causing issues)? <--- ITS THIS ONE
   // could also be that the constant re-rendering combined with toDataURL is causing the issue
   // in any case, should get rid of both
-  // it is also because of the larger input size to the openai endpoint 
+  // it is also because of the larger input size to the openai endpoint
 
   useEffect(() => {
     // if (images) {
