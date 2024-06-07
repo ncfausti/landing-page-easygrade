@@ -1,31 +1,55 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCompletion } from 'ai/react';
+import Loading from '@/components/Loading';
 
 export default function Chat(props: {
   text: string;
-  images: string;
-  setCompletion: (completionText: string) => void;
+  images: string[];
+  setCompletion: (completionText: string, isLoading: boolean) => void;
 }) {
   const { text, images } = props;
-  const { completion, input, setInput, handleInputChange, handleSubmit } =
-    useCompletion({
-      api: '/api/completion',
-    });
+  const {
+    completion,
+    input,
+    setInput,
+    isLoading,
+    handleInputChange,
+    handleSubmit,
+  } = useCompletion({
+    api: '/api/completion',
+    onResponse: (response: Response) => {
+      console.log('Received response from server:', response);
+    },
+  });
+
+  // test 1: are the images causing a problem because the POST is too large? <--- NO
+  // test 2: are the images causing a problem simply by being in the page
+  // (even if not sent, i.e. toDataURL causing issues)? <--- ITS THIS ONE
+  // could also be that the constant re-rendering combined with toDataURL is causing the issue
+  // in any case, should get rid of both
+  // it is also because of the larger input size to the openai endpoint 
 
   useEffect(() => {
-    if (images) {
-      console.log('useEffect: ', images.length);
-    }
-    setInput(JSON.stringify({ text, images: images }));
+    // if (images) {
+    //   // console.log('useEffect: ', images.length);
+    // }
+    // setInput(JSON.stringify({ text, images: images }));
+    setInput(JSON.stringify({ text, images: [] }));
   }, [text, images]);
 
+  // useEffect(() => {
+  //   if (completion) {
+  //     props.setCompletion(completion, isLoading);
+  //   }
+  // }, [completion, isLoading]);
   useEffect(() => {
     if (completion) {
-      props.setCompletion(completion);
+      props.setCompletion(completion, isLoading);
     }
-  }, [completion]);
+  }, [completion, isLoading]);
 
+  console.log('rerendered');
   return (
     <div className="w-full">
       <form onSubmit={handleSubmit}>
@@ -37,12 +61,15 @@ export default function Chat(props: {
           id="input"
         />
         <button
-          className="cursor-pointer w-full btn bg-white border-2 p-3 mt-3 rounded-xl border-black"
+          disabled={isLoading}
+          className={`${isLoading ? 'bg-gray-200' : 'bg-white'
+            } w-full btn  border-2 p-3 mt-3 rounded-xl border-black`}
           type="submit"
         >
-          Generate
+          {isLoading ? <Loading /> : 'Generate'}
         </button>
       </form>
+      <p className="border-2 border-black min-h-[100px]">{completion}</p>
     </div>
   );
 }

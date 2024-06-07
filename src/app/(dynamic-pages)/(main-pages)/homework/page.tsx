@@ -49,7 +49,12 @@ import { subjects } from './constants';
 import { PDFPreview } from './pdf-preview';
 import type { PDFFile, Subject } from '@/components/pdf/types';
 import DifficultySelector from './components/difficulty-selector';
+import { Textarea } from '@/components/ui/Textarea';
 const resizeObserverOptions = {};
+
+// Force the page to be dynamic and allow streaming responses up to 30 seconds
+export const dynamic = 'force-dynamic';
+export const maxDuration = 30;
 
 export default function Page() {
   const [grade, setGrade] = useState(5);
@@ -57,6 +62,7 @@ export default function Page() {
   const [mcqNum, setMcqNum] = useState(3);
   const [subject, setSubject] = useState<Subject>('Math');
   const [completion, setCompletion] = useState('');
+  const [isCompletionLoading, setIsCompletionLoading] = useState(false);
   const [file, setFile] = useState<PDFFile>();
   const [numPages, setNumPages] = useState<number>(0);
   const [, setLoadedPages] = useState<number>(0);
@@ -72,6 +78,11 @@ export default function Page() {
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 
+  function setCompletionCallback(completionText: string, isLoading: boolean) {
+    setCompletion(completionText);
+    setIsCompletionLoading(isLoading);
+  }
+
   function onFileChange(files): void {
     setNumPages(0);
     // setLoadedPages(0);
@@ -83,7 +94,6 @@ export default function Page() {
   function onDocumentLoadSuccess({
     numPages: nextNumPages,
   }: PDFDocumentProxy): void {
-    console.log('numpages: ', nextNumPages, numPages);
     setNumPages(nextNumPages);
   }
 
@@ -94,16 +104,13 @@ export default function Page() {
     setSubject(subject);
   };
   const handleMCQSelect = (mcqNum: number) => {
-    console.log(mcqNum);
     setMcqNum(mcqNum);
   };
   const handleSubjectiveSelect = (subjNum: number) => {
-    console.log(subjNum);
-
     setSubjNum(subjNum);
   };
 
-  const widthToSendToOpenAI = 500;
+  const widthToSendToOpenAI = 400;
   const MAX_PAGES = 50;
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
@@ -116,7 +123,47 @@ export default function Page() {
     }
   };
 
+  // if ref.current is not null, map it to a dataURL
+  const allImages = refs
+    .filter((ref) => ref.current)
+    .map((ref) => {
+      if (ref.current) {
+        return ref.current.toDataURL('image/jpeg', 0.7);
+      }
+    });
+
   const totalQuestions = mcqNum + subjNum;
+  const hwGenerationPrompt = `You are a grade ${grade} ${subject}. GENERATE
+  GRADE ${grade} ${subject} HOMEWORK QUESTIONS and ANSWERS based on the
+  attached images.
+
+  There should be exactly ${totalQuestions} questions and answers returned.
+  ${mcqNum} questions should be multiple choice. ${subjNum} questions
+  should be short answer. For math questions use appropriate
+  symbols, not words. E.g. "+" not "plus" and "-" not "minus".
+
+  Rules:
+  DO NOT INCLUDE ANY REFERENCES TO IMAGES IN THE QUESTIONS OR ANSWERS.
+  The format should be JSON.
+  DO NOT RETURN ANYTHING ELSE, ONLY THE JSON OBJECT.
+  JSON object format:
+  [
+      {
+        "question": "What is the capital of France?",
+        "answer": "Paris",
+        "type": "multiple choice",
+        "choices": ["Paris", "London", "Berlin", "Madrid"]
+      },
+      {
+        "question": "150 + 300",
+        "answer": "450",
+        "type": "short answer",
+        "choices": []
+      }
+    ]
+  `;
+
+  // console.log(completion);
   return (
     <>
       <div className="md:hidden">
@@ -162,9 +209,6 @@ export default function Page() {
                     </HoverCardTrigger>
                     <HoverCardContent className="w-[320px] text-sm" side="left">
                       Choose the interface that best suits your teaching task.
-                      {/* You can provide: a simple prompt to complete, starting and
-                      ending text to insert a completion within, or some text
-                      with instructions to edit it. */}
                     </HoverCardContent>
                   </HoverCard>
                   <TabsList className="grid grid-cols-3">
@@ -213,40 +257,12 @@ export default function Page() {
                   onChangeCallback={handleSubjectiveSelect}
                 />
                 <DifficultySelector />
+                {isCompletionLoading}
                 <Chat
-                  setCompletion={setCompletion}
-                  text={`You are a grade ${grade} ${subject}. Generate
-                  grade ${grade} ${subject} homework questions and answers based on the
-                  attached images.
-
-                  There should be exactly ${totalQuestions} questions and answers returned.
-                  ${mcqNum} questions should be multiple choice. ${subjNum} questions
-                  should be short answer. For math questions use appropriate
-                  symbols, not words. E.g. "+" not "plus" and "-" not "minus". The format should be JSON.
-                  DO NOT RETURN ANYTHING ELSE, ONLY THE JSON OBJECT.
-
-                  JSON object format:
-                  [
-                      {
-                        "question": "What is the capital of France?",
-                        "answer": "Paris",
-                        "type": "multiple choice",
-                        "choices": ["Paris", "London", "Berlin", "Madrid"]
-                      },
-                      {
-                        "question": "150 + 300",
-                        "answer": "450",
-                        "type": "short answer",
-                        "choices": []
-                      }
-                    ]
-                  `}
-                  images={
-                    refs[0].current &&
-                    refs[0].current.toDataURL('image/jpeg', 0.9)
-                  }
+                  setCompletion={setCompletionCallback}
+                  text={hwGenerationPrompt}
+                  images={allImages}
                 />
-                {/* <TopPSelector defaultValue={[0.9]} /> */}
               </div>
               <div className="md:order-1">
                 <TabsContent value="edit" className="mt-0 border-0 p-0">
@@ -259,8 +275,8 @@ export default function Page() {
                             id="input"
                             placeholder="Question and answers will appear here."
                             className="flex-1"
-                            onChange={handleTextChange}
-                            value={completion}
+                            // onChange={handleTextChange}
+                            value={completion.replace(/[^a-zA-Z0-9\s]/g, '')}
                           /> */}
                           {/* <textarea
                             className="text-area"
@@ -340,9 +356,20 @@ export default function Page() {
                         id="pdf-preview-container"
                         className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]"
                       >
-                        <PDFPreview
-                          questions={trycatch(JSON.parse, completion)}
-                        />
+                        {!isCompletionLoading && (
+                          <PDFPreview
+                            questions={trycatch(JSON.parse, completion)}
+                          />
+                        )}
+                        {isCompletionLoading && (
+                          <Textarea
+                            id="input"
+                            className="min-h-[400px] lg:min-h-[700px]"
+                            placeholder="No homework questions generated yet."
+                            // onChange={handleTextChange}
+                            value={completion}
+                          />
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">

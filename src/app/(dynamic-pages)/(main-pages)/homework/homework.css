@@ -15,14 +15,6 @@ canvas {
   min-height: 700px;
 } */
 
-/* .container {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  height: 100vh;
-  box-sizing: border-box;
-} */
-
 .document-preview {
   height: 100%;
   display: flex;

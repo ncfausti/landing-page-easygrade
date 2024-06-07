@@ -1,7 +1,8 @@
+// THIS FILE IS NOT CURRENTLY USED
+
 export const maxDuration = 30;
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-
 const openai = new OpenAI();
 
 export async function POST(req: NextRequest, res: NextResponse) {

@@ -18,7 +18,7 @@ interface Question {
 const styles = StyleSheet.create({
   body: {
     paddingTop: 35,
-    paddingBottom: 65,
+    paddingBottom: 35,
     paddingHorizontal: 35,
   },
   title: {
@@ -32,13 +32,19 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 14,
+    margin: 12,
+    fontFamily: 'Oswald',
+  },
+  question: {
+    fontSize: 12,
+    fontWeight: 'bold',
     margin: 12,
     fontFamily: 'Oswald',
   },
   text: {
-    margin: 12,
-    fontSize: 14,
+    margin: 8,
+    fontSize: 10,
     textAlign: 'justify',
     fontFamily: 'Times-Roman',
   },
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 12,
-    marginBottom: 20,
+    marginBottom: 12,
     textAlign: 'center',
     color: 'grey',
   },
@@ -75,10 +81,9 @@ export const PDFPreview = ({ questions }: { questions: Question[] }) => {
           <Text style={styles.title}>Homework 1</Text>
           <Text style={styles.author}>{new Date().toDateString()}</Text>
           {/* <Image style={styles.image} src="/images/quijote1.jpg" /> */}
-          <Text style={styles.subtitle}></Text>
           {questions.map((q) => (
             <>
-              <Text style={styles.subtitle}>{q.question}</Text>
+              <Text style={styles.question}>{q.question}</Text>
               {q.choices
                 ? q.choices.map((answer) => (
                   <Text style={styles.text}>{answer}</Text>
@@ -86,9 +91,6 @@ export const PDFPreview = ({ questions }: { questions: Question[] }) => {
                 : ' '}
             </>
           ))}
-
-          {/* <Image style={styles.image} src="/images/quijote2.png" /> */}
-
           {/* <Text
         style={styles.pageNumber}
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
