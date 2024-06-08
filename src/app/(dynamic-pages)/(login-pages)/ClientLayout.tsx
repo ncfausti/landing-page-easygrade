@@ -14,20 +14,22 @@ export function ClientLayout({ children }: { children: ReactNode }) {
     <div className=" h-full dark:bg-gray-900/20">
       <div
         className="grid"
-        style={{
-          gridTemplateColumns: '1fr 1fr',
-        }}
+        style={
+          {
+            // gridTemplateColumns: '1fr 1fr',
+          }
+        }
       >
-        <div className="text-center flex flex-col items-center justify-center space-y-8 h-screen">
+        <div className="text-center flex flex-col items-center justify-start space-y-2 h-screen">
           <div>{children}</div>
         </div>
-        <div className="relative p-3">
+        <div className="hidden relative p-3">
           {/* Background Overlay */}
 
           {/* Blue Background Image */}
           <div
             className="gap-10 bg-cover flex flex-col justify-between rounded-xl w-full dark:bg-gray-800 bg-gray-100 bg-opacity-90 h-full px-10 pt-10 pb-10"
-            // style={{ backgroundImage: `url(${LoginBackgroundLight.src})` }}
+          // style={{ backgroundImage: `url(${LoginBackgroundLight.src})` }}
           >
             <div className="ml-6 space-y-8">
               <div>

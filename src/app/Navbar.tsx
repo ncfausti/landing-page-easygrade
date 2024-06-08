@@ -2,7 +2,7 @@
 // import { Button } from '@/components/ui/Button';
 import { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import { MobileNavigation } from './MobileNavigation';
+// import { MobileNavigation } from './MobileNavigation';
 import { ExternalLinkIcon } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import Image from 'next/image';
@@ -38,19 +38,6 @@ export function Navbar() {
           : 'dark:bg-transparent'
       )}
     >
-      <div className="mr-6 flex lg:hidden space-x-2">
-        <MobileNavigation />
-        <div className={cn('block lg:hidden', 'relative ')}>
-          <Link href="/" className="block" aria-label="Home page">
-            <img
-              src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
-              className="h-9 block sm:h-9"
-              alt="Nextbase Logo"
-            />
-          </Link>
-        </div>
-      </div>
-
       <div className={cn(' mx-auto w-full max-w-8xl flex justify-center ')}>
         <div
           className={cn(
@@ -58,13 +45,6 @@ export function Navbar() {
             'relative '
           )}
         >
-          <Link href="/" aria-label="Home page">
-            <img
-              src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
-              className="h-9 block sm:h-9"
-              alt="Nextbase Logo"
-            />
-          </Link>
           <NavLink href="/" aria-label="Items">
             Home
           </NavLink>

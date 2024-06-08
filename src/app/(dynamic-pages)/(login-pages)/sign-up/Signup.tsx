@@ -1,9 +1,9 @@
 'use client';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
-import { Email } from '@/components/Auth/Email';
+// import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import {
-  useSignInWithMagicLink,
+  // useSignInWithMagicLink,
   useSignInWithProvider,
   useSignUp,
 } from '@/utils/react-query-hooks';
@@ -15,15 +15,16 @@ export function SignUp() {
   function redirectToDashboard() {
     setIsSuccessful(true);
   }
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const magicLinkMutation = useSignInWithMagicLink({
-    onSuccess: () => {
-      setSuccessMessage('A magic link has been sent to your email!');
-    },
-    onMutate: () => {
-      setSuccessMessage(null);
-    },
-  });
+  // COMMENT OUT BY NICK: 8 JUNE 2024 don't need this for pilot
+  // const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  // const magicLinkMutation = useSignInWithMagicLink({
+  //   onSuccess: () => {
+  //     setSuccessMessage('A magic link has been sent to your email!');
+  //   },
+  //   onMutate: () => {
+  //     setSuccessMessage(null);
+  //   },
+  // });
   const passwordMutation = useSignUp({
     onSuccess: redirectToDashboard,
   });
@@ -45,7 +46,8 @@ export function SignUp() {
             </p>
           </div>
           <RenderProviders
-            providers={['google', 'github', 'twitter']}
+            // providers={['google', 'github', 'twitter']}
+            providers={[]}
             isLoading={providerMutation.isLoading}
             onProviderLoginRequested={(provider) => {
               providerMutation.mutate({
@@ -53,8 +55,7 @@ export function SignUp() {
               });
             }}
           />
-          <hr />
-          <Email
+          {/* <Email
             onSubmit={(email) => {
               magicLinkMutation.mutate({
                 email,
@@ -64,7 +65,7 @@ export function SignUp() {
             isLoading={magicLinkMutation.isLoading}
             view="sign-up"
           />
-          <hr />
+          <hr /> */}
           <EmailAndPassword
             isLoading={passwordMutation.isLoading}
             onSubmit={(data) => {
