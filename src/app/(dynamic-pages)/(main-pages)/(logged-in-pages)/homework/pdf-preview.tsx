@@ -6,15 +6,19 @@ import {
   Text,
   Document,
   StyleSheet,
+  Svg,
+  Path,
+  View,
 } from '@react-pdf/renderer';
 // import Image from 'next/image';
-
+import { QRCodeSVG } from 'qrcode.react';
 interface Question {
   question: string;
   type: string;
   choices: string[];
 }
-
+import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState } from 'react';
 const styles = StyleSheet.create({
   body: {
     paddingTop: 35,
@@ -71,34 +75,71 @@ const styles = StyleSheet.create({
     fontSize: 8,
     lineHeight: 0.5,
   },
+  qr: {
+    marginLeft: 245,
+    textAlign: 'center',
+  },
 });
 
 export const PDFPreview = ({ questions }: { questions: Question[] }) => {
+  const [qrPath, setQrPath] = useState('');
+
+  // this needs to be unique for each student/hw pair
+  const uniqueStudentHwUrl = `https://www.assistteacher.com/grade/${uuidv4()}`;
+
+  useEffect(() => {
+    QRCodeSVG({
+      value: uniqueStudentHwUrl,
+    }).props.children.map((child) => {
+      if (child?.props?.d?.length > 50) {
+        setQrPath(child.props.d);
+      }
+    });
+  }, []);
+
   return (
-    <PDFViewer>
-      <Document>
-        <Page style={styles.body}>
-          <Text style={styles.title}>Homework 1</Text>
-          <Text style={styles.author}>{new Date().toDateString()}</Text>
-          {/* <Image style={styles.image} src="/images/quijote1.jpg" /> */}
-          {questions.map((q) => (
-            <>
-              <Text style={styles.question}>{q.question}</Text>
-              {q.choices
-                ? q.choices.map((answer) => (
-                  <Text style={styles.text}>{answer}</Text>
-                ))
-                : ' '}
-            </>
-          ))}
-          {/* <Text
+    <>
+      <PDFViewer>
+        <Document>
+          <Page style={styles.body}>
+            <Text style={styles.title}>Homework 1</Text>
+            <Text style={styles.author}>{new Date().toDateString()}</Text>
+            <View style={styles.qr}>
+              <Svg width="100" height="100">
+                <Path
+                  d="M0,0 h29v29H0z"
+                  fill="white"
+                  shape-rendering="crispEdges"
+                />
+                <Path
+                  d={qrPath}
+                  fill="black"
+                  shape-rendering="crispEdges"
+                ></Path>
+              </Svg>
+            </View>
+
+            {/* <Image style={styles.image} src="/images/quijote1.jpg" /> */}
+            {questions.map((q) => (
+              <>
+                <Text style={styles.question}>{q.question}</Text>
+                {q.choices
+                  ? q.choices.map((answer) => (
+                    <Text style={styles.text}>{answer}</Text>
+                  ))
+                  : ' '}
+              </>
+            ))}
+            {/* <Text
         style={styles.pageNumber}
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
         fixed
       /> */}
-        </Page>
-      </Document>
-    </PDFViewer>
+          </Page>
+        </Document>
+      </PDFViewer>
+      {/* <QRCodeSVG value={`https://www.assistteacher.com/grade`} useRef={refQR} /> */}
+    </>
   );
 };
 
