@@ -17,7 +17,10 @@ const userResource = createSuspenseResource<User | null>(
 export function LoginNavLink() {
   const user = userResource.read();
   return user ? (
-    <NavLink href="/dashboard">Dashboard</NavLink>
+    <>
+      <NavLink href="/homework">Homework</NavLink>
+      <NavLink href="/dashboard">Dashboard</NavLink>
+    </>
   ) : (
     <NavLink href="/login">Login</NavLink>
   );
