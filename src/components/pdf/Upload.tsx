@@ -170,6 +170,7 @@ export default function Upload() {
           images={
             refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)
           }
+          totalQuestions={10}
         />
       </div>
       <div id="generate-main" className="w-3/5">

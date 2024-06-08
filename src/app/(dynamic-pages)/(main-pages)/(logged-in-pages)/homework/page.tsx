@@ -49,7 +49,6 @@ import { subjects } from './constants';
 import { PDFPreview } from './pdf-preview';
 import type { PDFFile, Subject } from '@/components/pdf/types';
 import DifficultySelector from './components/difficulty-selector';
-import { Textarea } from '@/components/ui/Textarea';
 import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
 
@@ -272,19 +271,6 @@ export default function Page() {
                       <div className="flex flex-col space-y-4">
                         <div className="flex flex-1 flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
-                          {/* <Textarea
-                            id="input"
-                            placeholder="Question and answers will appear here."
-                            className="flex-1"
-                            // onChange={handleTextChange}
-                            value={completion.replace(/[^a-zA-Z0-9\s]/g, '')}
-                          /> */}
-                          {/* <textarea
-                            className="text-area"
-                            value={text}
-                            onChange={handleTextChange}
-                            placeholder="Enter text here"
-                          /> */}
                           <div className="Example__container min-h-[400px] lg:min-h-[700px] ">
                             <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
                               <input onChange={onFileChange} type="file" />
