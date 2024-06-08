@@ -50,6 +50,7 @@ import { PDFPreview } from './pdf-preview';
 import type { PDFFile, Subject } from '@/components/pdf/types';
 import DifficultySelector from './components/difficulty-selector';
 import { Textarea } from '@/components/ui/Textarea';
+import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
 
 // Force the page to be dynamic and allow streaming responses up to 30 seconds
@@ -163,7 +164,6 @@ export default function Page() {
     ]
   `;
 
-  // console.log(completion);
   return (
     <>
       <div className="md:hidden">
@@ -181,7 +181,6 @@ export default function Page() {
           alt="Playground"
           className="hidden dark:block"
         />
-        
       </div>
       <div className="hidden h-full flex-col md:flex">
         <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
@@ -263,6 +262,7 @@ export default function Page() {
                   setCompletion={setCompletionCallback}
                   text={hwGenerationPrompt}
                   images={allImages}
+                  totalQuestions={totalQuestions}
                 />
               </div>
               <div className="md:order-1">
@@ -362,15 +362,7 @@ export default function Page() {
                             questions={trycatch(JSON.parse, completion)}
                           />
                         )}
-                        {isCompletionLoading && (
-                          <Textarea
-                            id="input"
-                            className="min-h-[400px] lg:min-h-[700px]"
-                            placeholder="No homework questions generated yet."
-                            // onChange={handleTextChange}
-                            value={completion}
-                          />
-                        )}
+                        {isCompletionLoading && <Loading />}
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">

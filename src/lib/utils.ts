@@ -28,3 +28,13 @@ export async function parseBody(body: ReadableStream<Uint8Array> | null) {
 
   return result;
 }
+
+export function countCharacterFilter(str: string, char: string) {
+  return str.split('').filter((c) => c === char).length;
+}
+export function progress(completion: string, totalQuestions: number): string {
+  return `${countCharacterFilter(
+    completion,
+    '}'
+  )} of ${totalQuestions} questions generated`;
+}

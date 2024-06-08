@@ -2,13 +2,14 @@
 import { useEffect } from 'react';
 import { useCompletion } from 'ai/react';
 import Loading from '@/components/Loading';
-
+import { progress } from '@/lib/utils';
 export default function Chat(props: {
   text: string;
   images: string[];
   setCompletion: (completionText: string, isLoading: boolean) => void;
+  totalQuestions: number;
 }) {
-  const { text, images } = props;
+  const { text, images, totalQuestions } = props;
   const {
     completion,
     input,
@@ -35,7 +36,7 @@ export default function Chat(props: {
     //   // console.log('useEffect: ', images.length);
     // }
     // setInput(JSON.stringify({ text, images: images }));
-    setInput(JSON.stringify({ text, images: [] }));
+    setInput(JSON.stringify({ text, images }));
   }, [text, images]);
 
   // useEffect(() => {
@@ -69,7 +70,7 @@ export default function Chat(props: {
           {isLoading ? <Loading /> : 'Generate'}
         </button>
       </form>
-      <p className="border-2 border-black min-h-[100px]">{completion}</p>
+      {isLoading && progress(completion, totalQuestions)}
     </div>
   );
 }
