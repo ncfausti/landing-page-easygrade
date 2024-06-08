@@ -29,24 +29,6 @@ export async function POST(req: NextRequest) {
             type: 'text',
             text: text,
           },
-          {
-            type: 'image',
-            image: new URL(
-              'https://plus.unsplash.com/premium_photo-1661871178548-e35aece53d53?q=80&w=3300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            ),
-          },
-          {
-            type: 'image',
-            image: new URL(
-              'https://plus.unsplash.com/premium_photo-1661871178548-e35aece53d53?q=80&w=3300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            ),
-          },
-          {
-            type: 'image',
-            image: new URL(
-              'https://plus.unsplash.com/premium_photo-1661871178548-e35aece53d53?q=80&w=3300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            ),
-          },
           ...imageToObject.slice(0, 3),
         ],
       },
