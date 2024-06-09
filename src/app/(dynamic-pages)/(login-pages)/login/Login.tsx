@@ -1,13 +1,13 @@
 'use client';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
-// import { Email } from '@/components/Auth/Email';
+import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import {
-  // useSignInWithMagicLink,
+  useSignInWithMagicLink,
   useSignInWithPassword,
   useSignInWithProvider,
 } from '@/utils/react-query-hooks';
-// import { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { T } from '@/components/ui/Typography';
 
@@ -18,12 +18,12 @@ export function Login() {
     router.refresh();
     router.push('/auth/callback');
   }
-  // const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  // const magicLinkMutation = useSignInWithMagicLink({
-  //   onSuccess: () => {
-  //     setSuccessMessage('A magic link has been sent to your email!');
-  //   },
-  // });
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const magicLinkMutation = useSignInWithMagicLink({
+    onSuccess: () => {
+      setSuccessMessage('A magic link has been sent to your email!');
+    },
+  });
   const passwordMutation = useSignInWithPassword({
     onSuccess: redirectToDashboard,
   });
@@ -47,7 +47,7 @@ export function Login() {
             });
           }}
         />
-        {/* <Email
+        <Email
           onSubmit={(email) => {
             magicLinkMutation.mutate({
               email,
@@ -57,7 +57,7 @@ export function Login() {
           isLoading={magicLinkMutation.isLoading}
           view="sign-in"
         />
-        <hr /> */}
+        <hr />
         <EmailAndPassword
           isLoading={passwordMutation.isLoading}
           onSubmit={(data) => {

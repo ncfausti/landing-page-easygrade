@@ -1,9 +1,9 @@
 'use client';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
-// import { Email } from '@/components/Auth/Email';
+import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import {
-  // useSignInWithMagicLink,
+  useSignInWithMagicLink,
   useSignInWithProvider,
   useSignUp,
 } from '@/utils/react-query-hooks';
@@ -16,15 +16,15 @@ export function SignUp() {
     setIsSuccessful(true);
   }
   // COMMENT OUT BY NICK: 8 JUNE 2024 don't need this for pilot
-  // const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  // const magicLinkMutation = useSignInWithMagicLink({
-  //   onSuccess: () => {
-  //     setSuccessMessage('A magic link has been sent to your email!');
-  //   },
-  //   onMutate: () => {
-  //     setSuccessMessage(null);
-  //   },
-  // });
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const magicLinkMutation = useSignInWithMagicLink({
+    onSuccess: () => {
+      setSuccessMessage('A magic link has been sent to your email!');
+    },
+    onMutate: () => {
+      setSuccessMessage(null);
+    },
+  });
   const passwordMutation = useSignUp({
     onSuccess: redirectToDashboard,
   });
@@ -55,7 +55,7 @@ export function SignUp() {
               });
             }}
           />
-          {/* <Email
+          <Email
             onSubmit={(email) => {
               magicLinkMutation.mutate({
                 email,
@@ -65,7 +65,7 @@ export function SignUp() {
             isLoading={magicLinkMutation.isLoading}
             view="sign-up"
           />
-          <hr /> */}
+          <hr />
           <EmailAndPassword
             isLoading={passwordMutation.isLoading}
             onSubmit={(data) => {
