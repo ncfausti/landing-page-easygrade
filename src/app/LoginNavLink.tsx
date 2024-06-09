@@ -3,7 +3,6 @@
 import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
 import { createSuspenseResource } from '@/utils/createSuspenseResource';
 import { User } from '@supabase/supabase-js';
-import { redirect } from 'next/navigation';
 
 import { NavLink } from './NavLink';
 
@@ -35,7 +34,7 @@ const SignOutButton = () => {
       console.error('Error signing out:', error.message);
     } else {
       console.log('User signed out successfully');
-      redirect('/login');
+      window.location.reload();
     }
   };
 
