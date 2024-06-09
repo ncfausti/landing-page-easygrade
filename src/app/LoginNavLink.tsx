@@ -20,8 +20,22 @@ export function LoginNavLink() {
     <>
       <NavLink href="/homework">Homework</NavLink>
       <NavLink href="/dashboard">Dashboard</NavLink>
+      <SignOutButton />
     </>
   ) : (
     <NavLink href="/login">Login</NavLink>
   );
 }
+
+const SignOutButton = () => {
+  const handleSignOut = async () => {
+    const { error } = await supabaseUserClientComponentClient.auth.signOut();
+    if (error) {
+      console.error('Error signing out:', error.message);
+    } else {
+      console.log('User signed out successfully');
+    }
+  };
+
+  return <button onClick={handleSignOut}>Sign Out</button>;
+};
