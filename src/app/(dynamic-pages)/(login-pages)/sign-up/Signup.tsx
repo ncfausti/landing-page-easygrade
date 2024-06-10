@@ -15,7 +15,7 @@ export function SignUp() {
   function redirectToDashboard() {
     setIsSuccessful(true);
   }
-  // COMMENT OUT BY NICK: 8 JUNE 2024 don't need this for pilot
+
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const magicLinkMutation = useSignInWithMagicLink({
     onSuccess: () => {

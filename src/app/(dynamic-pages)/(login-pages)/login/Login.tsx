@@ -8,11 +8,14 @@ import {
   useSignInWithProvider,
 } from '@/utils/react-query-hooks';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { T } from '@/components/ui/Typography';
 
 export function Login() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isFromConfirmEmail = searchParams.get('confirmed');
+  console.log('isFromConfirmEmail', isFromConfirmEmail);
 
   function redirectToDashboard() {
     router.refresh();
@@ -58,6 +61,11 @@ export function Login() {
           view="sign-in"
         />
         <hr />
+        {isFromConfirmEmail && (
+          <T.P className="text-base text-green-600 text-left">
+            Your email has been confirmed. You can now login.
+          </T.P>
+        )}
         <EmailAndPassword
           isLoading={passwordMutation.isLoading}
           onSubmit={(data) => {
