@@ -38,16 +38,8 @@ import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const { email, pw } = Object.fromEntries(req.nextUrl.searchParams.entries());
-  // const { subject, grade } = Object.fromEntries(
-  //   req.nextUrl.searchParams.entries()
-  // );
-
-  // const email = decodeURIComponent(emailSlug); // 'ncfausti@gmail.com';
-  // const temporaryPassword = Math.random().toString(36).slice(-8);
-  // const user = await createUserProfile(email, temporaryPassword);
-  // return new Response(JSON.stringify([user]));
-
-  return new Response(JSON.stringify(email + '|' + pw));
+  const user = await createUserProfile(email, pw);
+  return new Response(JSON.stringify([user]));
 }
 
 export async function POST(req: NextRequest) {
