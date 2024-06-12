@@ -15,11 +15,12 @@ export function Login() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isFromConfirmEmail = searchParams.get('confirmed');
-  console.log('isFromConfirmEmail', isFromConfirmEmail);
+  const redirectToLocation = searchParams.get('redirectTo');
+  // console.log('isFromConfirmEmail', isFromConfirmEmail);
 
   function redirectToDashboard() {
     router.refresh();
-    router.push('/auth/callback');
+    router.push('/auth/callback?url=' + redirectToLocation);
   }
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const magicLinkMutation = useSignInWithMagicLink({

@@ -49,5 +49,5 @@ export interface Teacher {
 export interface Student {
   first_name: string;
   last_name: string;
-  added_by: number;
+  added_by_auth_user_id: string;
 }

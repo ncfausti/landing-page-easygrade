@@ -53,7 +53,27 @@ export default function Page() {
 
       // Process the roster file (Example: Uploading to Supabase storage)
       const rosterFileUrl = null;
-      console.log('form vals:', name, grades, subjects, rosterText);
+      const students = rosterText
+        .trim()
+        .split('\n')
+        .filter((s) => s.trim().length > 2 && s.includes(' ')); // includes first and last name
+      const studentRows = students.map((student) => {
+        const [first_name, last_name] = student.split(' ');
+        return {
+          first_name,
+          last_name,
+          added_by_auth_user_id: '',
+        };
+      });
+
+      // console.log(
+      //   'form vals:',
+      //   name,
+      //   grades,
+      //   subjects,
+      //   students,
+      //   rosterFileUrl
+      // );
 
       // if (rosterFile) {
       //   // console.log(rosterFile);
@@ -67,27 +87,11 @@ export default function Page() {
       //     rosterFileUrl = data.path;
       //   }
       // }
-      // get the cur
-      mutate({
-        students: [
-          {
-            first_name: 'John',
-            last_name: 'Doe',
-            added_by: 1,
-          },
-          {
-            first_name: 'Jane',
-            last_name: 'Smith',
-            added_by: 1,
-          },
-          {
-            first_name: 'Alice',
-            last_name: 'Johnson',
-            added_by: 1,
-          },
-        ],
-      });
-      console.log('form vals:', name, grades, subjects, rosterFileUrl);
+
+      // store students in Supabase
+      mutate({ students: studentRows });
+
+      // console.log('form vals:', name, grades, subjects, rosterFileUrl);
 
       // Save the teacher data to Supabase
       // const { error } = await supabase
@@ -105,6 +109,10 @@ export default function Page() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleGridChange = (checkedGridValues: string[], name: string) => {
+    setFormData({ ...formData, [name]: checkedGridValues.join(',') });
   };
 
   return (
@@ -137,16 +145,21 @@ export default function Page() {
               rows={4}
               columns={3}
               labels={grades}
-              onGridChange={(gridValues) => console.log('parent: ', gridValues)}
+              onGridChange={(gridValues) =>
+                handleGridChange(
+                  gridValues.map((s) => s.replace(/\D+/g, '')),
+                  'grades'
+                )
+              }
             />
 
-            <input
+            {/* <input
               type="text"
               name="grades"
               value={formData.grades}
               onChange={handleChange}
               className="border border-gray-300 p-2 w-full rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            /> */}
             <button
               onClick={handleNext}
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
@@ -164,15 +177,17 @@ export default function Page() {
               rows={4}
               columns={3}
               labels={subjects}
-              onGridChange={(gridValues) => console.log('parent: ', gridValues)}
+              onGridChange={(gridValues) =>
+                handleGridChange(gridValues, 'subjects')
+              }
             />
-            <input
+            {/* <input
               type="text"
               name="subjects"
               value={formData.subjects}
               onChange={handleChange}
               className="border border-gray-300 p-2 w-full rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            /> */}
             <button
               onClick={handleNext}
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
@@ -187,6 +202,7 @@ export default function Page() {
               Upload a roster of students
             </h2>
             <input
+              disabled
               type="file"
               accept=".csv,.xls,.xlsx,.txt"
               onChange={handleFileChange}
@@ -194,7 +210,7 @@ export default function Page() {
             />
             <p>Or</p>
             <p className="font-bold">
-              Paste the roster here (one name per line):
+              Paste or type class roster here (one name per line):
             </p>
             <textarea
               name="rosterText"

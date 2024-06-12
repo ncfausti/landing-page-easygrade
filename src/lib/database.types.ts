@@ -128,7 +128,7 @@ export type Database = {
       }
       students: {
         Row: {
-          added_by: number | null
+          added_by_auth_user_id: string | null
           created_at: string | null
           first_name: string
           grade_level: string | null
@@ -136,7 +136,7 @@ export type Database = {
           last_name: string
         }
         Insert: {
-          added_by?: number | null
+          added_by_auth_user_id?: string | null
           created_at?: string | null
           first_name: string
           grade_level?: string | null
@@ -144,7 +144,7 @@ export type Database = {
           last_name: string
         }
         Update: {
-          added_by?: number | null
+          added_by_auth_user_id?: string | null
           created_at?: string | null
           first_name?: string
           grade_level?: string | null
@@ -153,11 +153,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "students_added_by_fkey"
-            columns: ["added_by"]
+            foreignKeyName: "students_added_by_auth_user_id_fkey"
+            columns: ["added_by_auth_user_id"]
             isOneToOne: false
-            referencedRelation: "teachers"
-            referencedColumns: ["teacher_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
         ]
       }

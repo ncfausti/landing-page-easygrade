@@ -4,7 +4,7 @@ interface GridCheckboxProps {
   rows: number;
   columns: number;
   labels: string[];
-  onGridChange: (grid: boolean[][]) => void;
+  onGridChange: (grid: string[]) => void;
 }
 
 const GridCheckbox = (props: GridCheckboxProps) => {
@@ -22,7 +22,7 @@ const GridCheckbox = (props: GridCheckboxProps) => {
           rowIndex === row && colIndex === col ? !cell : cell
         )
       );
-      props.onGridChange(newGridValues);
+      props.onGridChange(labels.filter((_, i) => newGridValues.flat()[i]));
       return newGridValues;
     });
   };
@@ -35,9 +35,8 @@ const GridCheckbox = (props: GridCheckboxProps) => {
             <div
               key={colIndex}
               onClick={() => handleSquareClick(rowIndex, colIndex)}
-              className={`flex m-1 rounded-lg border-2 ${
-                cell ? 'bg-green-500 text-white' : 'bg-gray-200'
-              }`}
+              className={`flex m-1 rounded-lg border-2 ${cell ? 'bg-green-500 text-white' : 'bg-gray-200'
+                }`}
               style={{
                 width: '6rem',
                 height: '4rem',

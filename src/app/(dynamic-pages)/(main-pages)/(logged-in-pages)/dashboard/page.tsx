@@ -7,7 +7,7 @@ export default async function NewItem() {
   return (
     <div className="max-w-2xl">
       <h1 className="text-3xl font-bold">Dashboard</h1>
-      {/* <ClientPage /> */}
+      <ClientPage />
       {/* <PrivateItemsList privateItems={await getAllPrivateItems()} /> */}
     </div>
   );
