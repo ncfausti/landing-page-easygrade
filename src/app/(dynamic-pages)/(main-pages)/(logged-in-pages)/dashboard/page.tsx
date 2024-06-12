@@ -6,9 +6,9 @@ export const dynamic = 'force-dynamic';
 export default async function NewItem() {
   return (
     <div className="max-w-2xl">
-      <ClientPage />
-      Private items:
-      <PrivateItemsList privateItems={await getAllPrivateItems()} />
+      <h1 className="text-3xl font-bold">Dashboard</h1>
+      {/* <ClientPage /> */}
+      {/* <PrivateItemsList privateItems={await getAllPrivateItems()} /> */}
     </div>
   );
 }
