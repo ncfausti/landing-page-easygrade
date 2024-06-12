@@ -9,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      courses: {
+        Row: {
+          course_code: string
+          course_id: number
+          course_name: string
+          description: string | null
+        }
+        Insert: {
+          course_code: string
+          course_id?: number
+          course_name: string
+          description?: string | null
+        }
+        Update: {
+          course_code?: string
+          course_id?: number
+          course_name?: string
+          description?: string | null
+        }
+        Relationships: []
+      }
       emails: {
         Row: {
           created_at: string
@@ -26,6 +47,42 @@ export type Database = {
           id?: number
         }
         Relationships: []
+      }
+      enrollments: {
+        Row: {
+          course_id: number
+          enrollment_id: number
+          grade: string | null
+          student_id: number
+        }
+        Insert: {
+          course_id: number
+          enrollment_id?: number
+          grade?: string | null
+          student_id: number
+        }
+        Update: {
+          course_id?: number
+          enrollment_id?: number
+          grade?: string | null
+          student_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["course_id"]
+          },
+          {
+            foreignKeyName: "enrollments_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       items: {
         Row: {
@@ -68,6 +125,112 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      students: {
+        Row: {
+          added_by: number | null
+          created_at: string | null
+          first_name: string
+          grade_level: string | null
+          id: number
+          last_name: string
+        }
+        Insert: {
+          added_by?: number | null
+          created_at?: string | null
+          first_name: string
+          grade_level?: string | null
+          id?: number
+          last_name: string
+        }
+        Update: {
+          added_by?: number | null
+          created_at?: string | null
+          first_name?: string
+          grade_level?: string | null
+          id?: number
+          last_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["teacher_id"]
+          },
+        ]
+      }
+      teacher_courses: {
+        Row: {
+          course_id: number
+          teacher_course_id: number
+          teacher_id: number
+        }
+        Insert: {
+          course_id: number
+          teacher_course_id?: number
+          teacher_id: number
+        }
+        Update: {
+          course_id?: number
+          teacher_course_id?: number
+          teacher_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teacher_courses_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["course_id"]
+          },
+          {
+            foreignKeyName: "teacher_courses_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["teacher_id"]
+          },
+        ]
+      }
+      teachers: {
+        Row: {
+          auth_id: string | null
+          email: string
+          first_name: string
+          grades_taught: number[] | null
+          last_name: string
+          subjects_taught: string[] | null
+          teacher_id: number
+        }
+        Insert: {
+          auth_id?: string | null
+          email: string
+          first_name: string
+          grades_taught?: number[] | null
+          last_name: string
+          subjects_taught?: string[] | null
+          teacher_id?: number
+        }
+        Update: {
+          auth_id?: string | null
+          email?: string
+          first_name?: string
+          grades_taught?: number[] | null
+          last_name?: string
+          subjects_taught?: string[] | null
+          teacher_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teachers_auth_id_fkey"
+            columns: ["auth_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

@@ -22,3 +22,32 @@ export type AuthProvider =
   | 'twitch'
   | 'twitter'
   | 'workos';
+
+export type Subject =
+  | 'English'
+  | 'Math'
+  | 'Social'
+  | 'Science'
+  | 'EVS'
+  | 'Chemistry'
+  | 'Physics'
+  | 'Biology'
+  | 'ICT'
+  | 'History'
+  | 'Geography'
+  | 'Civics';
+export interface Teacher {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  department?: string;
+  subjects_taught?: Subject[];
+  grades_taught?: number[];
+}
+
+export interface Student {
+  first_name: string;
+  last_name: string;
+  added_by: number;
+}

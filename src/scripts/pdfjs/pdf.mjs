@@ -20,7 +20,7 @@
  * JavaScript code in this page
  */
 
-/******/ var __webpack_modules__ = ({
+/******/ const __webpack_modules__ = ({
 
 /***/ 976:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -35,12 +35,12 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/shared/util.js
-var util = __webpack_require__(292);
+const util = __webpack_require__(292);
 // EXTERNAL MODULE: ./src/display/display_utils.js
-var display_utils = __webpack_require__(419);
+const display_utils = __webpack_require__(419);
 // EXTERNAL MODULE: ./src/display/annotation_storage.js
-var annotation_storage = __webpack_require__(792);
-;// CONCATENATED MODULE: ./src/shared/scripting_utils.js
+const annotation_storage = __webpack_require__(792);
+// CONCATENATED MODULE: ./src/shared/scripting_utils.js
 function makeColorComp(n) {
   return Math.floor(Math.max(0, Math.min(1, n)) * 255).toString(16).padStart(2, "0");
 }
@@ -100,8 +100,8 @@ class ColorConverters {
 }
 
 // EXTERNAL MODULE: ./src/display/xfa_layer.js
-var xfa_layer = __webpack_require__(284);
-;// CONCATENATED MODULE: ./src/display/annotation_layer.js
+const xfa_layer = __webpack_require__(284);
+// CONCATENATED MODULE: ./src/display/annotation_layer.js
 
 
 
@@ -1757,7 +1757,7 @@ class ChoiceWidgetAnnotationElement extends WidgetAnnotationElement {
       });
       this._setEventListeners(selectElement, null, [["focus", "Focus"], ["blur", "Blur"], ["mousedown", "Mouse Down"], ["mouseenter", "Mouse Enter"], ["mouseleave", "Mouse Exit"], ["mouseup", "Mouse Up"], ["input", "Action"], ["input", "Validate"]], event => event.target.value);
     } else {
-      selectElement.addEventListener("input", function (event) {
+      selectElement.addEventListener("input", (event) => {
         storage.setValue(id, {
           value: getValue(true)
         });
@@ -2572,9 +2572,9 @@ class AnnotationLayer {
 /* harmony export */   PrintAnnotationStorage: () => (/* binding */ PrintAnnotationStorage),
 /* harmony export */   SerializableEmpty: () => (/* binding */ SerializableEmpty)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _editor_editor_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(310);
-/* harmony import */ var _shared_murmurhash3_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(651);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _editor_editor_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(310);
+/* harmony import */ const _shared_murmurhash3_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(651);
 
 
 
@@ -2778,23 +2778,23 @@ __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony export */   version: () => (/* binding */ version)
 /* harmony export */ });
 /* unused harmony exports DefaultCanvasFactory, DefaultCMapReaderFactory, DefaultFilterFactory, DefaultStandardFontDataFactory, LoopbackPort, PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy, PDFWorkerUtil, RenderTask */
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _annotation_storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(792);
-/* harmony import */ var _display_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(419);
-/* harmony import */ var _font_loader_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
-/* harmony import */ var display_node_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(573);
-/* harmony import */ var _canvas_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(923);
-/* harmony import */ var _text_layer_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(814);
-/* harmony import */ var _worker_options_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(164);
-/* harmony import */ var _shared_message_handler_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(178);
-/* harmony import */ var _metadata_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(62);
-/* harmony import */ var _optional_content_config_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(626);
-/* harmony import */ var _transport_stream_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(585);
-/* harmony import */ var display_fetch_stream__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(94);
-/* harmony import */ var display_network__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(457);
-/* harmony import */ var display_node_stream__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(786);
-/* harmony import */ var _xfa_text_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(50);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([display_node_utils__WEBPACK_IMPORTED_MODULE_4__, display_node_stream__WEBPACK_IMPORTED_MODULE_13__]);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _annotation_storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(792);
+/* harmony import */ const _display_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(419);
+/* harmony import */ const _font_loader_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
+/* harmony import */ let display_node_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(573);
+/* harmony import */ const _canvas_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(923);
+/* harmony import */ const _text_layer_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(814);
+/* harmony import */ const _worker_options_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(164);
+/* harmony import */ const _shared_message_handler_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(178);
+/* harmony import */ const _metadata_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(62);
+/* harmony import */ const _optional_content_config_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(626);
+/* harmony import */ const _transport_stream_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(585);
+/* harmony import */ const display_fetch_stream__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(94);
+/* harmony import */ const display_network__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(457);
+/* harmony import */ let display_node_stream__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(786);
+/* harmony import */ const _xfa_text_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(50);
+const __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([display_node_utils__WEBPACK_IMPORTED_MODULE_4__, display_node_stream__WEBPACK_IMPORTED_MODULE_13__]);
 ([display_node_utils__WEBPACK_IMPORTED_MODULE_4__, display_node_stream__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
@@ -2933,12 +2933,12 @@ function getDocument(src) {
     pdfBug,
     styleElement
   };
-  worker.promise.then(function () {
+  worker.promise.then(() => {
     if (task.destroyed) {
       throw new Error("Loading aborted");
     }
     const workerIdPromise = _fetchDocument(worker, fetchDocParams);
-    const networkStreamPromise = new Promise(function (resolve) {
+    const networkStreamPromise = new Promise((resolve) => {
       let networkStream;
       if (rangeTransport) {
         networkStream = new _transport_stream_js__WEBPACK_IMPORTED_MODULE_10__.PDFDataTransportStream(rangeTransport, {
@@ -2967,7 +2967,7 @@ function getDocument(src) {
       }
       resolve(networkStream);
     });
-    return Promise.all([workerIdPromise, networkStreamPromise]).then(function ([workerId, networkStream]) {
+    return Promise.all([workerIdPromise, networkStreamPromise]).then(([workerId, networkStream]) => {
       if (task.destroyed) {
         throw new Error("Loading aborted");
       }
@@ -3441,12 +3441,12 @@ class PDFPageProxy {
       return this.getXfa().then(xfa => _xfa_text_js__WEBPACK_IMPORTED_MODULE_15__.XfaText.textContent(xfa));
     }
     const readableStream = this.streamTextContent(params);
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       function pump() {
-        reader.read().then(function ({
+        reader.read().then(({
           value,
           done
-        }) {
+        }) => {
           if (done) {
             resolve(textContent);
             return;
@@ -3744,7 +3744,7 @@ class PDFWorker {
   _initializeFromPort(port) {
     this._port = port;
     this._messageHandler = new _shared_message_handler_js__WEBPACK_IMPORTED_MODULE_7__.MessageHandler("main", "worker", port);
-    this._messageHandler.on("ready", function () {});
+    this._messageHandler.on("ready", () => {});
     this._readyCapability.resolve();
     this._messageHandler.send("configure", {
       verbosity: this.verbosity
@@ -4027,10 +4027,10 @@ class WorkerTransport {
         };
       };
       sink.onPull = () => {
-        this._fullReader.read().then(function ({
+        this._fullReader.read().then(({
           value,
           done
-        }) {
+        }) => {
           if (done) {
             sink.close();
             return;
@@ -4082,10 +4082,10 @@ class WorkerTransport {
         return;
       }
       sink.onPull = () => {
-        rangeReader.read().then(function ({
+        rangeReader.read().then(({
           value,
           done
-        }) {
+        }) => {
           if (done) {
             sink.close();
             return;
@@ -4114,7 +4114,7 @@ class WorkerTransport {
       delete pdfInfo.htmlForXfa;
       loadingTask._capability.resolve(new PDFDocumentProxy(pdfInfo, this));
     });
-    messageHandler.on("DocException", function (ex) {
+    messageHandler.on("DocException", (ex) => {
       let reason;
       switch (ex.name) {
         case "PasswordException":
@@ -4579,7 +4579,7 @@ class InternalRenderTask {
     this._canvas = params.canvasContext.canvas;
   }
   get completed() {
-    return this.capability.promise.catch(function () {});
+    return this.capability.promise.catch(() => {});
   }
   initializeGraphics({
     transparency = false,
@@ -4689,7 +4689,7 @@ __webpack_async_result__();
 /* harmony export */   BaseSVGFactory: () => (/* binding */ BaseSVGFactory),
 /* harmony export */   BaseStandardFontDataFactory: () => (/* binding */ BaseStandardFontDataFactory)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
 
 class BaseFilterFactory {
   constructor() {
@@ -4848,10 +4848,10 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/shared/util.js
-var util = __webpack_require__(292);
+const util = __webpack_require__(292);
 // EXTERNAL MODULE: ./src/display/display_utils.js
-var display_utils = __webpack_require__(419);
-;// CONCATENATED MODULE: ./src/display/pattern_helper.js
+const display_utils = __webpack_require__(419);
+// CONCATENATED MODULE: ./src/display/pattern_helper.js
 
 
 const PathType = {
@@ -5291,7 +5291,7 @@ class TilingPattern {
   }
 }
 
-;// CONCATENATED MODULE: ./src/shared/image_utils.js
+// CONCATENATED MODULE: ./src/shared/image_utils.js
 
 function convertToRGBA(params) {
   switch (params.kind) {
@@ -5398,7 +5398,7 @@ function grayToRGBA(src, dest) {
   }
 }
 
-;// CONCATENATED MODULE: ./src/display/canvas.js
+// CONCATENATED MODULE: ./src/display/canvas.js
 
 
 
@@ -7625,8 +7625,8 @@ for (const op in util.OPS) {
 /* harmony export */   setLayerDimensions: () => (/* binding */ setLayerDimensions)
 /* harmony export */ });
 /* unused harmony export deprecated */
-/* harmony import */ var _base_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(583);
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(292);
+/* harmony import */ const _base_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(583);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(292);
 
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -8292,8 +8292,8 @@ function setLayerDimensions(div, viewport, mustFlip = false, mustRotate = true) 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   DrawLayer: () => (/* binding */ DrawLayer)
 /* harmony export */ });
-/* harmony import */ var _display_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(419);
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(292);
+/* harmony import */ const _display_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(419);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(292);
 
 
 class DrawLayer {
@@ -8501,14 +8501,14 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/shared/util.js
-var util = __webpack_require__(292);
+const util = __webpack_require__(292);
 // EXTERNAL MODULE: ./src/display/editor/editor.js + 1 modules
-var editor_editor = __webpack_require__(310);
+const editor_editor = __webpack_require__(310);
 // EXTERNAL MODULE: ./src/display/editor/tools.js
-var tools = __webpack_require__(830);
+const tools = __webpack_require__(830);
 // EXTERNAL MODULE: ./src/display/annotation_layer.js + 1 modules
-var annotation_layer = __webpack_require__(976);
-;// CONCATENATED MODULE: ./src/display/editor/freetext.js
+const annotation_layer = __webpack_require__(976);
+// CONCATENATED MODULE: ./src/display/editor/freetext.js
 
 
 
@@ -9118,12 +9118,12 @@ class FreeTextEditor extends editor_editor.AnnotationEditor {
 }
 
 // EXTERNAL MODULE: ./src/display/editor/outliner.js
-var editor_outliner = __webpack_require__(61);
+const editor_outliner = __webpack_require__(61);
 // EXTERNAL MODULE: ./src/display/editor/color_picker.js
-var color_picker = __webpack_require__(259);
+const color_picker = __webpack_require__(259);
 // EXTERNAL MODULE: ./src/display/display_utils.js
-var display_utils = __webpack_require__(419);
-;// CONCATENATED MODULE: ./src/display/editor/highlight.js
+const display_utils = __webpack_require__(419);
+// CONCATENATED MODULE: ./src/display/editor/highlight.js
 
 
 
@@ -9752,7 +9752,7 @@ class HighlightEditor extends editor_editor.AnnotationEditor {
   }
 }
 
-;// CONCATENATED MODULE: ./src/display/editor/ink.js
+// CONCATENATED MODULE: ./src/display/editor/ink.js
 
 
 
@@ -10548,7 +10548,7 @@ class InkEditor extends editor_editor.AnnotationEditor {
   }
 }
 
-;// CONCATENATED MODULE: ./src/display/editor/stamp.js
+// CONCATENATED MODULE: ./src/display/editor/stamp.js
 
 
 
@@ -10960,7 +10960,7 @@ class StampEditor extends editor_editor.AnnotationEditor {
   }
 }
 
-;// CONCATENATED MODULE: ./src/display/editor/annotation_editor_layer.js
+// CONCATENATED MODULE: ./src/display/editor/annotation_editor_layer.js
 
 
 
@@ -11566,9 +11566,9 @@ class AnnotationEditorLayer {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ColorPicker: () => (/* binding */ ColorPicker)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _tools_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(830);
-/* harmony import */ var _display_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(419);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _tools_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(830);
+/* harmony import */ const _display_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(419);
 
 
 
@@ -11785,12 +11785,12 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/display/editor/tools.js
-var tools = __webpack_require__(830);
+const tools = __webpack_require__(830);
 // EXTERNAL MODULE: ./src/shared/util.js
-var util = __webpack_require__(292);
+const util = __webpack_require__(292);
 // EXTERNAL MODULE: ./src/display/display_utils.js
-var display_utils = __webpack_require__(419);
-;// CONCATENATED MODULE: ./src/display/editor/alt_text.js
+const display_utils = __webpack_require__(419);
+// CONCATENATED MODULE: ./src/display/editor/alt_text.js
 
 class AltText {
   #altText = "";
@@ -11925,8 +11925,8 @@ class AltText {
 }
 
 // EXTERNAL MODULE: ./src/display/editor/toolbar.js
-var toolbar = __webpack_require__(362);
-;// CONCATENATED MODULE: ./src/display/editor/editor.js
+const toolbar = __webpack_require__(362);
+// CONCATENATED MODULE: ./src/display/editor/editor.js
 
 
 
@@ -13067,7 +13067,7 @@ class FakeEditor extends AnnotationEditor {
 /* harmony export */   FreeOutliner: () => (/* binding */ FreeOutliner),
 /* harmony export */   Outliner: () => (/* binding */ Outliner)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
 
 class Outliner {
   #box;
@@ -13677,7 +13677,7 @@ class FreeHighlightOutline extends Outline {
 /* harmony export */   EditorToolbar: () => (/* binding */ EditorToolbar),
 /* harmony export */   HighlightToolbar: () => (/* binding */ HighlightToolbar)
 /* harmony export */ });
-/* harmony import */ var _display_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(419);
+/* harmony import */ const _display_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(419);
 
 class EditorToolbar {
   #toolbar = null;
@@ -13854,9 +13854,9 @@ class HighlightToolbar {
 /* harmony export */   opacityToHex: () => (/* binding */ opacityToHex)
 /* harmony export */ });
 /* unused harmony export CommandManager */
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _display_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(419);
-/* harmony import */ var _toolbar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(362);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _display_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(419);
+/* harmony import */ const _toolbar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(362);
 
 
 
@@ -15417,8 +15417,8 @@ class AnnotationEditorUIManager {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PDFFetchStream: () => (/* binding */ PDFFetchStream)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _network_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(490);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _network_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(490);
 
 
 function createFetchOptions(headers, withCredentials, abortController) {
@@ -15632,7 +15632,7 @@ class PDFFetchStreamRangeReader {
 /* harmony export */   FontFaceObject: () => (/* binding */ FontFaceObject),
 /* harmony export */   FontLoader: () => (/* binding */ FontLoader)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
 
 class FontLoader {
   #systemFonts = new Set();
@@ -15982,7 +15982,7 @@ class FontFaceObject {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Metadata: () => (/* binding */ Metadata)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
 
 class Metadata {
   #metadataMap;
@@ -16017,8 +16017,8 @@ class Metadata {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PDFNetworkStream: () => (/* binding */ PDFNetworkStream)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _network_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(490);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _network_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(490);
 
 
 const OK_RESPONSE = 200;
@@ -16440,8 +16440,8 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/shared/util.js
-var util = __webpack_require__(292);
-;// CONCATENATED MODULE: ./src/display/content_disposition.js
+const util = __webpack_require__(292);
+// CONCATENATED MODULE: ./src/display/content_disposition.js
 
 function getFilenameFromContentDispositionHeader(contentDisposition) {
   let needsEncodingFixup = true;
@@ -16555,12 +16555,10 @@ function getFilenameFromContentDispositionHeader(contentDisposition) {
     if (!value.startsWith("=?") || /[\x00-\x19\x80-\xff]/.test(value)) {
       return value;
     }
-    return value.replaceAll(/=\?([\w-]*)\?([QqBb])\?((?:[^?]|\?(?!=))*)\?=/g, function (matches, charset, encoding, text) {
+    return value.replaceAll(/=\?([\w-]*)\?([QqBb])\?((?:[^?]|\?(?!=))*)\?=/g, (matches, charset, encoding, text) => {
       if (encoding === "q" || encoding === "Q") {
         text = text.replaceAll("_", " ");
-        text = text.replaceAll(/=([0-9a-fA-F]{2})/g, function (match, hex) {
-          return String.fromCharCode(parseInt(hex, 16));
-        });
+        text = text.replaceAll(/=([0-9a-fA-F]{2})/g, (match, hex) => String.fromCharCode(parseInt(hex, 16)));
         return textdecode(charset, text);
       }
       try {
@@ -16573,8 +16571,8 @@ function getFilenameFromContentDispositionHeader(contentDisposition) {
 }
 
 // EXTERNAL MODULE: ./src/display/display_utils.js
-var display_utils = __webpack_require__(419);
-;// CONCATENATED MODULE: ./src/display/network_utils.js
+const display_utils = __webpack_require__(419);
+// CONCATENATED MODULE: ./src/display/network_utils.js
 
 
 
@@ -16644,8 +16642,8 @@ __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PDFNodeStream: () => (/* binding */ PDFNodeStream)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _network_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(490);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _network_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(490);
 
 
 let fs, http, https, url;
@@ -16998,8 +16996,8 @@ __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony export */   NodeFilterFactory: () => (/* binding */ NodeFilterFactory),
 /* harmony export */   NodeStandardFontDataFactory: () => (/* binding */ NodeStandardFontDataFactory)
 /* harmony export */ });
-/* harmony import */ var _base_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(583);
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(292);
+/* harmony import */ const _base_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(583);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(292);
 
 
 let fs, canvas, path2d;
@@ -17046,8 +17044,8 @@ __webpack_async_result__();
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   OptionalContentConfig: () => (/* binding */ OptionalContentConfig)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _shared_murmurhash3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(651);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _shared_murmurhash3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(651);
 
 
 const INTERNAL = Symbol("INTERNAL");
@@ -17311,8 +17309,8 @@ class OptionalContentConfig {
 /* harmony export */   updateTextLayer: () => (/* binding */ updateTextLayer)
 /* harmony export */ });
 /* unused harmony export TextLayerRenderTask */
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _display_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(419);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _display_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(419);
 
 
 const MAX_TEXT_DIVS_TO_RENDER = 100000;
@@ -17680,8 +17678,8 @@ function updateTextLayer({
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PDFDataTransportStream: () => (/* binding */ PDFDataTransportStream)
 /* harmony export */ });
-/* harmony import */ var _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
-/* harmony import */ var _display_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(419);
+/* harmony import */ const _shared_util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _display_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(419);
 
 
 class PDFDataTransportStream {
@@ -17743,7 +17741,7 @@ class PDFDataTransportStream {
         this._queuedChunks.push(buffer);
       }
     } else {
-      const found = this._rangeReaders.some(function (rangeReader) {
+      const found = this._rangeReaders.some((rangeReader) => {
         if (rangeReader._begin !== begin) {
           return false;
         }
@@ -17990,7 +17988,7 @@ class GlobalWorkerOptions {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   XfaLayer: () => (/* binding */ XfaLayer)
 /* harmony export */ });
-/* harmony import */ var _xfa_text_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(50);
+/* harmony import */ const _xfa_text_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(50);
 
 class XfaLayer {
   static setupStorage(html, id, element, storage, intent) {
@@ -18318,7 +18316,7 @@ __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony import */ var _display_worker_options_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(164);
 /* harmony import */ var _display_editor_outliner_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(61);
 /* harmony import */ var _display_xfa_layer_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(284);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_display_api_js__WEBPACK_IMPORTED_MODULE_1__]);
+const __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_display_api_js__WEBPACK_IMPORTED_MODULE_1__]);
 _display_api_js__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
@@ -18346,7 +18344,7 @@ __webpack_async_result__();
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MessageHandler: () => (/* binding */ MessageHandler)
 /* harmony export */ });
-/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
+/* harmony import */ const _util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(292);
 
 const CallbackKind = {
   UNKNOWN: 0,
@@ -18426,9 +18424,9 @@ class MessageHandler {
       if (data.callbackId) {
         const cbSourceName = this.sourceName;
         const cbTargetName = data.sourceName;
-        new Promise(function (resolve) {
+        new Promise((resolve) => {
           resolve(action(data.data));
-        }).then(function (result) {
+        }).then((result) => {
           comObj.postMessage({
             sourceName: cbSourceName,
             targetName: cbTargetName,
@@ -18436,7 +18434,7 @@ class MessageHandler {
             callbackId: data.callbackId,
             data: result
           });
-        }, function (reason) {
+        }, (reason) => {
           comObj.postMessage({
             sourceName: cbSourceName,
             targetName: cbTargetName,
@@ -18603,9 +18601,9 @@ class MessageHandler {
     streamSink.sinkCapability.resolve();
     streamSink.ready = streamSink.sinkCapability.promise;
     this.streamSinks[streamId] = streamSink;
-    new Promise(function (resolve) {
+    new Promise((resolve) => {
       resolve(action(data.data, streamSink));
-    }).then(function () {
+    }).then(() => {
       comObj.postMessage({
         sourceName,
         targetName,
@@ -18613,7 +18611,7 @@ class MessageHandler {
         streamId,
         success: true
       });
-    }, function (reason) {
+    }, (reason) => {
       comObj.postMessage({
         sourceName,
         targetName,
@@ -18660,9 +18658,9 @@ class MessageHandler {
           streamSink.sinkCapability.resolve();
         }
         streamSink.desiredSize = data.desiredSize;
-        new Promise(function (resolve) {
+        new Promise((resolve) => {
           resolve(streamSink.onPull?.());
-        }).then(function () {
+        }).then(() => {
           comObj.postMessage({
             sourceName,
             targetName,
@@ -18670,7 +18668,7 @@ class MessageHandler {
             streamId,
             success: true
           });
-        }, function (reason) {
+        }, (reason) => {
           comObj.postMessage({
             sourceName,
             targetName,
@@ -18713,9 +18711,9 @@ class MessageHandler {
         if (!streamSink) {
           break;
         }
-        new Promise(function (resolve) {
+        new Promise((resolve) => {
           resolve(streamSink.onCancel?.(wrapReason(data.reason)));
-        }).then(function () {
+        }).then(() => {
           comObj.postMessage({
             sourceName,
             targetName,
@@ -18723,7 +18721,7 @@ class MessageHandler {
             streamId,
             success: true
           });
-        }, function (reason) {
+        }, (reason) => {
           comObj.postMessage({
             sourceName,
             targetName,
@@ -19645,17 +19643,17 @@ const FontRenderOps = {
 /******/ });
 /************************************************************************/
 /******/ // The module cache
-/******/ var __webpack_module_cache__ = {};
+/******/ const __webpack_module_cache__ = {};
 /******/ 
 /******/ // The require function
 /******/ function __webpack_require__(moduleId) {
 /******/ 	// Check if module is in cache
-/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	const cachedModule = __webpack_module_cache__[moduleId];
 /******/ 	if (cachedModule !== undefined) {
 /******/ 		return cachedModule.exports;
 /******/ 	}
 /******/ 	// Create a new module (and put it into the cache)
-/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 	const module = __webpack_module_cache__[moduleId] = {
 /******/ 		// no module.id needed
 /******/ 		// no module.loaded needed
 /******/ 		exports: {}
@@ -19671,21 +19669,21 @@ const FontRenderOps = {
 /************************************************************************/
 /******/ /* webpack/runtime/async module */
 /******/ (() => {
-/******/ 	var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
-/******/ 	var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
-/******/ 	var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
-/******/ 	var resolveQueue = (queue) => {
+/******/ 	const webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 	const webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 	const webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 	const resolveQueue = (queue) => {
 /******/ 		if(queue && queue.d < 1) {
 /******/ 			queue.d = 1;
 /******/ 			queue.forEach((fn) => (fn.r--));
 /******/ 			queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
 /******/ 		}
 /******/ 	}
-/******/ 	var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 	const wrapDeps = (deps) => (deps.map((dep) => {
 /******/ 		if(dep !== null && typeof dep === "object") {
 /******/ 			if(dep[webpackQueues]) return dep;
 /******/ 			if(dep.then) {
-/******/ 				var queue = [];
+/******/ 				const queue = [];
 /******/ 				queue.d = 0;
 /******/ 				dep.then((r) => {
 /******/ 					obj[webpackExports] = r;
@@ -19699,37 +19697,37 @@ const FontRenderOps = {
 /******/ 				return obj;
 /******/ 			}
 /******/ 		}
-/******/ 		var ret = {};
+/******/ 		const ret = {};
 /******/ 		ret[webpackQueues] = x => {};
 /******/ 		ret[webpackExports] = dep;
 /******/ 		return ret;
 /******/ 	}));
 /******/ 	__webpack_require__.a = (module, body, hasAwait) => {
-/******/ 		var queue;
+/******/ 		let queue;
 /******/ 		hasAwait && ((queue = []).d = -1);
-/******/ 		var depQueues = new Set();
-/******/ 		var exports = module.exports;
-/******/ 		var currentDeps;
-/******/ 		var outerResolve;
-/******/ 		var reject;
-/******/ 		var promise = new Promise((resolve, rej) => {
+/******/ 		const depQueues = new Set();
+/******/ 		const exports = module.exports;
+/******/ 		let currentDeps;
+/******/ 		let outerResolve;
+/******/ 		let reject;
+/******/ 		const promise = new Promise((resolve, rej) => {
 /******/ 			reject = rej;
 /******/ 			outerResolve = resolve;
 /******/ 		});
 /******/ 		promise[webpackExports] = exports;
-/******/ 		promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 		promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise.catch(x => {}));
 /******/ 		module.exports = promise;
 /******/ 		body((deps) => {
 /******/ 			currentDeps = wrapDeps(deps);
-/******/ 			var fn;
-/******/ 			var getResult = () => (currentDeps.map((d) => {
+/******/ 			let fn;
+/******/ 			const getResult = () => (currentDeps.map((d) => {
 /******/ 				if(d[webpackError]) throw d[webpackError];
 /******/ 				return d[webpackExports];
 /******/ 			}))
-/******/ 			var promise = new Promise((resolve) => {
+/******/ 			const promise = new Promise((resolve) => {
 /******/ 				fn = () => (resolve(getResult));
 /******/ 				fn.r = 0;
-/******/ 				var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 				const fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
 /******/ 				currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
 /******/ 			});
 /******/ 			return fn.r ? promise : getResult();
@@ -19742,7 +19740,7 @@ const FontRenderOps = {
 /******/ (() => {
 /******/ 	// define getter functions for harmony exports
 /******/ 	__webpack_require__.d = (exports, definition) => {
-/******/ 		for(var key in definition) {
+/******/ 		for(const key in definition) {
 /******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
@@ -19760,53 +19758,53 @@ const FontRenderOps = {
 /******/ // startup
 /******/ // Load entry module and return exports
 /******/ // This entry module used 'module' so it can't be inlined
-/******/ var __webpack_exports__ = __webpack_require__(228);
+/******/ let __webpack_exports__ = __webpack_require__(228);
 /******/ __webpack_exports__ = globalThis.pdfjsLib = await (globalThis.pdfjsLibPromise = __webpack_exports__);
-/******/ var __webpack_exports__AbortException = __webpack_exports__.AbortException;
-/******/ var __webpack_exports__AnnotationEditorLayer = __webpack_exports__.AnnotationEditorLayer;
-/******/ var __webpack_exports__AnnotationEditorParamsType = __webpack_exports__.AnnotationEditorParamsType;
-/******/ var __webpack_exports__AnnotationEditorType = __webpack_exports__.AnnotationEditorType;
-/******/ var __webpack_exports__AnnotationEditorUIManager = __webpack_exports__.AnnotationEditorUIManager;
-/******/ var __webpack_exports__AnnotationLayer = __webpack_exports__.AnnotationLayer;
-/******/ var __webpack_exports__AnnotationMode = __webpack_exports__.AnnotationMode;
-/******/ var __webpack_exports__CMapCompressionType = __webpack_exports__.CMapCompressionType;
-/******/ var __webpack_exports__ColorPicker = __webpack_exports__.ColorPicker;
-/******/ var __webpack_exports__DOMSVGFactory = __webpack_exports__.DOMSVGFactory;
-/******/ var __webpack_exports__DrawLayer = __webpack_exports__.DrawLayer;
-/******/ var __webpack_exports__FeatureTest = __webpack_exports__.FeatureTest;
-/******/ var __webpack_exports__GlobalWorkerOptions = __webpack_exports__.GlobalWorkerOptions;
-/******/ var __webpack_exports__ImageKind = __webpack_exports__.ImageKind;
-/******/ var __webpack_exports__InvalidPDFException = __webpack_exports__.InvalidPDFException;
-/******/ var __webpack_exports__MissingPDFException = __webpack_exports__.MissingPDFException;
-/******/ var __webpack_exports__OPS = __webpack_exports__.OPS;
-/******/ var __webpack_exports__Outliner = __webpack_exports__.Outliner;
-/******/ var __webpack_exports__PDFDataRangeTransport = __webpack_exports__.PDFDataRangeTransport;
-/******/ var __webpack_exports__PDFDateString = __webpack_exports__.PDFDateString;
-/******/ var __webpack_exports__PDFWorker = __webpack_exports__.PDFWorker;
-/******/ var __webpack_exports__PasswordResponses = __webpack_exports__.PasswordResponses;
-/******/ var __webpack_exports__PermissionFlag = __webpack_exports__.PermissionFlag;
-/******/ var __webpack_exports__PixelsPerInch = __webpack_exports__.PixelsPerInch;
-/******/ var __webpack_exports__RenderingCancelledException = __webpack_exports__.RenderingCancelledException;
-/******/ var __webpack_exports__UnexpectedResponseException = __webpack_exports__.UnexpectedResponseException;
-/******/ var __webpack_exports__Util = __webpack_exports__.Util;
-/******/ var __webpack_exports__VerbosityLevel = __webpack_exports__.VerbosityLevel;
-/******/ var __webpack_exports__XfaLayer = __webpack_exports__.XfaLayer;
-/******/ var __webpack_exports__build = __webpack_exports__.build;
-/******/ var __webpack_exports__createValidAbsoluteUrl = __webpack_exports__.createValidAbsoluteUrl;
-/******/ var __webpack_exports__fetchData = __webpack_exports__.fetchData;
-/******/ var __webpack_exports__getDocument = __webpack_exports__.getDocument;
-/******/ var __webpack_exports__getFilenameFromUrl = __webpack_exports__.getFilenameFromUrl;
-/******/ var __webpack_exports__getPdfFilenameFromUrl = __webpack_exports__.getPdfFilenameFromUrl;
-/******/ var __webpack_exports__getXfaPageViewport = __webpack_exports__.getXfaPageViewport;
-/******/ var __webpack_exports__isDataScheme = __webpack_exports__.isDataScheme;
-/******/ var __webpack_exports__isPdfFile = __webpack_exports__.isPdfFile;
-/******/ var __webpack_exports__noContextMenu = __webpack_exports__.noContextMenu;
-/******/ var __webpack_exports__normalizeUnicode = __webpack_exports__.normalizeUnicode;
-/******/ var __webpack_exports__renderTextLayer = __webpack_exports__.renderTextLayer;
-/******/ var __webpack_exports__setLayerDimensions = __webpack_exports__.setLayerDimensions;
-/******/ var __webpack_exports__shadow = __webpack_exports__.shadow;
-/******/ var __webpack_exports__updateTextLayer = __webpack_exports__.updateTextLayer;
-/******/ var __webpack_exports__version = __webpack_exports__.version;
+/******/ const __webpack_exports__AbortException = __webpack_exports__.AbortException;
+/******/ const __webpack_exports__AnnotationEditorLayer = __webpack_exports__.AnnotationEditorLayer;
+/******/ const __webpack_exports__AnnotationEditorParamsType = __webpack_exports__.AnnotationEditorParamsType;
+/******/ const __webpack_exports__AnnotationEditorType = __webpack_exports__.AnnotationEditorType;
+/******/ const __webpack_exports__AnnotationEditorUIManager = __webpack_exports__.AnnotationEditorUIManager;
+/******/ const __webpack_exports__AnnotationLayer = __webpack_exports__.AnnotationLayer;
+/******/ const __webpack_exports__AnnotationMode = __webpack_exports__.AnnotationMode;
+/******/ const __webpack_exports__CMapCompressionType = __webpack_exports__.CMapCompressionType;
+/******/ const __webpack_exports__ColorPicker = __webpack_exports__.ColorPicker;
+/******/ const __webpack_exports__DOMSVGFactory = __webpack_exports__.DOMSVGFactory;
+/******/ const __webpack_exports__DrawLayer = __webpack_exports__.DrawLayer;
+/******/ const __webpack_exports__FeatureTest = __webpack_exports__.FeatureTest;
+/******/ const __webpack_exports__GlobalWorkerOptions = __webpack_exports__.GlobalWorkerOptions;
+/******/ const __webpack_exports__ImageKind = __webpack_exports__.ImageKind;
+/******/ const __webpack_exports__InvalidPDFException = __webpack_exports__.InvalidPDFException;
+/******/ const __webpack_exports__MissingPDFException = __webpack_exports__.MissingPDFException;
+/******/ const __webpack_exports__OPS = __webpack_exports__.OPS;
+/******/ const __webpack_exports__Outliner = __webpack_exports__.Outliner;
+/******/ const __webpack_exports__PDFDataRangeTransport = __webpack_exports__.PDFDataRangeTransport;
+/******/ const __webpack_exports__PDFDateString = __webpack_exports__.PDFDateString;
+/******/ const __webpack_exports__PDFWorker = __webpack_exports__.PDFWorker;
+/******/ const __webpack_exports__PasswordResponses = __webpack_exports__.PasswordResponses;
+/******/ const __webpack_exports__PermissionFlag = __webpack_exports__.PermissionFlag;
+/******/ const __webpack_exports__PixelsPerInch = __webpack_exports__.PixelsPerInch;
+/******/ const __webpack_exports__RenderingCancelledException = __webpack_exports__.RenderingCancelledException;
+/******/ const __webpack_exports__UnexpectedResponseException = __webpack_exports__.UnexpectedResponseException;
+/******/ const __webpack_exports__Util = __webpack_exports__.Util;
+/******/ const __webpack_exports__VerbosityLevel = __webpack_exports__.VerbosityLevel;
+/******/ const __webpack_exports__XfaLayer = __webpack_exports__.XfaLayer;
+/******/ const __webpack_exports__build = __webpack_exports__.build;
+/******/ const __webpack_exports__createValidAbsoluteUrl = __webpack_exports__.createValidAbsoluteUrl;
+/******/ const __webpack_exports__fetchData = __webpack_exports__.fetchData;
+/******/ const __webpack_exports__getDocument = __webpack_exports__.getDocument;
+/******/ const __webpack_exports__getFilenameFromUrl = __webpack_exports__.getFilenameFromUrl;
+/******/ const __webpack_exports__getPdfFilenameFromUrl = __webpack_exports__.getPdfFilenameFromUrl;
+/******/ const __webpack_exports__getXfaPageViewport = __webpack_exports__.getXfaPageViewport;
+/******/ const __webpack_exports__isDataScheme = __webpack_exports__.isDataScheme;
+/******/ const __webpack_exports__isPdfFile = __webpack_exports__.isPdfFile;
+/******/ const __webpack_exports__noContextMenu = __webpack_exports__.noContextMenu;
+/******/ const __webpack_exports__normalizeUnicode = __webpack_exports__.normalizeUnicode;
+/******/ const __webpack_exports__renderTextLayer = __webpack_exports__.renderTextLayer;
+/******/ const __webpack_exports__setLayerDimensions = __webpack_exports__.setLayerDimensions;
+/******/ const __webpack_exports__shadow = __webpack_exports__.shadow;
+/******/ const __webpack_exports__updateTextLayer = __webpack_exports__.updateTextLayer;
+/******/ const __webpack_exports__version = __webpack_exports__.version;
 /******/ export { __webpack_exports__AbortException as AbortException, __webpack_exports__AnnotationEditorLayer as AnnotationEditorLayer, __webpack_exports__AnnotationEditorParamsType as AnnotationEditorParamsType, __webpack_exports__AnnotationEditorType as AnnotationEditorType, __webpack_exports__AnnotationEditorUIManager as AnnotationEditorUIManager, __webpack_exports__AnnotationLayer as AnnotationLayer, __webpack_exports__AnnotationMode as AnnotationMode, __webpack_exports__CMapCompressionType as CMapCompressionType, __webpack_exports__ColorPicker as ColorPicker, __webpack_exports__DOMSVGFactory as DOMSVGFactory, __webpack_exports__DrawLayer as DrawLayer, __webpack_exports__FeatureTest as FeatureTest, __webpack_exports__GlobalWorkerOptions as GlobalWorkerOptions, __webpack_exports__ImageKind as ImageKind, __webpack_exports__InvalidPDFException as InvalidPDFException, __webpack_exports__MissingPDFException as MissingPDFException, __webpack_exports__OPS as OPS, __webpack_exports__Outliner as Outliner, __webpack_exports__PDFDataRangeTransport as PDFDataRangeTransport, __webpack_exports__PDFDateString as PDFDateString, __webpack_exports__PDFWorker as PDFWorker, __webpack_exports__PasswordResponses as PasswordResponses, __webpack_exports__PermissionFlag as PermissionFlag, __webpack_exports__PixelsPerInch as PixelsPerInch, __webpack_exports__RenderingCancelledException as RenderingCancelledException, __webpack_exports__UnexpectedResponseException as UnexpectedResponseException, __webpack_exports__Util as Util, __webpack_exports__VerbosityLevel as VerbosityLevel, __webpack_exports__XfaLayer as XfaLayer, __webpack_exports__build as build, __webpack_exports__createValidAbsoluteUrl as createValidAbsoluteUrl, __webpack_exports__fetchData as fetchData, __webpack_exports__getDocument as getDocument, __webpack_exports__getFilenameFromUrl as getFilenameFromUrl, __webpack_exports__getPdfFilenameFromUrl as getPdfFilenameFromUrl, __webpack_exports__getXfaPageViewport as getXfaPageViewport, __webpack_exports__isDataScheme as isDataScheme, __webpack_exports__isPdfFile as isPdfFile, __webpack_exports__noContextMenu as noContextMenu, __webpack_exports__normalizeUnicode as normalizeUnicode, __webpack_exports__renderTextLayer as renderTextLayer, __webpack_exports__setLayerDimensions as setLayerDimensions, __webpack_exports__shadow as shadow, __webpack_exports__updateTextLayer as updateTextLayer, __webpack_exports__version as version };
 /******/ 
 

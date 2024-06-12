@@ -39,7 +39,7 @@ import { CompleteIcon } from '@/components/ui/Icons/Complete';
 import { InsertIcon } from '@/components/ui/Icons/Insert';
 import { EditIcon } from '@/components/ui/Icons/Edit';
 import './homework.css';
-import { subjects } from './constants';
+import { subjects } from '@/constants';
 
 // const metadata: Metadata = {
 //   title: 'Homework Lab',

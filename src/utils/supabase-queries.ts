@@ -1,4 +1,10 @@
-import { AppSupabaseClient, AuthProvider, Table } from '@/types';
+import {
+  AppSupabaseClient,
+  AuthProvider,
+  Student,
+  Table,
+  Teacher,
+} from '@/types';
 import { toSiteURL } from './helpers';
 
 export const getAllItems = async (
@@ -228,6 +234,36 @@ export const getPrivateItem = async (
     .select('*')
     .eq('id', id)
     .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const insertTeacher = async (
+  supabase: AppSupabaseClient,
+  teacher: Teacher
+): Promise<Table<'teachers'>> => {
+  const { data, error } = await supabase
+    .from('teachers')
+    .insert(teacher)
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const insertStudents = async (
+  supabase: AppSupabaseClient,
+  students: Student[]
+): Promise<Table<'students'>> => {
+  const { data, error } = await supabase.from('students').insert(students);
 
   if (error) {
     throw error;

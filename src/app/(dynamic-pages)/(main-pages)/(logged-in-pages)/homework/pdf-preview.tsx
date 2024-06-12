@@ -126,8 +126,8 @@ export const PDFPreview = ({ questions }: { questions: Question[] }) => {
                 <Text style={styles.question}>{q.question}</Text>
                 {q.choices
                   ? q.choices.map((answer) => (
-                    <Text style={styles.text}>{answer}</Text>
-                  ))
+                      <Text style={styles.text}>{answer}</Text>
+                    ))
                   : ' '}
               </View>
             ))}
