@@ -1,14 +1,20 @@
-import { ClientPage } from './ClientPage';
-import { PrivateItemsList } from '@/app/(dynamic-pages)/(main-pages)/PrivateItemsList';
-import { getAllPrivateItems } from '@/data/anon/privateItems';
+// import { ClientPage } from './ClientPage';
+import { getAllStudentsAction } from '@/data/user/students';
 export const dynamic = 'force-dynamic';
 
 export default async function NewItem() {
+  const students = await getAllStudentsAction();
   return (
     <div className="max-w-2xl">
       <h1 className="text-3xl font-bold">Dashboard</h1>
-      <ClientPage />
-      {/* <PrivateItemsList privateItems={await getAllPrivateItems()} /> */}
+      {students &&
+        students.map((student) => (
+          <div key={student.id}>
+            {student.first_name} {student.last_name}{' '}
+          </div>
+        ))}
+
+      {/* <ClientPage /> */}
     </div>
   );
 }

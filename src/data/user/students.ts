@@ -34,3 +34,15 @@ export async function insertStudentsAction(payload: { students: Student[] }) {
   revalidatePath('/');
   return data;
 }
+
+// limit to only the students that were added by the currently logged in user
+export async function getAllStudentsAction() {
+  const supabaseClient = createSupabaseServerActionClient();
+  const { data, error } = await supabaseClient.from('students').select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}

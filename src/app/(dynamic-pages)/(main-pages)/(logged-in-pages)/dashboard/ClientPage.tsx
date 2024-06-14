@@ -13,6 +13,7 @@ export const ClientPage = () => {
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
 
+  // TODO: modify this to insert new students (instead of 'privateItems')
   const { mutate } = useMutation(insertPrivateItemAction, {
     onMutate: () => {
       const toastId = toast.loading('Creating item');

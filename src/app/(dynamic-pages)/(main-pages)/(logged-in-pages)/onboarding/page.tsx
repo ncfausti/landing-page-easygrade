@@ -3,15 +3,38 @@
 import GridCheckbox from '@/components/ui/grid-checkbox';
 import { grades, subjects } from '@/constants';
 import { insertStudentsAction } from '@/data/user/students';
+import { insertTeacherAction } from '@/data/user/teachers';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { Subject } from '@/types';
 
 export default function Page() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
+
+  const { mutate: mutateTeacher } = useMutation(insertTeacherAction, {
+    onMutate: () => {
+      const toastId = toast.loading('Creating teacher profile');
+      toastRef.current = toastId;
+    },
+
+    onSuccess: () => {
+      toast.success(`Teacher created`, {
+        id: toastRef.current,
+      });
+      toastRef.current = null;
+      router.refresh();
+      queryClient.invalidateQueries(['teachers']);
+      // router.push(`/dashboard`);
+    },
+    onError: () => {
+      toast.error('Failed to create item', { id: toastRef.current });
+      toastRef.current = null;
+    },
+  });
 
   const { mutate } = useMutation(insertStudentsAction, {
     onMutate: () => {
@@ -45,35 +68,45 @@ export default function Page() {
 
   const handleNext = async () => {
     console.log(formData);
-    if (step < 4) {
+    if (step < 3) {
       setStep(step + 1);
+    } else if (step === 3) {
+      setStep(step + 1);
+
+      const { name, grades, subjects } = formData;
+      const [teacher_first_name] = name.split(' ').slice(0, 1);
+      const teacher_last_name = name.split(' ').slice(1).join(' ');
+      const grades_taught = grades.split(',').map((s) => parseInt(s));
+      const subjects_taught: Subject[] = subjects.split(',') as Subject[];
+
+      // store teacher in Supabase
+      mutateTeacher({
+        teacher: {
+          first_name: teacher_first_name,
+          last_name: teacher_last_name,
+          grades_taught,
+          subjects_taught,
+        },
+      });
     } else {
       // Handle final submission here
-      const { name, grades, subjects, rosterText } = formData;
+      const { rosterText } = formData;
 
       // Process the roster file (Example: Uploading to Supabase storage)
-      const rosterFileUrl = null;
+      // const rosterFileUrl = null;
       const students = rosterText
         .trim()
         .split('\n')
         .filter((s) => s.trim().length > 2 && s.includes(' ')); // includes first and last name
       const studentRows = students.map((student) => {
-        const [first_name, last_name] = student.split(' ');
+        const [first_name] = student.split(' ').slice(0, 1);
+        const last_name = student.split(' ').slice(1).join(' ');
         return {
           first_name,
           last_name,
           added_by_auth_user_id: '',
         };
       });
-
-      // console.log(
-      //   'form vals:',
-      //   name,
-      //   grades,
-      //   subjects,
-      //   students,
-      //   rosterFileUrl
-      // );
 
       // if (rosterFile) {
       //   // console.log(rosterFile);
@@ -90,14 +123,6 @@ export default function Page() {
 
       // store students in Supabase
       mutate({ students: studentRows });
-
-      // console.log('form vals:', name, grades, subjects, rosterFileUrl);
-
-      // Save the teacher data to Supabase
-      // const { error } = await supabase
-      //   .from('teachers')
-      //   .insert([{ name, grades, subjects, roster_file_url: rosterFileUrl }]);
-
       // router.push('/dashboard'); // Redirect to dashboard or another page after onboarding
     }
   };
@@ -210,7 +235,7 @@ export default function Page() {
             />
             <p>Or</p>
             <p className="font-bold">
-              Paste or type class roster here (one name per line):
+              Paste or type a class student list here (one name per line):
             </p>
             <textarea
               name="rosterText"

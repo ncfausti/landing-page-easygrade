@@ -36,11 +36,11 @@ export type Subject =
   | 'History'
   | 'Geography'
   | 'Civics';
+
 export interface Teacher {
-  id: number;
   first_name: string;
   last_name: string;
-  email: string;
+  email?: string;
   department?: string;
   subjects_taught?: Subject[];
   grades_taught?: number[];
