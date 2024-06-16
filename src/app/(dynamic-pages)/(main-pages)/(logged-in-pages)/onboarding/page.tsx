@@ -2,60 +2,98 @@
 // import { insertStudents, insertTeacher } from '@/utils/supabase-queries';
 import GridCheckbox from '@/components/ui/grid-checkbox';
 import { grades, subjects } from '@/constants';
-import { insertStudentsAction } from '@/data/user/students';
-import { insertTeacherAction } from '@/data/user/teachers';
+// import { insertCourseAction } from '@/data/user/courses';
+import { insertStudentsAndEnrollmentsAction } from '@/data/user/students';
+import { insertTeacherAndSetupCourseAction } from '@/data/user/teachers';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Subject } from '@/types';
+import { DBStudent, Subject } from '@/types';
 
 export default function Page() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
+  const [courseId, setCourseId] = useState<number>(-1);
 
-  const { mutate: mutateTeacher } = useMutation(insertTeacherAction, {
-    onMutate: () => {
-      const toastId = toast.loading('Creating teacher profile');
-      toastRef.current = toastId;
-    },
+  // const { mutate: mutateTeacher } = useMutation(insertTeacherAction, {
+  //   onMutate: () => {
+  //     const toastId = toast.loading('Creating teacher profile');
+  //     toastRef.current = toastId;
+  //   },
 
-    onSuccess: () => {
-      toast.success(`Teacher created`, {
-        id: toastRef.current,
-      });
-      toastRef.current = null;
-      router.refresh();
-      queryClient.invalidateQueries(['teachers']);
-      // router.push(`/dashboard`);
-    },
-    onError: () => {
-      toast.error('Failed to create item', { id: toastRef.current });
-      toastRef.current = null;
-    },
-  });
+  //   onSuccess: () => {
+  //     toast.success(`Teacher created`, {
+  //       id: toastRef.current,
+  //     });
+  //     toastRef.current = null;
+  //     router.refresh();
+  //     queryClient.invalidateQueries(['teachers']);
+  //     // router.push(`/dashboard`);
+  //   },
+  //   onError: () => {
+  //     toast.error('Failed to create teacher', { id: toastRef.current });
+  //     toastRef.current = null;
+  //   },
+  // });
 
-  const { mutate } = useMutation(insertStudentsAction, {
-    onMutate: () => {
-      const toastId = toast.loading('Creating students');
-      toastRef.current = toastId;
-    },
+  const { mutate: insertTeacherAndSetupCourse } = useMutation(
+    insertTeacherAndSetupCourseAction,
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Creating teacher and course');
+        toastRef.current = toastId;
+      },
 
-    onSuccess: () => {
-      toast.success(`Students created`, {
-        id: toastRef.current,
-      });
-      toastRef.current = null;
-      router.refresh();
-      queryClient.invalidateQueries(['students']);
-      router.push(`/dashboard`);
-    },
-    onError: () => {
-      toast.error('Failed to create item', { id: toastRef.current });
-      toastRef.current = null;
-    },
-  });
+      onSuccess: (teacherCourses) => {
+        toast.success(`New teacher and course added`, {
+          id: toastRef.current,
+        });
+        toastRef.current = null;
+        router.refresh();
+        queryClient.invalidateQueries([
+          'courses',
+          'teachers',
+          'teacher_courses',
+        ]);
+        console.log(teacherCourses.course.course_id);
+        setCourseId(teacherCourses.course.course_id);
+      },
+      onError: () => {
+        toast.error('Failed to add teacher/course', { id: toastRef.current });
+        toastRef.current = null;
+      },
+    }
+  );
+
+  const { mutate: insertStudentsAndEnrollments } = useMutation(
+    insertStudentsAndEnrollmentsAction,
+    {
+      onMutate: () => {
+        const toastId = toast.loading(
+          'Creating students and enrolling in course'
+        );
+        toastRef.current = toastId;
+      },
+
+      onSuccess: (studentsAndEnrollments) => {
+        toast.success(`Students added and enrolled `, {
+          id: toastRef.current,
+        });
+        toastRef.current = null;
+        router.refresh();
+        queryClient.invalidateQueries(['students']);
+
+        console.log(studentsAndEnrollments);
+        // input students into course
+      },
+      onError: () => {
+        toast.error('Failed to add students', { id: toastRef.current });
+        toastRef.current = null;
+      },
+    }
+  );
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -80,7 +118,7 @@ export default function Page() {
       const subjects_taught: Subject[] = subjects.split(',') as Subject[];
 
       // store teacher in Supabase
-      mutateTeacher({
+      insertTeacherAndSetupCourse({
         teacher: {
           first_name: teacher_first_name,
           last_name: teacher_last_name,
@@ -122,8 +160,12 @@ export default function Page() {
       // }
 
       // store students in Supabase
-      mutate({ students: studentRows });
-      // router.push('/dashboard'); // Redirect to dashboard or another page after onboarding
+      insertStudentsAndEnrollments({
+        students: studentRows,
+        course_id: courseId,
+      });
+
+      router.push('/dashboard'); // Redirect to dashboard or another page after onboarding
     }
   };
 
@@ -224,7 +266,7 @@ export default function Page() {
         {step === 4 && (
           <div className="question">
             <h2 className="text-xl font-semibold mb-4">
-              Upload a roster of students
+              Upload a list of students
             </h2>
             <input
               disabled
@@ -234,11 +276,10 @@ export default function Page() {
               className="border border-gray-300 p-2 w-full rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <p>Or</p>
-            <p className="font-bold">
-              Paste or type a class student list here (one name per line):
-            </p>
+            <p className="font-bold">Student List</p>
             <textarea
               name="rosterText"
+              placeholder="Type list of students for a single class here (one name per line):"
               className={
                 'min-h-[300px] w-full border-2 rounded-lg border-purple-400'
               }
