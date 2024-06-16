@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { DBStudent, Subject } from '@/types';
+import { Subject } from '@/types';
 
 export default function Page() {
   const router = useRouter();
