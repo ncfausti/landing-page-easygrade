@@ -1,8 +1,6 @@
 'use client';
-// import { insertStudents, insertTeacher } from '@/utils/supabase-queries';
 import GridCheckbox from '@/components/ui/grid-checkbox';
 import { grades, subjects } from '@/constants';
-// import { insertCourseAction } from '@/data/user/courses';
 import { insertStudentsAndEnrollmentsAction } from '@/data/user/students';
 import { insertTeacherAndSetupCourseAction } from '@/data/user/teachers';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -16,27 +14,6 @@ export default function Page() {
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
   const [courseId, setCourseId] = useState<number>(-1);
-
-  // const { mutate: mutateTeacher } = useMutation(insertTeacherAction, {
-  //   onMutate: () => {
-  //     const toastId = toast.loading('Creating teacher profile');
-  //     toastRef.current = toastId;
-  //   },
-
-  //   onSuccess: () => {
-  //     toast.success(`Teacher created`, {
-  //       id: toastRef.current,
-  //     });
-  //     toastRef.current = null;
-  //     router.refresh();
-  //     queryClient.invalidateQueries(['teachers']);
-  //     // router.push(`/dashboard`);
-  //   },
-  //   onError: () => {
-  //     toast.error('Failed to create teacher', { id: toastRef.current });
-  //     toastRef.current = null;
-  //   },
-  // });
 
   const { mutate: insertTeacherAndSetupCourse } = useMutation(
     insertTeacherAndSetupCourseAction,
@@ -146,26 +123,12 @@ export default function Page() {
         };
       });
 
-      // if (rosterFile) {
-      //   // console.log(rosterFile);
-      // }
-      //   const { data, error } = await supabase.storage
-      //     .from('rosters')
-      //     .upload(`roster-${Date.now()}`, rosterFile);
-      //   if (error) {
-      //     console.error('Error uploading roster:', error);
-      //   } else {
-      //     rosterFileUrl = data.path;
-      //   }
-      // }
-
-      // store students in Supabase
       insertStudentsAndEnrollments({
         students: studentRows,
         course_id: courseId,
       });
 
-      router.push('/dashboard'); // Redirect to dashboard or another page after onboarding
+      router.push('/dashboard');
     }
   };
 
