@@ -1,5 +1,6 @@
 import { AppSupabaseClient, AuthProvider, Table } from '@/types';
 import { toSiteURL } from './helpers';
+import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 
 export const getAllItems = async (
   supabase: AppSupabaseClient
@@ -173,9 +174,10 @@ export const getAllPrivateItems = async (
   return data;
 };
 
-export const getAllStudents = async (
-  supabase: AppSupabaseClient
-): Promise<Array<Table<'students'>>> => {
+export const getAllStudents = async (): // supabase: AppSupabaseClient
+Promise<Array<Table<'students'>>> => {
+  const supabase = createSupabaseServerComponentClient();
+
   const { data, error } = await supabase.from('students').select('*');
 
   if (error) {
@@ -276,4 +278,102 @@ export const insertStudents = async (
   }
 
   return data;
+};
+
+async function getAuthUser(supabase: AppSupabaseClient) {
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getCurrentTeachersCourses() {
+  console.log('getCurrentTeachersCourses on the server');
+  const supabaseClient = createSupabaseServerComponentClient();
+
+  const { user } = await getAuthUser(supabaseClient);
+
+  const { data, error } = await supabaseClient
+    .from('teacher_courses_by_auth')
+    .select('teacher_id, course_id, course_name, course_description')
+    .eq('auth_id', user.id);
+
+  if (error) {
+    console.error('Error fetching courses:', error);
+    return [];
+  }
+
+  return data;
+}
+
+export const getAllCourses = async (): Promise<
+  Array<Table<'private_items'>>
+> => {
+  const supabase = createSupabaseServerComponentClient();
+  const { data, error } = await supabase.from('private_items').select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export async function fetchStudentsByIds(studentIds: number[]) {
+  const supabase = createSupabaseServerComponentClient();
+  const { data, error } = await supabase
+    .from('students')
+    .select('*')
+    .in('id', studentIds); // Use the `in` operator to filter by student IDs
+
+  if (error) {
+    console.error('Error fetching students:', error);
+    return [];
+  }
+
+  return data;
+}
+
+// uses aggresive caching since we removed 'use server' from the top of file
+export const getCourseAndStudents = async (
+  id: string
+): Promise<CourseWithStudents> => {
+  const supabase = createSupabaseServerComponentClient();
+  console.log('id: ', id);
+  const { data: course, error } = await supabase
+    .from('courses')
+    .select('*')
+    .eq('course_id', parseInt(id))
+    .single();
+
+  const { data: studentIds, error: enrollmentError } = await supabase
+    .from('enrollments')
+    .select('student_id')
+    .eq('course_id', parseInt(id));
+
+  if (enrollmentError) {
+    throw enrollmentError;
+  }
+
+  if (error) {
+    throw error;
+  }
+
+  const students = await fetchStudentsByIds(
+    studentIds.map((enrollment) => enrollment.student_id)
+  );
+
+  return {
+    course_id: course.course_id,
+    course_name: course.course_name,
+    description: course.description,
+    students,
+  };
+};
+
+type CourseWithStudents = Table<'courses'> & {
+  students: Table<'students'>[];
 };

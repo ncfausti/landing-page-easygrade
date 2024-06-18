@@ -176,7 +176,7 @@ export type Database = {
           added_by_auth_user_id: string | null
           created_at: string | null
           first_name: string
-          grade_level: string | null
+          grade_level: number | null
           id: number
           last_name: string
         }
@@ -184,7 +184,7 @@ export type Database = {
           added_by_auth_user_id?: string | null
           created_at?: string | null
           first_name: string
-          grade_level?: string | null
+          grade_level?: number | null
           id?: number
           last_name: string
         }
@@ -192,7 +192,7 @@ export type Database = {
           added_by_auth_user_id?: string | null
           created_at?: string | null
           first_name?: string
-          grade_level?: string | null
+          grade_level?: number | null
           id?: number
           last_name?: string
         }
@@ -229,6 +229,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "courses"
             referencedColumns: ["course_id"]
+          },
+          {
+            foreignKeyName: "teacher_courses_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_courses_by_auth"
+            referencedColumns: ["teacher_id"]
           },
           {
             foreignKeyName: "teacher_courses_teacher_id_fkey"
@@ -279,7 +286,31 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      teacher_courses_by_auth: {
+        Row: {
+          auth_id: string | null
+          course_description: string | null
+          course_id: number | null
+          course_name: string | null
+          teacher_id: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teacher_courses_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["course_id"]
+          },
+          {
+            foreignKeyName: "teachers_auth_id_fkey"
+            columns: ["auth_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never

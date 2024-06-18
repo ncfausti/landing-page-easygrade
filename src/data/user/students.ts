@@ -41,18 +41,6 @@ export async function insertStudentsAction(payload: {
   return data;
 }
 
-// limit to only the students that were added by the currently logged in user
-export async function getAllStudentsAction() {
-  const supabaseClient = createSupabaseServerActionClient();
-  const { data, error } = await supabaseClient.from('students').select('*');
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-}
-
 export async function insertStudentsAndEnrollmentsAction(payload: {
   students: InsertStudent[];
   course_id: number;

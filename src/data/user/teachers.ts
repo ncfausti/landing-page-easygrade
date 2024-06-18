@@ -8,6 +8,23 @@ import {
   InsertTeacherCourse,
 } from '@/types';
 
+export async function getTeacherIdFromAuthIdAction(payload: {
+  auth_id: string;
+}) {
+  const supabaseClient = createSupabaseServerActionClient();
+
+  const { data, error } = await supabaseClient
+    .from('teachers')
+    .select('teacher_id')
+    .eq('auth_id', payload.auth_id);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
 export async function insertTeacherAction(payload: {
   teacher: InsertTeacherPayload;
 }) {

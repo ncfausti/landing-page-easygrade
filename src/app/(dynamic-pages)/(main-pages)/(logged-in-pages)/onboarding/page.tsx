@@ -14,7 +14,6 @@ export default function Page() {
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
   const [courseId, setCourseId] = useState<number>(-1);
-
   const { mutate: insertTeacherAndSetupCourse } = useMutation(
     insertTeacherAndSetupCourseAction,
     {
