@@ -9,50 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      assignment_questions: {
-        Row: {
-          assignment_id: number
-          question_id: number
-        }
-        Insert: {
-          assignment_id: number
-          question_id: number
-        }
-        Update: {
-          assignment_id?: number
-          question_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "assignmentquestions_assignment_id_fkey"
-            columns: ["assignment_id"]
-            isOneToOne: false
-            referencedRelation: "assignment_questions_view"
-            referencedColumns: ["assignment_id"]
-          },
-          {
-            foreignKeyName: "assignmentquestions_assignment_id_fkey"
-            columns: ["assignment_id"]
-            isOneToOne: false
-            referencedRelation: "assignments"
-            referencedColumns: ["assignment_id"]
-          },
-          {
-            foreignKeyName: "assignmentquestions_question_id_fkey"
-            columns: ["question_id"]
-            isOneToOne: false
-            referencedRelation: "assignment_questions_view"
-            referencedColumns: ["question_id"]
-          },
-          {
-            foreignKeyName: "assignmentquestions_question_id_fkey"
-            columns: ["question_id"]
-            isOneToOne: false
-            referencedRelation: "questions"
-            referencedColumns: ["question_id"]
-          },
-        ]
-      }
       assignments: {
         Row: {
           assignment_id: number
@@ -61,6 +17,8 @@ export type Database = {
           created_at: string
           feedback: string[] | null
           number_incorrect: number
+          pdf_url: string | null
+          question_ids: number[] | null
           student_id: number
           submission_date: string | null
           submitted_answers: string[] | null
@@ -73,6 +31,8 @@ export type Database = {
           created_at?: string
           feedback?: string[] | null
           number_incorrect: number
+          pdf_url?: string | null
+          question_ids?: number[] | null
           student_id: number
           submission_date?: string | null
           submitted_answers?: string[] | null
@@ -85,6 +45,8 @@ export type Database = {
           created_at?: string
           feedback?: string[] | null
           number_incorrect?: number
+          pdf_url?: string | null
+          question_ids?: number[] | null
           student_id?: number
           submission_date?: string | null
           submitted_answers?: string[] | null
@@ -363,19 +325,6 @@ export type Database = {
       }
     }
     Views: {
-      assignment_questions_view: {
-        Row: {
-          answer_choices: string[] | null
-          assignment_id: number | null
-          assignment_name: string | null
-          correct_answer: string | null
-          question_id: number | null
-          question_text: string | null
-          submission_date: string | null
-          submitted_answers: string[] | null
-        }
-        Relationships: []
-      }
       teacher_courses_by_auth: {
         Row: {
           auth_id: string | null

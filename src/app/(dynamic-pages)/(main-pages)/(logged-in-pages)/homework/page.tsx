@@ -82,8 +82,7 @@ export function CourseSelectDropdown(props) {
         supabaseUserClientComponentClient
       );
       if (error) {
-        // setError(error.message);
-        // throw error;
+        console.error('Error fetching courses:', error);
       } else {
         setCourses(data || []);
       }
@@ -118,6 +117,8 @@ export default function Page(props) {
   const [subjNum, setSubjNum] = useState(7);
   const [mcqNum, setMcqNum] = useState(3);
   const [subject, setSubject] = useState<Subject>('Math');
+  const [courseId, setCourseId] = useState<Subject>('-1');
+
   const [completion, setCompletion] = useState('');
   const [isCompletionLoading, setIsCompletionLoading] = useState(false);
   const [file, setFile] = useState<PDFFile>();
@@ -165,6 +166,12 @@ export default function Page(props) {
   };
   const handleSubjectiveSelect = (subjNum: number) => {
     setSubjNum(subjNum);
+  };
+
+  const handleCourseIdSelect = (courseId) => {
+    // need to use this value to generate homeworks for all students in course
+    // with course.courseId = courseId
+    setCourseId(courseId);
   };
 
   const widthToSendToOpenAI = 400;
@@ -317,7 +324,7 @@ export default function Page(props) {
                 <DifficultySelector />
                 {isCompletionLoading}
                 <CourseSelectDropdown
-                  handleCourseSelect={(e) => console.log(e)}
+                  handleCourseSelect={handleCourseIdSelect}
                 />
                 <Chat
                   setCompletion={setCompletionCallback}
