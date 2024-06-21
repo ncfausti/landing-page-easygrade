@@ -6,6 +6,7 @@ import {
   InsertTeacher,
   InsertTeacherPayload,
   InsertTeacherCourse,
+  InsertQuestion,
 } from '@/types';
 
 export async function getTeacherIdFromAuthIdAction(payload: {
@@ -117,4 +118,24 @@ export async function insertTeacherAndSetupCourseAction(payload: {
     course: courseRecord,
     teacherCourse: teacherCourseRecord,
   };
+}
+
+export async function insertQuestions(payload: {
+  questions: InsertQuestion[];
+}) {
+  const supabase = createSupabaseServerActionClient();
+  const { questions } = payload;
+
+  // Insert data into the questions table
+  const { data, error } = await supabase
+    .from('questions')
+    .insert(questions)
+    .select();
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/');
+  return data;
 }

@@ -58,3 +58,7 @@ export type InsertTeacherCourse = Omit<TeacherCourse, 'teacher_course_id'>;
 
 export type Enrollment = Table<'enrollments'>;
 export type InsertEnrollment = Omit<Enrollment, 'course_id'>;
+
+export type Question = Table<'questions'>;
+export type InsertQuestion =
+  Database['public']['Tables']['questions']['Insert'];
