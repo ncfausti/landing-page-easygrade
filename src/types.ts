@@ -4,6 +4,9 @@ import { Database } from './lib/database.types';
 export type AppSupabaseClient = SupabaseClient<Database>;
 export type Table<T extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][T]['Row'];
+
+export type View<T extends keyof Database['public']['Views']> =
+  Database['public']['Views'][T]['Row'];
 /** One of the providers supported by GoTrue. */
 export type AuthProvider =
   | 'apple'

@@ -21,6 +21,11 @@ export default {
       },
     ],
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   webpack: (config) => {
     config.resolve.alias.canvas = false;
 

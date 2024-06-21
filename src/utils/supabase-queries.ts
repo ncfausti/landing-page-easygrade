@@ -291,9 +291,7 @@ async function getAuthUser(supabase: AppSupabaseClient) {
 }
 
 export async function getCurrentTeachersCourses() {
-  console.log('getCurrentTeachersCourses on the server');
   const supabaseClient = createSupabaseServerComponentClient();
-
   const { user } = await getAuthUser(supabaseClient);
 
   const { data, error } = await supabaseClient
@@ -309,11 +307,27 @@ export async function getCurrentTeachersCourses() {
   return data;
 }
 
-export const getAllCourses = async (): Promise<
-  Array<Table<'private_items'>>
-> => {
+export async function getCurrentTeachersCoursesFromFrontend(
+  supabaseClient: AppSupabaseClient
+) {
+  const { user } = await getAuthUser(supabaseClient);
+
+  const { data, error } = await supabaseClient
+    .from('teacher_courses_by_auth')
+    .select('*')
+    .eq('auth_id', user.id);
+
+  // if (error) {
+  //   console.error('Error fetching courses:', error);
+  //   return [];
+  // }
+
+  return { data, error };
+}
+
+export const getAllCourses = async (): Promise<Array<Table<'courses'>>> => {
   const supabase = createSupabaseServerComponentClient();
-  const { data, error } = await supabase.from('private_items').select('*');
+  const { data, error } = await supabase.from('courses').select('*');
 
   if (error) {
     throw error;
@@ -377,3 +391,52 @@ export const getCourseAndStudents = async (
 type CourseWithStudents = Table<'courses'> & {
   students: Table<'students'>[];
 };
+
+// type QuestionAndAnswer = Table<'questions'>;
+// type InsertQuestionAndAnswer = Omit<QuestionAndAnswer, 'question_id'>;
+
+// export async function addAssignmentWithQuestions(
+//   assignmentData,
+//   questionData: InsertQuestionAndAnswer[]
+// ): Promise<Table<'assignments'>> {
+//   const supabase = createSupabaseServerComponentClient();
+
+//   // Insert questions
+//   const { data: questions, error: questionsError } = await supabase
+//     .from('questions')
+//     .insert(questionData)
+//     .select();
+
+//   if (questionsError) {
+//     console.error('Error adding questions:', questionsError);
+//     return null;
+//   }
+
+//   // Insert assignment
+//   const { data: assignment, error: assignmentError } = await supabase
+//     .from('assignments')
+//     .insert(assignmentData)
+//     .single();
+
+//   if (assignmentError) {
+//     console.error('Error adding assignment:', assignmentError);
+//     return null;
+//   }
+
+//   // Link assignment to questions
+//   const assignmentQuestions = questions.map((question) => ({
+//     assignment_id: assignment.assignment_id,
+//     question_id: question.question_id,
+//   }));
+
+//   const { error: linkError } = await supabase
+//     .from('assignment_questions')
+//     .insert(assignmentQuestions);
+
+//   if (linkError) {
+//     console.error('Error linking assignment to questions:', linkError);
+//     return null;
+//   }
+
+//   return assignment;
+// }

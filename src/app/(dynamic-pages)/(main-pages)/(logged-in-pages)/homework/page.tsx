@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import FileUpload from '@/components/ui/FileUpload';
 import Image from 'next/image';
 import { pdfjs, Document, Thumbnail } from 'react-pdf';
@@ -52,11 +52,68 @@ import DifficultySelector from './components/difficulty-selector';
 import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
 
+import { getCurrentTeachersCoursesFromFrontend } from '@/utils/supabase-queries';
+import { View } from '@/types';
+
 // Force the page to be dynamic and allow streaming responses up to 30 seconds
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
-export default function Page() {
+import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
+import { createSuspenseResource } from '@/utils/createSuspenseResource';
+import { User } from '@supabase/supabase-js';
+
+// const userResource = createSuspenseResource<User | null>(
+//   supabaseUserClientComponentClient.auth
+//     .getUser()
+//     .then(({ data }) => data?.user ?? null)
+// );
+export function CourseSelectDropdown(props) {
+  // const user = userResource.read();
+  const { handleCourseSelect } = props;
+
+  const [courses, setCourses] = useState<View<'teacher_courses_by_auth'>[]>([]);
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const { data, error } = await getCurrentTeachersCoursesFromFrontend(
+        supabaseUserClientComponentClient
+      );
+      if (error) {
+        // setError(error.message);
+        // throw error;
+      } else {
+        setCourses(data || []);
+      }
+      console.log(data);
+      // setLoading(false);
+    };
+
+    fetchCourses();
+  }, []);
+
+  return courses ? (
+    <Select onValueChange={(e) => handleCourseSelect(e)}>
+      <SelectTrigger className="mx-2">
+        <SelectValue placeholder={'Select course period'} />
+      </SelectTrigger>
+      <SelectContent>
+        {courses.map((course) => (
+          <SelectItem key={course.course_id} value={`${course.course_id}`}>
+            {course.course_name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  ) : (
+    <Select>
+      <SelectValue placeholder={'Loading courses'} />
+    </Select>
+  );
+}
+export default function Page(props) {
   const [grade, setGrade] = useState(5);
   const [subjNum, setSubjNum] = useState(7);
   const [mcqNum, setMcqNum] = useState(3);
@@ -163,6 +220,8 @@ export default function Page() {
     ]
   `;
 
+  // const courses = await getCurrentTeachersCourses();
+
   return (
     <>
       <div className="md:hidden">
@@ -257,6 +316,9 @@ export default function Page() {
                 />
                 <DifficultySelector />
                 {isCompletionLoading}
+                <CourseSelectDropdown
+                  handleCourseSelect={(e) => console.log(e)}
+                />
                 <Chat
                   setCompletion={setCompletionCallback}
                   text={hwGenerationPrompt}

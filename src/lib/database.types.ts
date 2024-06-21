@@ -9,36 +9,86 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      assignments: {
+      assignment_questions: {
         Row: {
-          answers: string[]
           assignment_id: number
-          course_id: number
-          feedback: string[] | null
-          number_incorrect: number
-          questions: string[]
-          student_id: number
-          submission_date: string | null
+          question_id: number
         }
         Insert: {
-          answers: string[]
-          assignment_id?: number
-          course_id: number
-          feedback?: string[] | null
-          number_incorrect: number
-          questions: string[]
-          student_id: number
-          submission_date?: string | null
+          assignment_id: number
+          question_id: number
         }
         Update: {
-          answers?: string[]
           assignment_id?: number
+          question_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignmentquestions_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "assignment_questions_view"
+            referencedColumns: ["assignment_id"]
+          },
+          {
+            foreignKeyName: "assignmentquestions_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "assignments"
+            referencedColumns: ["assignment_id"]
+          },
+          {
+            foreignKeyName: "assignmentquestions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "assignment_questions_view"
+            referencedColumns: ["question_id"]
+          },
+          {
+            foreignKeyName: "assignmentquestions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["question_id"]
+          },
+        ]
+      }
+      assignments: {
+        Row: {
+          assignment_id: number
+          assignment_name: string | null
+          course_id: number
+          created_at: string
+          feedback: string[] | null
+          number_incorrect: number
+          student_id: number
+          submission_date: string | null
+          submitted_answers: string[] | null
+          upload_photo_url: string | null
+        }
+        Insert: {
+          assignment_id?: number
+          assignment_name?: string | null
+          course_id: number
+          created_at?: string
+          feedback?: string[] | null
+          number_incorrect: number
+          student_id: number
+          submission_date?: string | null
+          submitted_answers?: string[] | null
+          upload_photo_url?: string | null
+        }
+        Update: {
+          assignment_id?: number
+          assignment_name?: string | null
           course_id?: number
+          created_at?: string
           feedback?: string[] | null
           number_incorrect?: number
-          questions?: string[]
           student_id?: number
           submission_date?: string | null
+          submitted_answers?: string[] | null
+          upload_photo_url?: string | null
         }
         Relationships: [
           {
@@ -171,6 +221,33 @@ export type Database = {
         }
         Relationships: []
       }
+      questions: {
+        Row: {
+          answer_choices: string[] | null
+          correct_answer: string
+          hints: string[] | null
+          question_id: number
+          question_text: string
+          question_type: string | null
+        }
+        Insert: {
+          answer_choices?: string[] | null
+          correct_answer: string
+          hints?: string[] | null
+          question_id?: number
+          question_text: string
+          question_type?: string | null
+        }
+        Update: {
+          answer_choices?: string[] | null
+          correct_answer?: string
+          hints?: string[] | null
+          question_id?: number
+          question_text?: string
+          question_type?: string | null
+        }
+        Relationships: []
+      }
       students: {
         Row: {
           added_by_auth_user_id: string | null
@@ -286,6 +363,19 @@ export type Database = {
       }
     }
     Views: {
+      assignment_questions_view: {
+        Row: {
+          answer_choices: string[] | null
+          assignment_id: number | null
+          assignment_name: string | null
+          correct_answer: string | null
+          question_id: number | null
+          question_text: string | null
+          submission_date: string | null
+          submitted_answers: string[] | null
+        }
+        Relationships: []
+      }
       teacher_courses_by_auth: {
         Row: {
           auth_id: string | null
