@@ -13,7 +13,6 @@ export default function QuestionForm() {
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [hints, setHints] = useState<string[]>(['']);
   const [questionType, setQuestionType] = useState('');
-  const [status, setStatus] = useState('');
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -30,11 +29,22 @@ export default function QuestionForm() {
       },
 
       onSuccess: (newQuestions: Question[]) => {
-        toast.success(`Question(s) created `, { id: toastRef.current });
+        toast.success(
+          // eslint-disable-next-line prettier/prettier
+          `${newQuestions.length} question${newQuestions.length > 1 ? 's' : ''
+          } created `,
+          { id: toastRef.current }
+        );
         toastRef.current = null;
         router.refresh();
         queryClient.invalidateQueries(['questions']);
-        // router.push(`/ item / ${ newItemId }`);
+        // setStatus('Question submitted successfully!');
+        // Clear the form fields after successful submission
+        setQuestionText('');
+        setAnswerChoices(['']);
+        setCorrectAnswer('');
+        setHints(['']);
+        setQuestionType('');
       },
       onError: () => {
         toast.error('Failed to create question', { id: toastRef.current });
@@ -75,6 +85,7 @@ export default function QuestionForm() {
         question_type: questionType,
       },
     ]);
+
     // console.log(JSON.stringify());
   };
 
@@ -147,7 +158,6 @@ export default function QuestionForm() {
         />
       </label>
       <button type="submit">Submit</button>
-      {status && <p>{status}</p>}
     </form>
   );
 }

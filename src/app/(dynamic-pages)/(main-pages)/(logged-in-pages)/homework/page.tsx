@@ -118,7 +118,7 @@ export default function Page(props) {
   const [subjNum, setSubjNum] = useState(7);
   const [mcqNum, setMcqNum] = useState(3);
   const [subject, setSubject] = useState<Subject>('Math');
-  const [courseId, setCourseId] = useState<Subject>('-1');
+  const [courseId, setCourseId] = useState<string>('-1');
 
   const [completion, setCompletion] = useState('');
   const [isCompletionLoading, setIsCompletionLoading] = useState(false);
@@ -311,13 +311,13 @@ export default function Page(props) {
                   onChangeCallback={handleGradeSelect}
                 />
                 <QuestionRatioSelector
-                  defaultValue={[7]}
+                  defaultValue={[mcqNum]}
                   maxValue={20}
                   title="No. of MCQs:"
                   onChangeCallback={handleMCQSelect}
                 />
                 <QuestionRatioSelector
-                  defaultValue={[3]}
+                  defaultValue={[subjNum]}
                   maxValue={10}
                   title="No. of subjective:"
                   onChangeCallback={handleSubjectiveSelect}

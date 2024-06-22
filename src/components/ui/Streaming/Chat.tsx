@@ -1,8 +1,14 @@
 'use client';
-import { useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { useCompletion } from 'ai/react';
 import Loading from '@/components/Loading';
 import { progress } from '@/lib/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { InsertQuestion, Question } from '@/types';
+import { toast } from 'react-hot-toast';
+import { insertQuestionsAction } from '@/data/user/questions';
+import { useRouter } from 'next/navigation';
+
 export default function Chat(props: {
   text: string;
   images: string[];
@@ -10,6 +16,33 @@ export default function Chat(props: {
   totalQuestions: number;
 }) {
   const { text, images, totalQuestions } = props;
+  const queryClient = useQueryClient();
+  const toastRef = useRef<string | null>(null);
+  const router = useRouter();
+
+  const { mutate: insertQuestions } = useMutation(
+    async (questions: InsertQuestion[]) => {
+      return insertQuestionsAction(questions);
+    },
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Creating question(s)');
+        toastRef.current = toastId;
+      },
+
+      onSuccess: () => {
+        toast.success('Questions created', { id: toastRef.current });
+        toastRef.current = null;
+        router.refresh();
+        queryClient.invalidateQueries(['questions']);
+      },
+      onError: () => {
+        toast.error('Failed to create question', { id: toastRef.current });
+        toastRef.current = null;
+      },
+    }
+  );
+
   const {
     completion,
     input,
@@ -21,6 +54,20 @@ export default function Chat(props: {
     api: '/api/completion',
     onResponse: (response: Response) => {
       console.log('Received response from server:', response);
+    },
+    onFinish: (prompt, completion) => {
+      console.log('Finished json completion.');
+      const questions = JSON.parse(completion).map((q) => {
+        return {
+          question_text: q.question,
+          correct_answer: q.answer,
+          answer_choices: q.choices,
+          question_type: q.type,
+          hints: [], // fill in later with form or adjust prompt to include
+        };
+      });
+
+      insertQuestions(questions);
     },
   });
 
@@ -63,9 +110,8 @@ export default function Chat(props: {
         />
         <button
           disabled={isLoading}
-          className={`${
-            isLoading ? 'bg-gray-200' : 'bg-white'
-          } w-full btn  border-2 p-3 mt-3 rounded-xl border-black`}
+          className={`${isLoading ? 'bg-gray-200' : 'bg-white'
+            } w-full btn  border-2 p-3 mt-3 rounded-xl border-black`}
           type="submit"
         >
           {isLoading ? <Loading /> : 'Generate'}

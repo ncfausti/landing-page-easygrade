@@ -20,6 +20,6 @@ export const insertQuestionsAction = async (questions: InsertQuestion[]) => {
     throw error;
   }
 
-  revalidatePath('/homeworks');
+  revalidatePath('/');
   return data;
 };
