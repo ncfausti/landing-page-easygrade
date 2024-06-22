@@ -78,7 +78,7 @@ export default function Chat(props: {
   // in any case, should get rid of both
   // it is also because of the larger input size to the openai endpoint
 
-  useEffect(() => {
+  useEffect(() => { 
     // if (images) {
     //   // console.log('useEffect: ', images.length);
     // }

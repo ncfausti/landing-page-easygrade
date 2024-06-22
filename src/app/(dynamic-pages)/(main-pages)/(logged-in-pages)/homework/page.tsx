@@ -40,6 +40,7 @@ import { InsertIcon } from '@/components/ui/Icons/Insert';
 import { EditIcon } from '@/components/ui/Icons/Edit';
 import './homework.css';
 import { subjects } from '@/constants';
+import { MAIN_PROMPT } from '@/lib/utils';
 
 // const metadata: Metadata = {
 //   title: 'Homework Lab',
@@ -198,37 +199,15 @@ export default function Page(props) {
     });
 
   const totalQuestions = mcqNum + subjNum;
-  const hwGenerationPrompt = `You are a grade ${grade} ${subject}. GENERATE
-  GRADE ${grade} ${subject} HOMEWORK QUESTIONS and ANSWERS based on the
-  attached images.
 
-  There should be exactly ${totalQuestions} questions and answers returned.
-  ${mcqNum} questions should be multiple choice. ${subjNum} questions
-  should be short answer. For math questions use appropriate
-  symbols, not words. E.g. "+" not "plus" and "-" not "minus".
-
-  Rules:
-  DO NOT INCLUDE ANY REFERENCES TO IMAGES IN THE QUESTIONS OR ANSWERS.
-  The format should be JSON.
-  DO NOT RETURN ANYTHING ELSE, ONLY THE JSON OBJECT.
-  JSON object format:
-  [
-      {
-        "question": "What is the capital of France?",
-        "answer": "Paris",
-        "type": "multiple choice",
-        "choices": ["Paris", "London", "Berlin", "Madrid"]
-      },
-      {
-        "question": "150 + 300",
-        "answer": "450",
-        "type": "short answer",
-        "choices": []
-      }
-    ]
-  `;
-
-  // const courses = await getCurrentTeachersCourses();
+  const config = {
+    grade,
+    subject,
+    totalQuestions,
+    mcqNum,
+    subjNum,
+  };
+  const hwGenerationPrompt = MAIN_PROMPT(config);
 
   return (
     <>
