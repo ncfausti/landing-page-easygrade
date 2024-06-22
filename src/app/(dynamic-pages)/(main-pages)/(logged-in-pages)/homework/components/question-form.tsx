@@ -1,6 +1,11 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { insertQuestionsAction } from '@/data/user/questions';
+import { useRef, useState, FormEvent } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+import { InsertQuestion, Question } from '@/types';
+import { useRouter } from 'next/navigation';
 
 export default function QuestionForm() {
   const [questionText, setQuestionText] = useState('');
@@ -9,6 +14,34 @@ export default function QuestionForm() {
   const [hints, setHints] = useState<string[]>(['']);
   const [questionType, setQuestionType] = useState('');
   const [status, setStatus] = useState('');
+  const router = useRouter();
+
+  const queryClient = useQueryClient();
+  const toastRef = useRef<string | null>(null);
+
+  const { mutate: insertQuestions } = useMutation(
+    async (questions: InsertQuestion[]) => {
+      return insertQuestionsAction(questions);
+    },
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Creating question(s)');
+        toastRef.current = toastId;
+      },
+
+      onSuccess: (newQuestions: Question[]) => {
+        toast.success(`Question(s) created `, { id: toastRef.current });
+        toastRef.current = null;
+        router.refresh();
+        queryClient.invalidateQueries(['questions']);
+        // router.push(`/ item / ${ newItemId }`);
+      },
+      onError: () => {
+        toast.error('Failed to create question', { id: toastRef.current });
+        toastRef.current = null;
+      },
+    }
+  );
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,17 +64,18 @@ export default function QuestionForm() {
     //   setStatus('Question submitted successfully!');
     // } else {
     //   const error = await response.json();
-    //   setStatus(`Error: ${error.error}`);
+    //   setStatus(`Error: ${ error.error }`);
     // }
-    console.log(
-      JSON.stringify({
+    insertQuestions([
+      {
         question_text: questionText,
         answer_choices: answerChoices,
         correct_answer: correctAnswer,
         hints,
         question_type: questionType,
-      })
-    );
+      },
+    ]);
+    // console.log(JSON.stringify());
   };
 
   return (
