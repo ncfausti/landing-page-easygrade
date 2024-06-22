@@ -62,6 +62,7 @@ export const maxDuration = 30;
 import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
 import { createSuspenseResource } from '@/utils/createSuspenseResource';
 import { User } from '@supabase/supabase-js';
+import QuestionForm from './components/question-form';
 
 // const userResource = createSuspenseResource<User | null>(
 //   supabaseUserClientComponentClient.auth
@@ -412,6 +413,7 @@ export default function Page(props) {
                         id="pdf-preview-container"
                         className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]"
                       >
+                        <QuestionForm />
                         {!isCompletionLoading && (
                           <PDFPreview
                             questions={trycatch(JSON.parse, completion)}
