@@ -15,6 +15,7 @@ export type Database = {
           assignment_name: string | null
           course_id: number
           created_at: string
+          due_date: string | null
           feedback: string[] | null
           number_incorrect: number
           pdf_url: string | null
@@ -29,6 +30,7 @@ export type Database = {
           assignment_name?: string | null
           course_id: number
           created_at?: string
+          due_date?: string | null
           feedback?: string[] | null
           number_incorrect: number
           pdf_url?: string | null
@@ -43,6 +45,7 @@ export type Database = {
           assignment_name?: string | null
           course_id?: number
           created_at?: string
+          due_date?: string | null
           feedback?: string[] | null
           number_incorrect?: number
           pdf_url?: string | null
