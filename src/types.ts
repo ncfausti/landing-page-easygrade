@@ -70,3 +70,7 @@ export type InsertEnrollment = Omit<Enrollment, 'course_id'>;
 export type Question = Table<'questions'>;
 export type InsertQuestion =
   Database['public']['Tables']['questions']['Insert'];
+
+export type Assignment = Table<'assignments'>;
+export type InsertAssignment =
+  Database['public']['Tables']['assignments']['Insert'];

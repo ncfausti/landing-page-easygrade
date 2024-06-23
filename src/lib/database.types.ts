@@ -17,7 +17,7 @@ export type Database = {
           created_at: string
           due_date: string | null
           feedback: string[] | null
-          number_incorrect: number
+          number_incorrect: number | null
           pdf_url: string | null
           question_ids: number[] | null
           student_id: number
@@ -32,7 +32,7 @@ export type Database = {
           created_at?: string
           due_date?: string | null
           feedback?: string[] | null
-          number_incorrect: number
+          number_incorrect?: number | null
           pdf_url?: string | null
           question_ids?: number[] | null
           student_id: number
@@ -47,7 +47,7 @@ export type Database = {
           created_at?: string
           due_date?: string | null
           feedback?: string[] | null
-          number_incorrect?: number
+          number_incorrect?: number | null
           pdf_url?: string | null
           question_ids?: number[] | null
           student_id?: number

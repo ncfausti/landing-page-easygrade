@@ -14,8 +14,9 @@ export default function Chat(props: {
   images: string[];
   setCompletion: (completionText: string, isLoading: boolean) => void;
   totalQuestions: number;
+  setInsertedQuestions: (questions: Question[]) => void;
 }) {
-  const { text, images, totalQuestions } = props;
+  const { text, images, setInsertedQuestions, totalQuestions } = props;
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
   const router = useRouter();
@@ -30,9 +31,13 @@ export default function Chat(props: {
         toastRef.current = toastId;
       },
 
-      onSuccess: () => {
+      onSuccess: (questions: Question[]) => {
         toast.success('Questions created', { id: toastRef.current });
         toastRef.current = null;
+
+        // call back to parent component to update state
+        setInsertedQuestions(questions);
+
         router.refresh();
         queryClient.invalidateQueries(['questions']);
       },
@@ -78,7 +83,7 @@ export default function Chat(props: {
   // in any case, should get rid of both
   // it is also because of the larger input size to the openai endpoint
 
-  useEffect(() => { 
+  useEffect(() => {
     // if (images) {
     //   // console.log('useEffect: ', images.length);
     // }

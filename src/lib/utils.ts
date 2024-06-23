@@ -39,9 +39,9 @@ export function progress(completion: string, totalQuestions: number): string {
   )} of ${totalQuestions} questions generated`;
 }
 
-export const MAIN_PROMPT = (promptConfig: PromptConfig) => {
+export const MAIN_PROMPT = (promptConfig: PromptConfig): string => {
   const { grade, subject, totalQuestions, mcqNum, subjNum } = promptConfig;
-  `You are a grade ${grade} ${subject}. GENERATE
+  return `You are a grade ${grade} ${subject}. GENERATE
   GRADE ${grade} ${subject} HOMEWORK QUESTIONS and ANSWERS based on the
   attached images.
 

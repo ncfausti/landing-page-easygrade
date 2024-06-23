@@ -41,6 +41,8 @@ import { EditIcon } from '@/components/ui/Icons/Edit';
 import './homework.css';
 import { subjects } from '@/constants';
 import { MAIN_PROMPT } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // const metadata: Metadata = {
 //   title: 'Homework Lab',
@@ -54,24 +56,19 @@ import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
 
 import { getCurrentTeachersCoursesFromFrontend } from '@/utils/supabase-queries';
-import { View } from '@/types';
+import { View, Question } from '@/types';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
+import QuestionForm from './components/question-form';
+import { createAllAssignmentsForCourseAction } from '@/data/user/assignments';
 
 // Force the page to be dynamic and allow streaming responses up to 30 seconds
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
-import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
-import { createSuspenseResource } from '@/utils/createSuspenseResource';
-import { User } from '@supabase/supabase-js';
-import QuestionForm from './components/question-form';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
-// const userResource = createSuspenseResource<User | null>(
-//   supabaseUserClientComponentClient.auth
-//     .getUser()
-//     .then(({ data }) => data?.user ?? null)
-// );
 export function CourseSelectDropdown(props) {
-  // const user = userResource.read();
   const { handleCourseSelect } = props;
 
   const [courses, setCourses] = useState<View<'teacher_courses_by_auth'>[]>([]);
@@ -88,7 +85,6 @@ export function CourseSelectDropdown(props) {
       } else {
         setCourses(data || []);
       }
-      console.log(data);
       // setLoading(false);
     };
 
@@ -96,7 +92,7 @@ export function CourseSelectDropdown(props) {
   }, []);
 
   return courses ? (
-    <Select onValueChange={(e) => handleCourseSelect(e)}>
+    <Select onValueChange={handleCourseSelect}>
       <SelectTrigger className="mx-2">
         <SelectValue placeholder={'Select course period'} />
       </SelectTrigger>
@@ -114,12 +110,13 @@ export function CourseSelectDropdown(props) {
     </Select>
   );
 }
-export default function Page(props) {
+export default function Page() {
   const [grade, setGrade] = useState(5);
   const [subjNum, setSubjNum] = useState(7);
   const [mcqNum, setMcqNum] = useState(3);
   const [subject, setSubject] = useState<Subject>('Math');
-  const [courseId, setCourseId] = useState<string>('-1');
+  const [courseId, setCourseId] = useState<number>(-1);
+  const [insertedQuestions, setInsertedQuestions] = useState<Question[]>([]);
 
   const [completion, setCompletion] = useState('');
   const [isCompletionLoading, setIsCompletionLoading] = useState(false);
@@ -128,6 +125,9 @@ export default function Page(props) {
   const [, setLoadedPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [, setContainerWidth] = useState<number>();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const toastRef = useRef<string | null>(null);
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
 
@@ -170,12 +170,6 @@ export default function Page(props) {
     setSubjNum(subjNum);
   };
 
-  const handleCourseIdSelect = (courseId) => {
-    // need to use this value to generate homeworks for all students in course
-    // with course.courseId = courseId
-    setCourseId(courseId);
-  };
-
   const widthToSendToOpenAI = 400;
   const MAX_PAGES = 50;
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
@@ -208,6 +202,44 @@ export default function Page(props) {
     subjNum,
   };
   const hwGenerationPrompt = MAIN_PROMPT(config);
+
+  const { mutate: createAssignments } = useMutation(
+    ['assignments'],
+    createAllAssignmentsForCourseAction,
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Creating assignments for students');
+        toastRef.current = toastId;
+      },
+
+      onSuccess: () => {
+        toast.success(`New assignments created`, {
+          id: toastRef.current,
+        });
+        toastRef.current = null;
+        router.refresh();
+        queryClient.invalidateQueries(['assignments']);
+      },
+      onError: () => {
+        toast.error('Failed to add assignments', { id: toastRef.current });
+        toastRef.current = null;
+      },
+    }
+  );
+
+  const handleCourseIdSelect = async (courseId: string) => {
+    setCourseId(parseInt(courseId));
+  };
+
+  const handleCreateAllHomeworks = async (
+    course_id: number,
+    question_ids: number[] = []
+  ) => {
+    if (course_id === -1) {
+      return;
+    }
+    createAssignments({ course_id, question_ids });
+  };
 
   return (
     <>
@@ -303,15 +335,31 @@ export default function Page(props) {
                 />
                 <DifficultySelector />
                 {isCompletionLoading}
-                <CourseSelectDropdown
-                  handleCourseSelect={handleCourseIdSelect}
-                />
+
                 <Chat
                   setCompletion={setCompletionCallback}
                   text={hwGenerationPrompt}
                   images={allImages}
                   totalQuestions={totalQuestions}
+                  setInsertedQuestions={setInsertedQuestions}
                 />
+                <CourseSelectDropdown
+                  handleCourseSelect={handleCourseIdSelect}
+                />
+
+                <Button
+                  variant="secondary"
+                  className={courseId === -1 ? 'disabled' : ''}
+                  onClick={() =>
+                    handleCreateAllHomeworks(
+                      courseId,
+                      insertedQuestions.map((q: Question) => q.question_id)
+                    )
+                  }
+                >
+                  <span className="sr-only">Show history</span>
+                  Create all homeworks
+                </Button>
               </div>
               <div className="md:order-1">
                 <TabsContent value="edit" className="mt-0 border-0 p-0">

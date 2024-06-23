@@ -1,9 +1,4 @@
-import {
-  AppSupabaseClient,
-  AuthProvider,
-  Table,
-  InsertQuestion,
-} from '@/types';
+import { AppSupabaseClient, AuthProvider, Table } from '@/types';
 import { toSiteURL } from './helpers';
 import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 

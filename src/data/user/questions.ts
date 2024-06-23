@@ -14,7 +14,8 @@ export const insertQuestionsAction = async (questions: InsertQuestion[]) => {
 
   const { data, error } = await supabaseClient
     .from('questions')
-    .insert(questions);
+    .insert(questions)
+    .select();
 
   if (error) {
     throw error;
