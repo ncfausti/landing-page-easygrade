@@ -71,3 +71,10 @@ export const MAIN_PROMPT = (promptConfig: PromptConfig): string => {
     ]
   `;
 };
+
+export const arrayToObjectMap = (array: { id: number }[]) => {
+  return array.reduce((acc, object) => {
+    acc[object.id] = object;
+    return acc;
+  }, {});
+};

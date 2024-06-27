@@ -3,11 +3,15 @@ import { notFound } from 'next/navigation';
 import { T } from '@/components/ui/Typography';
 import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
 import { getCourseStudentsAndAssignments } from '@/utils/supabase-queries';
+import { arrayToObjectMap } from '@/lib/utils';
 import { Suspense } from 'react';
 
 async function Course({ courseId }: { courseId: string }) {
-  const course = await getCourseStudentsAndAssignments(courseId);
-  console.log(course.assignments);
+  const { course_name, description, students, assignments } =
+    await getCourseStudentsAndAssignments(courseId);
+
+  const student = arrayToObjectMap(students);
+
   return (
     <div className="space-y-2">
       <div className="space-y-4">
@@ -17,13 +21,13 @@ async function Course({ courseId }: { courseId: string }) {
         >
           <ArrowLeft /> <span>Back to dashboard</span>
         </Link>
-        <T.H1>{course.course_name}</T.H1>
-        <T.Subtle>Course: {course.description}</T.Subtle>
+        <T.H1>{course_name}</T.H1>
+        <T.Subtle>Course: {description}</T.Subtle>
       </div>
       <div className="space-y-4">
         <T.H2>Students</T.H2>
         <ul className="space-y-2">
-          {course.students.map((student) => (
+          {students.map((student) => (
             <li key={student.id}>
               {student.first_name} {student.last_name}
             </li>
@@ -31,11 +35,14 @@ async function Course({ courseId }: { courseId: string }) {
         </ul>
         <T.H2>Assignments</T.H2>
         <ul className="space-y-2">
-          {course.assignments.map((assignment) => (
+          {assignments.map((assignment) => (
             <li key={assignment.assignment_id}>
-              {assignment.assignment_name} {assignment.due_date}{' '}
-              {assignment.submission_date} {assignment.upload_photo_url}{' '}
-              {assignment.pdf_url} {assignment.number_incorrect}{' '}
+              {student[assignment.student_id].first_name}{' '}
+              {student[assignment.student_id].last_name}{' '}
+              {assignment.assignment_number} {assignment.assignment_name}{' '}
+              {assignment.due_date} {assignment.submission_date}{' '}
+              {assignment.upload_photo_url} {assignment.pdf_url}{' '}
+              {assignment.number_incorrect}{' '}
             </li>
           ))}
         </ul>
