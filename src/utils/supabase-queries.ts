@@ -352,11 +352,10 @@ export async function fetchStudentsByIds(studentIds: number[]) {
 }
 
 // uses aggresive caching since we removed 'use server' from the top of file
-export const getCourseAndStudents = async (
+export const getCourseStudentsAndAssignments = async (
   id: string
-): Promise<CourseWithStudents> => {
+): Promise<CourseWithStudentsAndAssignments> => {
   const supabase = createSupabaseServerComponentClient();
-  console.log('id: ', id);
   const { data: course, error } = await supabase
     .from('courses')
     .select('*')
@@ -368,6 +367,10 @@ export const getCourseAndStudents = async (
     .select('student_id')
     .eq('course_id', parseInt(id));
 
+  if (error) {
+    console.error('Error fetching assignments:', error);
+    return null;
+  }
   if (enrollmentError) {
     throw enrollmentError;
   }
@@ -380,11 +383,19 @@ export const getCourseAndStudents = async (
     studentIds.map((enrollment) => enrollment.student_id)
   );
 
+  const course_student_pairs = studentIds.map((enrollment) => ({
+    course_id: parseInt(id),
+    student_id: enrollment.student_id,
+  }));
+
+  const assignments = await getAssignments(course_student_pairs);
+
   return {
     course_id: course.course_id,
     course_name: course.course_name,
     description: course.description,
     students,
+    assignments,
   };
 };
 
@@ -392,51 +403,30 @@ type CourseWithStudents = Table<'courses'> & {
   students: Table<'students'>[];
 };
 
-// type QuestionAndAnswer = Table<'questions'>;
-// type InsertQuestionAndAnswer = Omit<QuestionAndAnswer, 'question_id'>;
+type CourseWithStudentsAndAssignments = CourseWithStudents & {
+  assignments: Table<'assignments'>[];
+};
 
-// export async function addAssignmentWithQuestions(
-//   assignmentData,
-//   questionData: InsertQuestionAndAnswer[]
-// ): Promise<Table<'assignments'>> {
-//   const supabase = createSupabaseServerComponentClient();
+export const getAssignments = async (
+  course_student_pairs: { course_id: number; student_id: number }[]
+) => {
+  const supabase = createSupabaseServerComponentClient();
+  const { data, error } = await supabase
+    .from('assignments')
+    .select('*')
+    .or(
+      course_student_pairs
+        .map(
+          (pair) =>
+            `and(course_id.eq.${pair.course_id},student_id.eq.${pair.student_id})`
+        )
+        .join(',')
+    );
 
-//   // Insert questions
-//   const { data: questions, error: questionsError } = await supabase
-//     .from('questions')
-//     .insert(questionData)
-//     .select();
+  if (error) {
+    console.error('Error fetching assignments:', error);
+    return null;
+  }
 
-//   if (questionsError) {
-//     console.error('Error adding questions:', questionsError);
-//     return null;
-//   }
-
-//   // Insert assignment
-//   const { data: assignment, error: assignmentError } = await supabase
-//     .from('assignments')
-//     .insert(assignmentData)
-//     .single();
-
-//   if (assignmentError) {
-//     console.error('Error adding assignment:', assignmentError);
-//     return null;
-//   }
-
-//   // Link assignment to questions
-//   const assignmentQuestions = questions.map((question) => ({
-//     assignment_id: assignment.assignment_id,
-//     question_id: question.question_id,
-//   }));
-
-//   const { error: linkError } = await supabase
-//     .from('assignment_questions')
-//     .insert(assignmentQuestions);
-
-//   if (linkError) {
-//     console.error('Error linking assignment to questions:', linkError);
-//     return null;
-//   }
-
-//   return assignment;
-// }
+  return data;
+};

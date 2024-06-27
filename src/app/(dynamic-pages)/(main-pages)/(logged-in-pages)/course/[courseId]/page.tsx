@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { T } from '@/components/ui/Typography';
 import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
-import { getCourseAndStudents } from '@/utils/supabase-queries';
+import { getCourseStudentsAndAssignments } from '@/utils/supabase-queries';
 import { Suspense } from 'react';
 
 async function Course({ courseId }: { courseId: string }) {
-  const course = await getCourseAndStudents(courseId);
-  console.log(course);
+  const course = await getCourseStudentsAndAssignments(courseId);
+  console.log(course.assignments);
   return (
     <div className="space-y-2">
       <div className="space-y-4">
@@ -26,6 +26,16 @@ async function Course({ courseId }: { courseId: string }) {
           {course.students.map((student) => (
             <li key={student.id}>
               {student.first_name} {student.last_name}
+            </li>
+          ))}
+        </ul>
+        <T.H2>Assignments</T.H2>
+        <ul className="space-y-2">
+          {course.assignments.map((assignment) => (
+            <li key={assignment.assignment_id}>
+              {assignment.assignment_name} {assignment.due_date}{' '}
+              {assignment.submission_date} {assignment.upload_photo_url}{' '}
+              {assignment.pdf_url} {assignment.number_incorrect}{' '}
             </li>
           ))}
         </ul>
