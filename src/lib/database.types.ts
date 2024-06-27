@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           assignment_id: number
           assignment_name: string | null
+          assignment_number: number | null
           course_id: number
           created_at: string
           due_date: string | null
@@ -28,6 +29,7 @@ export type Database = {
         Insert: {
           assignment_id?: number
           assignment_name?: string | null
+          assignment_number?: number | null
           course_id: number
           created_at?: string
           due_date?: string | null
@@ -43,6 +45,7 @@ export type Database = {
         Update: {
           assignment_id?: number
           assignment_name?: string | null
+          assignment_number?: number | null
           course_id?: number
           created_at?: string
           due_date?: string | null
