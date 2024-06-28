@@ -241,7 +241,7 @@ export default function Page() {
     createAssignments({ course_id, question_ids });
   };
 
-  return
+  return (
     <>
       <div className="md:hidden">
         <Image
