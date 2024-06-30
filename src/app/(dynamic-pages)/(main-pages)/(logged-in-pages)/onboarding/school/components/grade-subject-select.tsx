@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const GradeSubjectSelect = () => {
-  const [step, setStep] = useState(1);
   const [configuration, setConfiguration] = useState({
     schoolName: '',
     numberOfTeachers: '',
@@ -14,16 +13,9 @@ const GradeSubjectSelect = () => {
   const [newSubject, setNewSubject] = useState('');
   const [studentNames, setStudentNames] = useState('');
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setConfiguration((prev) => ({ ...prev, [name]: value }));
-  // };
-
-  const handleNextStep = (e) => {
-    if (e.key === 'Enter' || e.type === 'click') {
-      e.preventDefault();
-      setStep((prev) => prev + 1);
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setConfiguration((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleGradeChange = (e) => {
@@ -51,7 +43,10 @@ const GradeSubjectSelect = () => {
 
   const handleAddStudents = () => {
     if (currentGrade && currentSubject && studentNames) {
-      const students = studentNames.split(',').map((name) => name.trim());
+      const students = studentNames
+        .split('\n')
+        .map((name) => name.trim())
+        .filter(Boolean);
       setConfiguration((prev) => ({
         ...prev,
         [currentGrade]: {
@@ -61,15 +56,6 @@ const GradeSubjectSelect = () => {
       }));
       setStudentNames('');
     }
-  };
-
-  const slideIn = {
-    hidden: { x: '100%' },
-    visible: {
-      x: 0,
-      transition: { type: 'spring', stiffness: 300, damping: 30 },
-    },
-    exit: { x: '-100%' },
   };
 
   const grades = [
@@ -150,120 +136,130 @@ const GradeSubjectSelect = () => {
     ],
   };
 
-  return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-4">School Configuration</h2>
-      <form>
-        {/* ... (previous steps remain the same) */}
+  const allSubjects = Array.from(
+    new Set(Object.values(defaultSubjects).flat())
+  );
 
-        {step === 4 && (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={slideIn}
+  return (
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+      <h2 className="text-2xl font-bold mb-4">
+        Grade and Subject Configuration
+      </h2>
+      <form>
+        <div className="mb-4">
+          <label className="block mb-2">Grade</label>
+          <select
+            value={currentGrade}
+            onChange={handleGradeChange}
+            className="w-full p-2 border rounded"
           >
+            <option value="">Select a grade</option>
+            {grades.map((grade) => (
+              <option key={grade} value={grade}>
+                {grade}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {currentGrade && (
+          <>
             <div className="mb-4">
-              <label className="block mb-2">Grade</label>
+              <label className="block mb-2">Subject</label>
               <select
-                value={currentGrade}
-                onChange={handleGradeChange}
+                value={currentSubject}
+                onChange={handleSubjectChange}
                 className="w-full p-2 border rounded"
               >
-                <option value="">Select a grade</option>
-                {grades.map((grade) => (
-                  <option key={grade} value={grade}>
-                    {grade}
+                <option value="">Select a subject</option>
+                {[
+                  ...defaultSubjects[currentGrade],
+                  ...Object.keys(configuration[currentGrade] || {}),
+                ].map((subject) => (
+                  <option key={subject} value={subject}>
+                    {subject}
                   </option>
                 ))}
               </select>
             </div>
 
-            {currentGrade && (
-              <>
-                <div className="mb-4">
-                  <label className="block mb-2">Subject</label>
-                  <select
-                    value={currentSubject}
-                    onChange={handleSubjectChange}
-                    className="w-full p-2 border rounded"
-                  >
-                    <option value="">Select a subject</option>
-                    {[
-                      ...defaultSubjects[currentGrade],
-                      ...Object.keys(configuration[currentGrade] || {}),
-                    ].map((subject) => (
-                      <option key={subject} value={subject}>
-                        {subject}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            <div className="mb-4">
+              <label className="block mb-2">Add New Subject</label>
+              <div className="flex">
+                <input
+                  type="text"
+                  value={newSubject}
+                  onChange={(e) => setNewSubject(e.target.value)}
+                  className="flex-grow p-2 border rounded-l"
+                  placeholder="New subject name"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddSubject}
+                  className="px-4 py-2 bg-green-500 text-white rounded-r hover:bg-green-600"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
 
-                <div className="mb-4">
-                  <label className="block mb-2">Add New Subject</label>
-                  <div className="flex">
-                    <input
-                      type="text"
-                      value={newSubject}
-                      onChange={(e) => setNewSubject(e.target.value)}
-                      className="flex-grow p-2 border rounded-l"
-                      placeholder="New subject name"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddSubject}
-                      className="px-4 py-2 bg-green-500 text-white rounded-r hover:bg-green-600"
-                    >
-                      Add
-                    </button>
-                  </div>
-                </div>
-
-                {currentSubject && (
-                  <div className="mb-4">
-                    <label className="block mb-2">
-                      Student Names (comma-separated)
-                    </label>
-                    <textarea
-                      value={studentNames}
-                      onChange={(e) => setStudentNames(e.target.value)}
-                      className="w-full p-2 border rounded"
-                      rows="4"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddStudents}
-                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                    >
-                      Add Students
-                    </button>
-                  </div>
-                )}
-              </>
+            {currentSubject && (
+              <div className="mb-4">
+                <label className="block mb-2">
+                  Student Names (one per line)
+                </label>
+                <textarea
+                  value={studentNames}
+                  onChange={(e) => setStudentNames(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  rows="4"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddStudents}
+                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Add Students
+                </button>
+              </div>
             )}
-          </motion.div>
+          </>
         )}
       </form>
 
-      {/* Navigation buttons */}
-      <div className="mt-4 flex justify-between">
-        {step > 1 && (
-          <button
-            onClick={() => setStep((prev) => prev - 1)}
-            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-          >
-            Back
-          </button>
-        )}
-        {step < 4 && (
-          <button
-            onClick={handleNextStep}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Next
-          </button>
-        )}
+      {/* Table View */}
+      <div className="mt-8 overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b">Subject</th>
+              {grades.map((grade) => (
+                <th key={grade} className="py-2 px-4 border-b">
+                  {grade}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {allSubjects.map((subject) => (
+              <tr key={subject}>
+                <td className="py-2 px-4 border-b font-medium">{subject}</td>
+                {grades.map((grade) => (
+                  <td
+                    key={`${grade}-${subject}`}
+                    className="py-2 px-4 border-b text-center"
+                  >
+                    {configuration[grade] && configuration[grade][subject]
+                      ? configuration[grade][subject].length
+                      : defaultSubjects[grade].includes(subject)
+                        ? '0'
+                        : '-'}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Display the current configuration object */}
