@@ -93,6 +93,7 @@
     "tailwindcss-animate": "^1.0.7",
     "url-join": "^5.0.0",
     "uuid": "^9.0.1",
+    "xlsx": "^0.18.5",
     "zod": "^3.23.6"
   },
   "devDependencies": {

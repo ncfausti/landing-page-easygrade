@@ -13,10 +13,10 @@ const GradeSubjectSelect = () => {
   const [newSubject, setNewSubject] = useState('');
   const [studentNames, setStudentNames] = useState('');
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setConfiguration((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setConfiguration((prev) => ({ ...prev, [name]: value }));
+  // };
 
   const handleGradeChange = (e) => {
     setCurrentGrade(e.target.value);
@@ -206,13 +206,17 @@ const GradeSubjectSelect = () => {
             {currentSubject && (
               <div className="mb-4">
                 <label className="block mb-2">
-                  Student Names (one per line)
+                  Student names for{' '}
+                  <span className="font-bold">
+                    {currentGrade} grade {currentSubject}
+                  </span>{' '}
+                  (one per line):
                 </label>
                 <textarea
                   value={studentNames}
                   onChange={(e) => setStudentNames(e.target.value)}
                   className="w-full p-2 border rounded"
-                  rows="4"
+                  rows={4}
                 />
                 <button
                   type="button"
