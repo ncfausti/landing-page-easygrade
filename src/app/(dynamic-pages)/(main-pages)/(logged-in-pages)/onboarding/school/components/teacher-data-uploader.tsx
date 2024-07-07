@@ -1,14 +1,22 @@
 'use client';
 import React, { useState, useRef } from 'react';
 import * as XLSX from 'xlsx/xlsx.mjs';
+import { submitUserList } from '@/data/user/teachers';
+import startBackgroundJob from '@/app/actions/start-background-job';
+
+interface TeacherSignupUser {
+  name: string;
+  email: string;
+}
 
 const TeacherDataUploader = () => {
   const [file, setFile] = useState(null);
   const [manualData, setManualData] = useState('');
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [parsedData, setParsedData] = useState([]);
+  const [parsedData, setParsedData] = useState<TeacherSignupUser[]>([]);
   const fileInputRef = useRef(null);
+  const [userList, setUserList] = useState('');
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -59,6 +67,10 @@ const TeacherDataUploader = () => {
       setError(error.message);
     }
   };
+
+  async function handleJobBtnClick() {
+    await startBackgroundJob();
+  }
 
   const readExcel = (file) => {
     return new Promise((resolve, reject) => {
@@ -117,17 +129,36 @@ const TeacherDataUploader = () => {
       .map((row) => {
         const [name, email] = row.split(/[,\t]/);
         return {
-          'Teacher Name': name.trim(),
-          'Teacher Email': email.trim(),
+          name: name.trim(),
+          email: email.trim(),
         };
       });
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     console.log('Confirmed data:', parsedData);
+    // console.log('User list:', userList)
     // Here you would typically send this data to your backend
+    const users = parsedData.map((user: { name: string; email: string }) => {
+      const { name, email } = user;
+      return { name, email };
+    });
+    await submitUserList(users);
+    setUserList('');
+    alert('User list submitted successfully!');
     setShowModal(false);
   };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const users = userList.split('\n').map((line) => {
+  //     const [name, email] = line.split(',').map((item) => item.trim());
+  //     return { name, email };
+  //   });
+  //   await submitUserList(users);
+  //   setUserList('');
+  //   alert('User list submitted successfully!');
+  // };
 
   return (
     <div className="p-4">
@@ -170,6 +201,12 @@ const TeacherDataUploader = () => {
         >
           Preview Data
         </button>
+        <button
+          onClick={handleJobBtnClick}
+          className="btn btn-primary w-1/2 h-56 bg-green-500 text-xl sm:text-3xl rounded-lg hover:bg-green-600"
+        >
+          Start Background Job
+        </button>
       </form>
 
       {showModal && (
@@ -184,10 +221,10 @@ const TeacherDataUploader = () => {
                 </tr>
               </thead>
               <tbody>
-                {parsedData.map((row, index) => (
+                {parsedData.map((row: TeacherSignupUser, index) => (
                   <tr key={index}>
-                    <td className="border p-2">{row['Teacher Name']}</td>
-                    <td className="border p-2">{row['Teacher Email']}</td>
+                    <td className="border p-2">{row.name}</td>
+                    <td className="border p-2">{row.email}</td>
                   </tr>
                 ))}
               </tbody>

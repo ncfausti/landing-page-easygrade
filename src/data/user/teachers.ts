@@ -26,7 +26,7 @@ export async function getTeacherIdFromAuthIdAction(payload: {
   return data;
 }
 
-export async function insertTeacherAction(payload: {
+export async function insertTeachersAction(payload: {
   teacher: InsertTeacherPayload;
 }) {
   const supabaseClient = createSupabaseServerActionClient();
@@ -40,11 +40,11 @@ export async function insertTeacherAction(payload: {
   const { id: auth_id, email } = session.user;
 
   // add the currently logged in user_id and email to the teacher object
-  const teacherRow: InsertTeacher = { ...payload.teacher, auth_id, email };
+  const teacherRows: InsertTeacher[] = { ...payload.teacher, auth_id, email };
 
   const { data, error } = await supabaseClient
     .from('teachers')
-    .insert(teacherRow)
+    .insert(teacherRows)
     .select('*');
 
   if (error) {
@@ -138,4 +138,50 @@ export async function insertQuestions(payload: {
 
   revalidatePath('/');
   return data;
+}
+
+type UserSubmission = {
+  name: string;
+  email: string;
+};
+
+export async function submitUserList(users: UserSubmission[]) {
+  // modify this to submit the users to the server
+  // and send the job to the queue
+  console.log('submitUserList', users);
+  const jobQueue = new Queue('signupQueue', {
+    connection: {
+      host: process.env.REDIS_HOST,
+      port: 6379,
+      password: process.env.REDIS_PASSWORD,
+    },
+  });
+
+  // const { users } = req.body; // Expecting an array of {email, name} objects
+
+  try {
+    const job = await jobQueue.add('process_signup', { users });
+    console.log({ message: 'Job added to queue', jobId: job.id });
+  } catch (error) {
+    console.log({ message: 'Error adding job to queue', error: error.message });
+  }
+
+  // const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  // const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+  // const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
+  //   auth: {
+  //     autoRefreshToken: false,
+  //     persistSession: false,
+  //   },
+  // });
+
+  // const usersArray = Array.isArray(users) ? users : [users];
+
+  // const { data, error } = await supabase.rpc('submit_and_process_users', {
+  //   users_json: usersArray,
+  // });
+
+  // if (error) throw error;
+  return 'success';
 }

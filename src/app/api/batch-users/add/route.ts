@@ -44,20 +44,36 @@ export async function GET(req: NextRequest) {
   return new Response(JSON.stringify([user]));
 }
 
-export async function POST(req: NextRequest) {
-  const { body } = req;
-  const reader = body.getReader();
-  const decoder = new TextDecoder('utf-8');
-  let result = '';
-  let value;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    value = await reader.read();
-    if (value.done) {
-      break;
-    }
-    result += decoder.decode(value.value, { stream: true });
+// export async function POST(req: NextRequest) {
+//   const { body } = req;
+//   const reader = body.getReader();
+//   const decoder = new TextDecoder('utf-8');
+//   let result = '';
+//   let value;
+//   // eslint-disable-next-line no-constant-condition
+//   while (true) {
+//     value = await reader.read();
+//     if (value.done) {
+//       break;
+//     }
+//     result += decoder.decode(value.value, { stream: true });
+//   }
+//   result += decoder.decode();
+//   return new Response(result);
+// }
+
+// what is this for ?
+export async function POST(request: NextRequest) {
+  const data = await request.json();
+
+  for (let i = 0; i < 10; i++) {
+    await fetch('https://firstqstashmessage.requestcatcher.com/test', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    await new Promise((resolve) => setTimeout(resolve, 500));
   }
-  result += decoder.decode();
-  return new Response(result);
+
+  return Response.json({ success: true });
 }

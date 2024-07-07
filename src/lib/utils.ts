@@ -78,3 +78,35 @@ export const arrayToObjectMap = (array: { id: number }[]) => {
     return acc;
   }, {});
 };
+
+// async function processUserCreationQueue(batchSize: number = 10) {
+
+//   for (const user of pendingUsers) {
+//     try {
+//       // Sign up the user
+//       const { data, error } = await supabase.auth.admin.createUser({
+//         email: user.email,
+//         email_confirm: true,
+//         user_metadata: { full_name: user.name }
+//       })
+
+//       if (error) throw error
+
+//       // Update the queue item status
+//       await supabase
+//         .from('user_creation_queue')
+//         .update({ status: 'completed', processed_at: new Date().toISOString() })
+//         .eq('id', user.id)
+
+//       console.log(`User created successfully: ${user.email}`)
+//     } catch (error) {
+//       console.error(`Error creating user ${user.email}:`, error)
+
+//       // Update the queue item status to 'failed'
+//       await supabase
+//         .from('user_creation_queue')
+//         .update({ status: 'failed', processed_at: new Date().toISOString() })
+//         .eq('id', user.id)
+//     }
+//   }
+// }
