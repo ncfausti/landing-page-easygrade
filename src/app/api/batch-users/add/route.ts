@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-
+import { verifySignatureAppRouter } from '@upstash/qstash/nextjs';
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -29,7 +29,7 @@ async function createUserProfile(email, temporaryPassword) {
 
 import { NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GetHandler(req: NextRequest) {
   const { email, pw } = Object.fromEntries(req.nextUrl.searchParams.entries());
   const user = await createUserProfile(email, pw);
   return new Response(JSON.stringify([user]));
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
 // The function will return a JSON object with the user's email and ID.
 // The function will log the user's email and ID to the console.
 
-export async function POST(request: NextRequest) {
+export async function PostHandler(request: NextRequest) {
   const data = await request.json();
 
   // for (let i = 0; i < 10; i++) {
@@ -72,3 +72,5 @@ export async function POST(request: NextRequest) {
 
   return Response.json({ success: true });
 }
+export const POST = verifySignatureAppRouter(PostHandler);
+export const GET = verifySignatureAppRouter(GetHandler);
