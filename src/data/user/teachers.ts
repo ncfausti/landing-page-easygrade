@@ -149,22 +149,8 @@ export async function submitUserList(users: UserSubmission[]) {
   // modify this to submit the users to the server
   // and send the job to the queue
   console.log('submitUserList', users);
-  const jobQueue = new Queue('signupQueue', {
-    connection: {
-      host: process.env.REDIS_HOST,
-      port: 6379,
-      password: process.env.REDIS_PASSWORD,
-    },
-  });
 
   // const { users } = req.body; // Expecting an array of {email, name} objects
-
-  try {
-    const job = await jobQueue.add('process_signup', { users });
-    console.log({ message: 'Job added to queue', jobId: job.id });
-  } catch (error) {
-    console.log({ message: 'Error adding job to queue', error: error.message });
-  }
 
   // const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   // const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;

@@ -56,6 +56,7 @@ const TeacherDataUploader = () => {
     try {
       if (file) {
         const data = await readExcel(file);
+        console.log('Data:', data);
         setParsedData(data);
         setShowModal(true);
       } else if (validateManualData()) {
@@ -68,9 +69,9 @@ const TeacherDataUploader = () => {
     }
   };
 
-  async function handleJobBtnClick() {
-    await startBackgroundJob();
-  }
+  // async function handleJobBtnClick() {
+  //   await startBackgroundJob();
+  // }
 
   const readExcel = (file) => {
     return new Promise((resolve, reject) => {
@@ -107,10 +108,10 @@ const TeacherDataUploader = () => {
 
           const formattedData = rows
             .map((row) => ({
-              'Teacher Name': row[nameIndex],
-              'Teacher Email': row[emailIndex],
+              name: row[nameIndex],
+              email: row[emailIndex],
             }))
-            .filter((row) => row['Teacher Name'] && row['Teacher Email']);
+            .filter((row) => row.name && row.email);
 
           resolve(formattedData);
         } catch (error) {
@@ -143,7 +144,9 @@ const TeacherDataUploader = () => {
       const { name, email } = user;
       return { name, email };
     });
-    await submitUserList(users);
+    await startBackgroundJob(users);
+
+    // await submitUserList(users);
     setUserList('');
     alert('User list submitted successfully!');
     setShowModal(false);
@@ -166,6 +169,10 @@ const TeacherDataUploader = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block mb-2">Upload XLS, XLSX, or CSV file:</label>
+          <label className="block mb-2 text-xs">
+            Please include a header row with columns for{' '}
+            <strong>full name</strong> and <strong>email</strong>.
+          </label>
           <input
             type="file"
             accept=".xls,.xlsx,.csv"
@@ -200,12 +207,6 @@ const TeacherDataUploader = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Preview Data
-        </button>
-        <button
-          onClick={handleJobBtnClick}
-          className="btn btn-primary w-1/2 h-56 bg-green-500 text-xl sm:text-3xl rounded-lg hover:bg-green-600"
-        >
-          Start Background Job
         </button>
       </form>
 
