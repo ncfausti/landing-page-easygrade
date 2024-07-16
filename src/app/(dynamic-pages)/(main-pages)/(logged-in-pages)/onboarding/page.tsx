@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Subject } from '@/types';
+import SectionForm from './components/section-form';
 
 export default function Page() {
   const router = useRouter();
@@ -148,22 +149,23 @@ export default function Page() {
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         {step === 1 && (
-          <div className="question">
-            <h2 className="text-xl font-semibold mb-4">What is your name?</h2>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="border border-gray-300 p-2 w-full rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              onClick={handleNext}
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
-            >
-              Next
-            </button>
-          </div>
+          <SectionForm />
+          // <div className="question">
+          //   <h2 className="text-xl font-semibold mb-4">What is your name?</h2>
+          //   <input
+          //     type="text"
+          //     name="name"
+          //     value={formData.name}
+          //     onChange={handleChange}
+          //     className="border border-gray-300 p-2 w-full rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          //   />
+          //   <button
+          //     onClick={handleNext}
+          //     className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+          //   >
+          //     Next
+          //   </button>
+          // </div>
         )}
         {step === 2 && (
           <div className="question">

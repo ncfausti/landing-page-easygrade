@@ -39,7 +39,7 @@ const TeacherDataUploader = () => {
     const rows = manualData.trim().split('\n');
     for (const row of rows) {
       const parts = row.split(/[,\t]/);
-      if (parts.length !== 2) {
+      if (parts.length < 2) {
         setError(
           'Each row must contain a teacher name and email separated by a tab or comma.'
         );
@@ -165,7 +165,7 @@ const TeacherDataUploader = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Teacher Data Uploader</h2>
+      <h2 className="text-2xl font-bold mb-4">Teacher Data Upload</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block mb-2">Upload XLS, XLSX, or CSV file:</label>
@@ -186,7 +186,9 @@ const TeacherDataUploader = () => {
               hover:file:bg-blue-100"
           />
         </div>
-        <div className="text-center">OR</div>
+        <div className="text-center">
+          <h3>OR</h3>
+        </div>
         <div>
           <label className="block mb-2">
             Enter teacher data (Name, Email - one per line, separated by tab or

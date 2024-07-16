@@ -39,14 +39,5 @@ export default async function startBackgroundJob(users: UserSubmission[]) {
 
   const res = await qstashClient.batchJSON(batch);
 
-  //   {
-  //     url: 'https://4e86-46-135-73-91.ngrok-free.app/api/batch-users/add',
-  //     delay: 1.25,
-  //     body: {
-  //       hello: `bgJob scheduled at: ${new Date().toISOString()}, called at: `,
-  //     },
-  //   },
-  // ]);
-  // console.log('startBackgroundJob: ', res);
   return res;
 }
