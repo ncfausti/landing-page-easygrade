@@ -1,10 +1,18 @@
 'use server';
 
 import { insertStudentsAndEnrollmentsAction } from '@/data/user/students';
-import { createSupabaseServerActionClient } from '@/supabase-clients/createSupabaseServerActionClient';
+import {
+  createSupabaseServerActionClient,
+  getSupabaseServerActionClientAndCurrentUser,
+} from '@/supabase-clients/createSupabaseServerActionClient';
 import { revalidatePath } from 'next/cache';
-import { InsertCourse, InsertStudentPayload } from '@/types';
+import {
+  InsertCourse,
+  InsertTeacherCourse,
+  InsertStudentPayload,
+} from '@/types';
 import { z } from 'zod';
+import { getTeacherIdFromAuthIdAction } from './teachers';
 
 export async function insertCourseAction(payload: { course: InsertCourse }) {
   const supabaseClient = createSupabaseServerActionClient();
@@ -98,19 +106,18 @@ const classesSchema = z
 export async function setupTeacherClassesAction(classes) {
   try {
     const validatedData = classesSchema.parse(classes);
+    const { currentUser, supabaseClient } =
+      await getSupabaseServerActionClientAndCurrentUser();
 
-    // Here you would typically save the classes to your database
-    console.log('Classes to be created:', validatedData);
-
-    // when I added students via onboarding/ teacher data uploader
-    // use the data to create classes
-
-    // 3. save enrollments
-    // 4. fetch students, classes, enrollments and display them in teacher dashboard
+    const [{ teacher_id }] = await getTeacherIdFromAuthIdAction({
+      auth_id: currentUser.id,
+    });
 
     let enrollmentsCount = 0;
+    const teacherCourses: InsertTeacherCourse[] = [];
+
+    // OPTIMIZE: Use a single transaction to insert all data
     for (const classData of validatedData) {
-      // Insert class data into the database
       const { grade, section, subject, students } = classData;
 
       // 2. save classes
@@ -134,27 +141,30 @@ export async function setupTeacherClassesAction(classes) {
           };
         });
 
-      const courseInsertResults = await insertCourseAction({
+      const [courseInsertResult] = await insertCourseAction({
         course: insertCourseRecord,
       });
+      const { course_id } = courseInsertResult;
 
       const insertedStudentsAndEnrollments =
         await insertStudentsAndEnrollmentsAction({
           students: studentRecords,
-          course_id: courseInsertResults[0].course_id,
+          course_id,
         });
 
-      console.log('Course insert results:', courseInsertResults);
-      console.log(
-        'Inserted students and enrollments:',
-        insertedStudentsAndEnrollments
-      );
+      // update teacherCourses records to get inserted after loop
+      teacherCourses.push({ course_id, teacher_id });
       enrollmentsCount += insertedStudentsAndEnrollments.students.length;
     }
 
+    const { data: teacherCoursesInsertData } = await supabaseClient
+      .from('teacher_courses')
+      .insert(teacherCourses)
+      .select('*');
+
     return {
       message: 'Classes setup successfully!',
-      coursesCount: validatedData.length,
+      coursesCount: teacherCoursesInsertData.length,
       enrollmentsCount,
     };
   } catch (error) {
@@ -163,10 +173,8 @@ export async function setupTeacherClassesAction(classes) {
       error.errors.forEach((err) => {
         errors[err.path.join('.')] = err.message;
       });
-      console.log('Error 1: ', errors);
       return { errors };
     } else {
-      console.log('Error 2: ', error);
       throw error;
     }
   }

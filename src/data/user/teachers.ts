@@ -171,3 +171,12 @@ export async function submitUserList(users: UserSubmission[]) {
   // if (error) throw error;
   return 'success';
 }
+
+export async function getSupabaseServerActionClientAndCurrentUser() {
+  const supabaseClient = createSupabaseServerActionClient();
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+  const currentUser = session.user;
+  return { currentUser, supabaseClient };
+}

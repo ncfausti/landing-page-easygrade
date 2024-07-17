@@ -35,16 +35,17 @@ async function Course({ courseId }: { courseId: string }) {
         </ul>
         <T.H2>Assignments</T.H2>
         <ul className="space-y-2">
-          {assignments.map((assignment) => (
-            <li key={assignment.assignment_id}>
-              {student[assignment.student_id].first_name}{' '}
-              {student[assignment.student_id].last_name}{' '}
-              {assignment.assignment_number} {assignment.assignment_name}{' '}
-              {assignment.due_date} {assignment.submission_date}{' '}
-              {assignment.upload_photo_url} {assignment.pdf_url}{' '}
-              {assignment.number_incorrect}{' '}
-            </li>
-          ))}
+          {assignments &&
+            assignments.map((assignment) => (
+              <li key={assignment.assignment_id}>
+                {student[assignment.student_id].first_name}{' '}
+                {student[assignment.student_id].last_name}{' '}
+                {assignment.assignment_number} {assignment.assignment_name}{' '}
+                {assignment.due_date} {assignment.submission_date}{' '}
+                {assignment.upload_photo_url} {assignment.pdf_url}{' '}
+                {assignment.number_incorrect}{' '}
+              </li>
+            ))}
         </ul>
       </div>
     </div>

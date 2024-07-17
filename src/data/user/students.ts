@@ -1,8 +1,7 @@
 'use server';
-import { createSupabaseServerActionClient } from '@/supabase-clients/createSupabaseServerActionClient';
+import { getSupabaseServerActionClientAndCurrentUser } from '@/supabase-clients/createSupabaseServerActionClient';
 import { revalidatePath } from 'next/cache';
 import { InsertStudentPayload } from '@/types';
-
 export async function insertStudentsAction(payload: {
   students: InsertStudentPayload[];
 }) {
@@ -78,12 +77,4 @@ export async function insertStudentsAndEnrollmentsAction(payload: {
 
   revalidatePath('/');
   return { students: studentRecords, enrollments: enrollmentRecords };
-}
-async function getSupabaseServerActionClientAndCurrentUser() {
-  const supabaseClient = createSupabaseServerActionClient();
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
-  const currentUser = session.user;
-  return { currentUser, supabaseClient };
 }

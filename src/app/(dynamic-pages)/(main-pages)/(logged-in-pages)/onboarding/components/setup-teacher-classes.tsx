@@ -30,7 +30,7 @@ export default function TeacherClassesForm() {
 
       onSuccess: (results) => {
         toast.success(
-          `${results.enrollmentsCount} enrollments and ${results.coursesCount} addded.`,
+          `${results.enrollmentsCount} enrollments and ${results.coursesCount} classes addded.`,
           {
             id: toastRef.current,
           }
@@ -144,7 +144,7 @@ export default function TeacherClassesForm() {
         // setState({ message: result.message, errors: {} });
       } catch (error) {
         console.log('error 3: ', error);
-        setState({ 
+        setState({
           message: null,
           errors: { general: 'An unexpected error occurred.' },
         });

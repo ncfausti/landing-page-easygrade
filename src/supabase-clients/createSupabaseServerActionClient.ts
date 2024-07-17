@@ -16,3 +16,12 @@ export const createSupabaseServerActionClient = () =>
       },
     }
   );
+
+export const getSupabaseServerActionClientAndCurrentUser = async () => {
+  const supabaseClient = createSupabaseServerActionClient();
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+  const currentUser = session.user;
+  return { currentUser, supabaseClient };
+};
