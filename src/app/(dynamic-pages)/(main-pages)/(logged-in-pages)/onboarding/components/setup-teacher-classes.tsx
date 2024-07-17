@@ -1,96 +1,14 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { useFormState } from 'react-dom';
-import { setupTeacherClasses } from '@/data/user/courses';
-
-const defaultSubjects = {
-  Nursery: ['English', 'Maths', 'EVS'],
-  LKG: ['English', 'Maths', 'EVS'],
-  UKG: ['English', 'Maths', 'EVS'],
-  'Class 1': ['English', 'Hindi', 'Maths', 'EVS', 'Computer Studies'],
-  'Class 2': ['English', 'Hindi', 'Maths', 'EVS', 'Computer Studies'],
-  'Class 3': ['English', 'Hindi', 'Maths', 'EVS', 'Computer Studies'],
-  'Class 4': ['English', 'Hindi', 'Maths', 'EVS', 'Computer Studies'],
-  'Class 5': ['English', 'Hindi', 'Maths', 'EVS', 'Computer Studies'],
-  'Class 6': [
-    'English',
-    'Hindi',
-    'Maths',
-    'History & Civics',
-    'Geography',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Computer Studies',
-  ],
-  'Class 7': [
-    'English',
-    'Hindi',
-    'Maths',
-    'History & Civics',
-    'Geography',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Computer Studies',
-  ],
-  'Class 8': [
-    'English',
-    'Hindi',
-    'Maths',
-    'History & Civics',
-    'Geography',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Computer Studies',
-  ],
-  'Class 9': [
-    'English',
-    'Hindi',
-    'Maths',
-    'History & Civics',
-    'Geography',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Computer Applications',
-  ],
-  'Class 10': [
-    'English',
-    'Hindi',
-    'Maths',
-    'History & Civics',
-    'Geography',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Computer Applications',
-  ],
-  'Class 11': [
-    'English',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Maths',
-    'Computer Science',
-    'Economics',
-  ],
-  'Class 12': [
-    'English',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Maths',
-    'Computer Science',
-    'Economics',
-  ],
-};
+import { setupTeacherClassesAction } from '@/data/user/courses';
+import { defaultSubjects } from '@/constants';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
+import { toast } from 'react-hot-toast';
 
 const grades = Object.keys(defaultSubjects);
-
-// const initialState = { message: null, errors: {} };
 
 export default function TeacherClassesForm() {
   const [state, setState] = useState({ message: null, errors: {} });
@@ -98,6 +16,40 @@ export default function TeacherClassesForm() {
   const [sections, setSections] = useState(['A']);
   const [selectedClass, setSelectedClass] = useState('');
   const [openAccordion, setOpenAccordion] = useState(null);
+  const toastRef = useRef<string | null>(null);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutate: setupTeacherClasses } = useMutation(
+    setupTeacherClassesAction,
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Creating students and classes');
+        toastRef.current = toastId;
+      },
+
+      onSuccess: (results) => {
+        toast.success(
+          `${results.enrollmentsCount} enrollments and ${results.coursesCount} addded.`,
+          {
+            id: toastRef.current,
+          }
+        );
+        toastRef.current = null;
+        router.refresh();
+        queryClient.invalidateQueries([
+          'courses',
+          'students',
+          'enrollments',
+          'teacher_courses',
+        ]);
+      },
+      onError: () => {
+        toast.error('Failed to add students/courses', { id: toastRef.current });
+        toastRef.current = null;
+      },
+    }
+  );
 
   const addNewClass = () => {
     const newIndex = classes.length;
@@ -183,13 +135,16 @@ export default function TeacherClassesForm() {
     }
 
     if (Object.keys(errors).length > 0) {
+      console.log('object.keys errors: ', errors);
       setState({ message: null, errors });
     } else {
       try {
-        const result = await setupTeacherClasses(classesData);
-        setState({ message: result.message, errors: {} });
+        setupTeacherClasses(classesData);
+
+        // setState({ message: result.message, errors: {} });
       } catch (error) {
-        setState({
+        console.log('error 3: ', error);
+        setState({ 
           message: null,
           errors: { general: 'An unexpected error occurred.' },
         });

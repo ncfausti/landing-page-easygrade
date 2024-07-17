@@ -1,7 +1,7 @@
 'use server';
 import { createSupabaseServerActionClient } from '@/supabase-clients/createSupabaseServerActionClient';
 import { revalidatePath } from 'next/cache';
-import { InsertStudent, InsertStudentPayload } from '@/types';
+import { InsertStudentPayload } from '@/types';
 
 export async function insertStudentsAction(payload: {
   students: InsertStudentPayload[];

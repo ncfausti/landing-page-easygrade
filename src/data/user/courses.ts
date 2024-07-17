@@ -63,7 +63,7 @@ export async function createGradeSections(prevState, formData) {
   }
 
   try {
-    gradeData.forEach((grade, index) => {
+    gradeData.forEach((grade) => {
       gradeSchema.parse(grade);
     });
 
@@ -77,6 +77,7 @@ export async function createGradeSections(prevState, formData) {
         errors[err.path.join('.')] = err.message;
       });
     } else {
+      console.log(errors);
       errors.general = 'An unexpected error occurred';
     }
     return { message: null, errors };
@@ -94,30 +95,7 @@ const classesSchema = z
   .array(classSchema)
   .min(1, 'At least one class is required');
 
-// Example input from form:
-// [
-//   {
-//     grade: 'Class 1',
-//     section: 'A',
-//     subject: 'English',
-//     students: 'eng1 student1\neng1 student2\neng1 student3'
-//   },
-//   {
-//     grade: 'Class 2',
-//     section: 'A',
-//     subject: 'English',
-//     students: 'eng2 student1\neng2 student2\neng2 student3\neng2 student4'
-//   },
-//   {
-//     grade: 'Class 3',
-//     section: 'A',
-//     subject: 'Maths',
-//     students: 'math3 student1\nmath3 student2\nmath3 student3\nmath3 student4'
-//   }
-// ]
-
-export async function setupTeacherClasses(classes) {
-  console.log(classes);
+export async function setupTeacherClassesAction(classes) {
   try {
     const validatedData = classesSchema.parse(classes);
 
@@ -130,6 +108,7 @@ export async function setupTeacherClasses(classes) {
     // 3. save enrollments
     // 4. fetch students, classes, enrollments and display them in teacher dashboard
 
+    let enrollmentsCount = 0;
     for (const classData of validatedData) {
       // Insert class data into the database
       const { grade, section, subject, students } = classData;
@@ -148,9 +127,10 @@ export async function setupTeacherClasses(classes) {
         .split('\n')
         .map((student) => {
           const [first_name, last_name] = student.split(' ');
+
           return {
             first_name,
-            last_name,
+            last_name: last_name || first_name,
           };
         });
 
@@ -169,17 +149,24 @@ export async function setupTeacherClasses(classes) {
         'Inserted students and enrollments:',
         insertedStudentsAndEnrollments
       );
+      enrollmentsCount += insertedStudentsAndEnrollments.students.length;
     }
 
-    return { message: 'Classes setup successfully!' };
+    return {
+      message: 'Classes setup successfully!',
+      coursesCount: validatedData.length,
+      enrollmentsCount,
+    };
   } catch (error) {
     if (error instanceof z.ZodError) {
       const errors = {};
       error.errors.forEach((err) => {
         errors[err.path.join('.')] = err.message;
       });
+      console.log('Error 1: ', errors);
       return { errors };
     } else {
+      console.log('Error 2: ', error);
       throw error;
     }
   }
