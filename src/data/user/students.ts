@@ -1,26 +1,19 @@
 'use server';
 import { createSupabaseServerActionClient } from '@/supabase-clients/createSupabaseServerActionClient';
 import { revalidatePath } from 'next/cache';
-import { InsertStudent } from '@/types';
+import { InsertStudent, InsertStudentPayload } from '@/types';
 
 export async function insertStudentsAction(payload: {
-  students: InsertStudent[];
+  students: InsertStudentPayload[];
 }) {
-  const supabaseClient = createSupabaseServerActionClient();
-  // Retrieve the user session
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
-
-  // Get the user ID from the session
-  const userId = session.user.id;
-  // get the currently logged in user's id
+  const { currentUser, supabaseClient } =
+    await getSupabaseServerActionClientAndCurrentUser();
 
   // add the currently logged in user's id to each student object
   const studentRows = payload.students.map((student) => {
     return {
       ...student,
-      added_by_auth_user_id: userId,
+      added_by_auth_user_id: currentUser.id,
     };
   });
 
@@ -42,24 +35,17 @@ export async function insertStudentsAction(payload: {
 }
 
 export async function insertStudentsAndEnrollmentsAction(payload: {
-  students: InsertStudent[];
+  students: InsertStudentPayload[];
   course_id: number;
 }) {
-  const supabaseClient = createSupabaseServerActionClient();
-  // Retrieve the user session
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
-
-  // Get the user ID from the session
-  const userId = session.user.id;
-  // get the currently logged in user's id
+  const { currentUser, supabaseClient } =
+    await getSupabaseServerActionClientAndCurrentUser();
 
   // add the currently logged in user's id to each student object
   const studentRows = payload.students.map((student) => {
     return {
       ...student,
-      added_by_auth_user_id: userId,
+      added_by_auth_user_id: currentUser.id,
     };
   });
 
@@ -72,7 +58,6 @@ export async function insertStudentsAndEnrollmentsAction(payload: {
     .insert(studentRows)
     .select('*');
 
-  // insert enrollments for each student in the course
   const enrollmentRows = studentRecords.map((student) => {
     return {
       student_id: student.id,
@@ -93,4 +78,12 @@ export async function insertStudentsAndEnrollmentsAction(payload: {
 
   revalidatePath('/');
   return { students: studentRecords, enrollments: enrollmentRecords };
+}
+async function getSupabaseServerActionClientAndCurrentUser() {
+  const supabaseClient = createSupabaseServerActionClient();
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+  const currentUser = session.user;
+  return { currentUser, supabaseClient };
 }

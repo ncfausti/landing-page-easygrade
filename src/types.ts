@@ -50,15 +50,16 @@ export type Subject =
 
 export type Student = Table<'students'>;
 export type InsertStudent = Omit<Student, 'id' | 'created_at' | 'grade_level'>;
+export type InsertStudentPayload = Omit<InsertStudent, 'added_by_auth_user_id'>;
 
 export type Course = Table<'courses'>;
-export type InsertCourse = Omit<Course, 'course_id'>;
+export type InsertCourse = Omit<Course, 'course_id' | 'assignment_count'>;
 
 export type Teacher = Table<'teachers'>;
 export type InsertTeacher = Omit<Teacher, 'teacher_id'>;
 export type InsertTeacherPayload = Omit<
   Teacher,
-  'teacher_id' | 'email' | 'auth_id'
+  'teacher_id' | 'email' | 'auth_id' | 'school_id'
 >;
 
 export type TeacherCourse = Table<'teacher_courses'>;

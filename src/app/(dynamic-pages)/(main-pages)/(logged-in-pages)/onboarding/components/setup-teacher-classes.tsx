@@ -298,7 +298,7 @@ export default function TeacherClassesForm() {
                           handleStudentsChange(index, e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        rows="5"
+                        rows={5}
                       ></textarea>
                     </div>
                     <button

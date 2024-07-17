@@ -77,19 +77,31 @@ export type Database = {
       }
       courses: {
         Row: {
+          assignment_count: number | null
           course_id: number
           course_name: string
           description: string | null
+          grade: string | null
+          section: string | null
+          subject: string | null
         }
         Insert: {
+          assignment_count?: number | null
           course_id?: number
           course_name: string
           description?: string | null
+          grade?: string | null
+          section?: string | null
+          subject?: string | null
         }
         Update: {
+          assignment_count?: number | null
           course_id?: number
           course_name?: string
           description?: string | null
+          grade?: string | null
+          section?: string | null
+          subject?: string | null
         }
         Relationships: []
       }
@@ -216,6 +228,30 @@ export type Database = {
         }
         Relationships: []
       }
+      schools: {
+        Row: {
+          configuration: Json | null
+          created_at: string
+          id: number
+          name: string
+          teacher_count: number | null
+        }
+        Insert: {
+          configuration?: Json | null
+          created_at?: string
+          id?: number
+          name: string
+          teacher_count?: number | null
+        }
+        Update: {
+          configuration?: Json | null
+          created_at?: string
+          id?: number
+          name?: string
+          teacher_count?: number | null
+        }
+        Relationships: []
+      }
       students: {
         Row: {
           added_by_auth_user_id: string | null
@@ -298,6 +334,7 @@ export type Database = {
           first_name: string
           grades_taught: number[] | null
           last_name: string
+          school_id: number | null
           subjects_taught: string[] | null
           teacher_id: number
         }
@@ -307,6 +344,7 @@ export type Database = {
           first_name: string
           grades_taught?: number[] | null
           last_name: string
+          school_id?: number | null
           subjects_taught?: string[] | null
           teacher_id?: number
         }
@@ -316,6 +354,7 @@ export type Database = {
           first_name?: string
           grades_taught?: number[] | null
           last_name?: string
+          school_id?: number | null
           subjects_taught?: string[] | null
           teacher_id?: number
         }
@@ -327,7 +366,41 @@ export type Database = {
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "teachers_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
         ]
+      }
+      user_signup_queue: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: number
+          name: string
+          processed_at: string | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: number
+          name: string
+          processed_at?: string | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: number
+          name?: string
+          processed_at?: string | null
+          status?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {
@@ -358,7 +431,65 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      check_and_stop_processing: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      create_assignments_for_course: {
+        Args: {
+          p_course_id: number
+          p_question_ids: number[]
+          p_due_date: string
+        }
+        Returns: {
+          assignment_id: number
+          course_id: number
+          student_id: number
+          assignment_number: number
+          assignment_name: string
+          feedback: string[]
+          submitted_answers: string[]
+          number_incorrect: number
+          submission_date: string
+          created_at: string
+          upload_photo_url: string
+          question_ids: number[]
+          pdf_url: string
+          due_date: string
+        }[]
+      }
+      increment_assignment_counter: {
+        Args: {
+          p_course_id: number
+        }
+        Returns: {
+          new_count: number
+        }[]
+      }
+      process_user_creation_queue_batch: {
+        Args: {
+          batch_size: number
+        }
+        Returns: number
+      }
+      process_user_signup_queue: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      scheduled_process_user_creation_queue: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      submit_and_process_users: {
+        Args: {
+          users_json: Json
+        }
+        Returns: undefined
+      }
+      trigger_user_signup_processing: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
