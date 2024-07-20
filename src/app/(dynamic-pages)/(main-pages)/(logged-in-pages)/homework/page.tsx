@@ -43,6 +43,7 @@ import { subjects } from '@/constants';
 import { MAIN_PROMPT } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { v4 as uuidv4 } from 'uuid';
 
 // const metadata: Metadata = {
 //   title: 'Homework Lab',
@@ -125,8 +126,6 @@ export default function Page() {
   const [, setLoadedPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [, setContainerWidth] = useState<number>();
-  const router = useRouter();
-  const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
@@ -483,6 +482,8 @@ export default function Page() {
                         {!isCompletionLoading && (
                           <PDFPreview
                             questions={trycatch(JSON.parse, completion)}
+                            assignment_template_id={uuidv4()}
+                            student_ids={[0, 1, 2]}
                           />
                         )}
                         {isCompletionLoading && <Loading />}
