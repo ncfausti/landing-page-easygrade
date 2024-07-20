@@ -203,29 +203,54 @@ export default function Page() {
   };
   const hwGenerationPrompt = MAIN_PROMPT(config);
 
-  const { mutate: createAssignments } = useMutation(
-    ['assignments'],
-    createAllAssignmentsForCourseAction,
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Creating assignments for students');
-        toastRef.current = toastId;
-      },
+  // const { mutate: createAssignments } = useMutation(
+  //   ['assignments'],
+  //   createAllAssignmentsForCourseAction,
+  //   {
+  //     onMutate: () => {
+  //       const toastId = toast.loading('Creating assignments for students');
+  //       toastRef.current = toastId;
+  //     },
 
-      onSuccess: () => {
-        toast.success(`New assignments created`, {
-          id: toastRef.current,
-        });
-        toastRef.current = null;
-        router.refresh();
-        queryClient.invalidateQueries(['assignments']);
-      },
-      onError: () => {
-        toast.error('Failed to add assignments', { id: toastRef.current });
-        toastRef.current = null;
-      },
-    }
-  );
+  //     onSuccess: () => {
+  //       toast.success(`New assignments created`, {
+  //         id: toastRef.current,
+  //       });
+  //       toastRef.current = null;
+  //       router.refresh();
+  //       queryClient.invalidateQueries(['assignments']);
+  //     },
+  //     onError: () => {
+  //       toast.error('Failed to add assignments', { id: toastRef.current });
+  //       toastRef.current = null;
+  //     },
+  //   }
+  // );
+
+  // const doCreateAssignments = async ({ courseId, question_ids }) => {
+  //   if (courseId === -1) {
+  //     return;
+  //   }
+  //   try {
+  //     const toastId = toast.loading('Creating assignments for students');
+  //     toastRef.current = toastId;
+  //     await createAllAssignmentsForCourseAction({
+  //       course_id: courseId,
+  //       question_ids: insertedQuestions.map((q: Question) => q.question_id),
+  //     });
+  //     toast.success(`New assignments created`, {
+  //       id: toastRef.current,
+  //     });
+  //     toastRef.current = null;
+  //   } catch (e) {
+  //     toast.error('Failed to add assignments', { id: toastRef.current });
+  //     toastRef.current = null;
+  //   }
+  //   const toastId = toast.loading('Creating assignments for students');
+  //   toastRef.current = toastId;
+
+  //   // await createAssignments({ course_id: courseId, question_ids: [] });
+  // };
 
   const handleCourseIdSelect = async (courseId: string) => {
     setCourseId(parseInt(courseId));
@@ -238,7 +263,21 @@ export default function Page() {
     if (course_id === -1) {
       return;
     }
-    createAssignments({ course_id, question_ids });
+    try {
+      const toastId = toast.loading('Creating assignments for students');
+      toastRef.current = toastId;
+      await createAllAssignmentsForCourseAction({
+        course_id,
+        question_ids,
+      });
+      toast.success(`New assignments created`, {
+        id: toastRef.current,
+      });
+      toastRef.current = null;
+    } catch (e) {
+      toast.error('Failed to add assignments', { id: toastRef.current });
+      toastRef.current = null;
+    }
   };
 
   return (

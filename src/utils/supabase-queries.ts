@@ -1,4 +1,4 @@
-import { AppSupabaseClient, AuthProvider, Table } from '@/types';
+import { AppSupabaseClient, AuthProvider, Table, Course } from '@/types';
 import { toSiteURL } from './helpers';
 import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 
@@ -396,10 +396,14 @@ export const getCourseStudentsAndAssignments = async (
     description: course.description,
     students,
     assignments,
+    grade: course.grade,
+    section: course.section,
+    subject: course.subject,
+    
   };
 };
 
-type CourseWithStudents = Table<'courses'> & {
+type CourseWithStudents = Course & {
   students: Table<'students'>[];
 };
 

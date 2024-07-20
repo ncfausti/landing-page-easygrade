@@ -1,30 +1,7 @@
-// serverAction
 'use server';
 import { createSupabaseServerActionClient } from '@/supabase-clients/createSupabaseServerActionClient';
 import { revalidatePath } from 'next/cache';
 import { InsertAssignment } from '@/types';
-
-export const createAssignmentsAction = async (
-  assignments: InsertAssignment[]
-) => {
-  'use server';
-  const supabaseClient = createSupabaseServerActionClient();
-
-  if (assignments.length === 0) {
-    throw new Error('No assignments provided');
-  }
-
-  const { data, error } = await supabaseClient
-    .from('assignments')
-    .insert(assignments);
-
-  if (error) {
-    throw error;
-  }
-
-  revalidatePath('/homework');
-  return data;
-};
 
 export const createAllAssignmentsForCourseAction = async ({
   course_id,
@@ -33,7 +10,6 @@ export const createAllAssignmentsForCourseAction = async ({
   course_id: number;
   question_ids: number[];
 }) => {
-  'use server';
   if (!course_id) {
     throw new Error('No course_id provided');
   }

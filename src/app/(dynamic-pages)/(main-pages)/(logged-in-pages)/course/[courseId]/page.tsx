@@ -43,7 +43,11 @@ async function Course({ courseId }: { courseId: string }) {
                 {assignment.assignment_number} {assignment.assignment_name}{' '}
                 {assignment.due_date} {assignment.submission_date}{' '}
                 {assignment.upload_photo_url} {assignment.pdf_url}{' '}
-                {assignment.number_incorrect}{' '}
+                {assignment.number_incorrect}
+                {'Question IDs: '}
+                {assignment.question_ids.map((question) => (
+                  <span key={question}>{question} </span>
+                ))}
               </li>
             ))}
         </ul>
