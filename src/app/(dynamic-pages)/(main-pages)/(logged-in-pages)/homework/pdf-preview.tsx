@@ -84,10 +84,16 @@ const styles = StyleSheet.create({
   },
 });
 
+// app-index.js:34 Error: Font family not registered: Oswald. Please register it calling Font.register() method.
+Font.register({
+  family: 'Oswald',
+  src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf',
+});
+
 export const PDFPreview = ({
   questions,
   assignment_template_id,
-  student_ids,
+  student_ids = [],
 }: {
   questions: Question[];
   assignment_template_id: string;
@@ -106,11 +112,11 @@ export const PDFPreview = ({
         student_ids
       );
 
-      console.log('students', students);
+      console.log('students inside pdf-preview', students);
     };
 
     fetchStudents();
-  }, []);
+  }, [student_ids]);
 
   // this needs to be unique for each student/hw pair
   const uniqueStudentHwUrls = student_ids.map(
@@ -185,8 +191,3 @@ export const PDFPreview = ({
     </>
   );
 };
-
-Font.register({
-  family: 'Oswald',
-  src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf',
-});
