@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import FileUpload from '@/components/ui/FileUpload';
 import Image from 'next/image';
 import { pdfjs, Document, Thumbnail } from 'react-pdf';
@@ -42,23 +42,14 @@ import './homework.css';
 import { subjects } from '@/constants';
 import { MAIN_PROMPT } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
-
-// const metadata: Metadata = {
-//   title: 'Homework Lab',
-//   description:
-//     'AssistTeacher Homework Lab - Tools for teachers and students to create and manage homework assignments.',
-// };
 import { PDFPreview } from './pdf-preview';
 import type { PDFFile, Subject } from '@/components/pdf/types';
 import DifficultySelector from './components/difficulty-selector';
 import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
 
-import { getCurrentTeachersCoursesFromFrontend } from '@/utils/supabase-queries';
-import { View, Question } from '@/types';
-import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
+import { CourseStudents, Question } from '@/types';
 import QuestionForm from './components/question-form';
 import { createAllAssignmentsForCourseAction } from '@/data/user/assignments';
 
@@ -66,51 +57,9 @@ import { createAllAssignmentsForCourseAction } from '@/data/user/assignments';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
-export function CourseSelectDropdown(props) {
-  const { handleCourseSelect } = props;
-
-  const [courses, setCourses] = useState<View<'teacher_courses_by_auth'>[]>([]);
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const { data, error } = await getCurrentTeachersCoursesFromFrontend(
-        supabaseUserClientComponentClient
-      );
-      if (error) {
-        console.error('Error fetching courses:', error);
-      } else {
-        setCourses(data || []);
-      }
-      // setLoading(false);
-    };
-
-    fetchCourses();
-  }, []);
-
-  return courses ? (
-    <Select onValueChange={handleCourseSelect}>
-      <SelectTrigger className="mx-2">
-        <SelectValue placeholder={'Select course period'} />
-      </SelectTrigger>
-      <SelectContent>
-        {courses.map((course) => (
-          <SelectItem key={course.course_id} value={`${course.course_id}`}>
-            {course.course_name}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  ) : (
-    <Select>
-      <SelectValue placeholder={'Loading courses'} />
-    </Select>
-  );
-}
+import { CourseSelectDropdown } from './components/course-select-dropdown';
 export default function Page() {
   const [grade, setGrade] = useState(5);
   const [subjNum, setSubjNum] = useState(7);
@@ -134,6 +83,11 @@ export default function Page() {
       setContainerWidth(entry.contentRect.width);
     }
   }, []);
+  const [enrollments, setEnrollments] = useState<CourseStudents[]>([]);
+  const [studentIds, setStudentIds] = useState<number[]>([]);
+  const [studentsInCourse, setStudentsInCourse] = useState<CourseStudents[]>(
+    []
+  );
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 
@@ -201,58 +155,13 @@ export default function Page() {
     subjNum,
   };
   const hwGenerationPrompt = MAIN_PROMPT(config);
-
-  // const { mutate: createAssignments } = useMutation(
-  //   ['assignments'],
-  //   createAllAssignmentsForCourseAction,
-  //   {
-  //     onMutate: () => {
-  //       const toastId = toast.loading('Creating assignments for students');
-  //       toastRef.current = toastId;
-  //     },
-
-  //     onSuccess: () => {
-  //       toast.success(`New assignments created`, {
-  //         id: toastRef.current,
-  //       });
-  //       toastRef.current = null;
-  //       router.refresh();
-  //       queryClient.invalidateQueries(['assignments']);
-  //     },
-  //     onError: () => {
-  //       toast.error('Failed to add assignments', { id: toastRef.current });
-  //       toastRef.current = null;
-  //     },
-  //   }
-  // );
-
-  // const doCreateAssignments = async ({ courseId, question_ids }) => {
-  //   if (courseId === -1) {
-  //     return;
-  //   }
-  //   try {
-  //     const toastId = toast.loading('Creating assignments for students');
-  //     toastRef.current = toastId;
-  //     await createAllAssignmentsForCourseAction({
-  //       course_id: courseId,
-  //       question_ids: insertedQuestions.map((q: Question) => q.question_id),
-  //     });
-  //     toast.success(`New assignments created`, {
-  //       id: toastRef.current,
-  //     });
-  //     toastRef.current = null;
-  //   } catch (e) {
-  //     toast.error('Failed to add assignments', { id: toastRef.current });
-  //     toastRef.current = null;
-  //   }
-  //   const toastId = toast.loading('Creating assignments for students');
-  //   toastRef.current = toastId;
-
-  //   // await createAssignments({ course_id: courseId, question_ids: [] });
-  // };
-
   const handleCourseIdSelect = async (courseId: string) => {
     setCourseId(parseInt(courseId));
+  };
+
+  const setEnrollmentsCallback = (enrollments) => {
+    setEnrollments(enrollments);
+    setStudentIds(enrollments.map((enrollment) => enrollment.student_ids));
   };
 
   const handleCreateAllHomeworks = async (
@@ -278,6 +187,12 @@ export default function Page() {
       toastRef.current = null;
     }
   };
+
+  console.log('in Homework/ : ', courseId, studentIds, enrollments);
+  const [courseStudents]: CourseStudents[] = enrollments.filter(
+    (enrollment) => enrollment.course_id === courseId
+  );
+  console.log(courseStudents?.course_id, courseStudents?.student_ids);
 
   return (
     <>
@@ -383,6 +298,7 @@ export default function Page() {
                 />
                 <CourseSelectDropdown
                   handleCourseSelect={handleCourseIdSelect}
+                  setEnrollmentsCallback={setEnrollmentsCallback}
                 />
 
                 <Button
@@ -483,7 +399,7 @@ export default function Page() {
                           <PDFPreview
                             questions={trycatch(JSON.parse, completion)}
                             assignment_template_id={uuidv4()}
-                            student_ids={[0, 1, 2]}
+                            student_ids={courseStudents?.student_ids}
                           />
                         )}
                         {isCompletionLoading && <Loading />}

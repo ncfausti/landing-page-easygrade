@@ -1,5 +1,6 @@
 import { AppSupabaseClient, AuthProvider, Table, Course } from '@/types';
 import { toSiteURL } from './helpers';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
 import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 
 export const getAllItems = async (
@@ -325,6 +326,23 @@ export async function getCurrentTeachersCoursesFromFrontend(
   return { data, error };
 }
 
+export async function getCourseEnrollmentsFromFrontend(
+  supabaseClient: AppSupabaseClient,
+  course_ids: number[]
+) {
+  // const { user } = await getAuthUser(supabaseClient);
+  const { data, error } = await supabaseClient
+    .from('enrollments')
+    .select('student_id, course_id')
+    .in('course_id', course_ids);
+
+  if (error) {
+    console.error('Error fetching enrollments:', error);
+    return;
+  }
+  return { data, error };
+}
+
 export const getAllCourses = async (): Promise<Array<Table<'courses'>>> => {
   const supabase = createSupabaseServerComponentClient();
   const { data, error } = await supabase.from('courses').select('*');
@@ -351,7 +369,24 @@ export async function fetchStudentsByIds(studentIds: number[]) {
   return data;
 }
 
-// uses aggresive caching since we removed 'use server' from the top of file
+export async function fetchStudentsByIdsFrontEnd(
+  supabaseClient: AppSupabaseClient,
+  studentIds: number[]
+) {
+  const { data, error } = await supabaseClient
+    .from('students')
+    .select('*')
+    .in('id', studentIds); // Use the `in` operator to filter by student IDs
+
+  if (error) {
+    console.error('Error fetching students:', error);
+    return [];
+  }
+
+  return data;
+}
+
+// uses aggresive caching since we removed 'use server' from the top of file (i think?)
 export const getCourseStudentsAndAssignments = async (
   id: string
 ): Promise<CourseWithStudentsAndAssignments> => {
@@ -399,7 +434,7 @@ export const getCourseStudentsAndAssignments = async (
     grade: course.grade,
     section: course.section,
     subject: course.subject,
-    
+    assignment_count: 0,
   };
 };
 

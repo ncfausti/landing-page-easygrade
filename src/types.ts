@@ -75,3 +75,4 @@ export type InsertQuestion =
 export type Assignment = Table<'assignments'>;
 export type InsertAssignment =
   Database['public']['Tables']['assignments']['Insert'];
+export type CourseStudents = { course_id: number; student_ids: number[] };
