@@ -102,7 +102,6 @@ export default function Chat(props: {
     }
   }, [completion, isLoading]);
 
-  console.log('rerendered');
   return (
     <div className="w-full">
       <form onSubmit={handleSubmit}>

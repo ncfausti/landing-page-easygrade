@@ -79,6 +79,10 @@ export const arrayToObjectMap = (array: { id: number }[]) => {
   }, {});
 };
 
+export function zip(arr1, arr2) {
+  return arr1.map((item, index) => [item, arr2[index]]);
+}
+
 // async function processUserCreationQueue(batchSize: number = 10) {
 
 //   for (const user of pendingUsers) {

@@ -1,6 +1,5 @@
 import { AppSupabaseClient, AuthProvider, Table, Course } from '@/types';
 import { toSiteURL } from './helpers';
-import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
 import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 
 export const getAllItems = async (
@@ -355,6 +354,8 @@ export const getAllCourses = async (): Promise<Array<Table<'courses'>>> => {
 };
 
 export async function fetchStudentsByIds(studentIds: number[]) {
+  if (!studentIds || studentIds.length === 0) return [];
+
   const supabase = createSupabaseServerComponentClient();
   const { data, error } = await supabase
     .from('students')
@@ -373,10 +374,11 @@ export async function fetchStudentsByIdsFrontEnd(
   supabaseClient: AppSupabaseClient,
   studentIds: number[]
 ) {
+  if (!studentIds || studentIds.length === 0) return [];
   const { data, error } = await supabaseClient
     .from('students')
     .select('*')
-    .in('id', studentIds); // Use the `in` operator to filter by student IDs
+    .in('id', studentIds);
 
   if (error) {
     console.error('Error fetching students:', error);

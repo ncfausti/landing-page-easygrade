@@ -48,26 +48,26 @@ import type { PDFFile, Subject } from '@/components/pdf/types';
 import DifficultySelector from './components/difficulty-selector';
 import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
-
 import { CourseStudents, Question } from '@/types';
 import QuestionForm from './components/question-form';
 import { createAllAssignmentsForCourseAction } from '@/data/user/assignments';
-
+import { toast } from 'react-hot-toast';
+import { CourseSelectDropdown } from './components/course-select-dropdown';
+import { useQuery } from '@tanstack/react-query';
+import { fetchStudentsByIdsFrontEnd } from '@/utils/supabase-queries';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
 // Force the page to be dynamic and allow streaming responses up to 30 seconds
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
-import { toast } from 'react-hot-toast';
-
-import { CourseSelectDropdown } from './components/course-select-dropdown';
 export default function Page() {
   const [grade, setGrade] = useState(5);
   const [subjNum, setSubjNum] = useState(7);
   const [mcqNum, setMcqNum] = useState(3);
   const [subject, setSubject] = useState<Subject>('Math');
   const [courseId, setCourseId] = useState<number>(-1);
+  const [courseName, setCourseName] = useState<string>('');
   const [insertedQuestions, setInsertedQuestions] = useState<Question[]>([]);
-
   const [completion, setCompletion] = useState('');
   const [isCompletionLoading, setIsCompletionLoading] = useState(false);
   const [file, setFile] = useState<PDFFile>();
@@ -84,10 +84,8 @@ export default function Page() {
     }
   }, []);
   const [enrollments, setEnrollments] = useState<CourseStudents[]>([]);
-  const [studentIds, setStudentIds] = useState<number[]>([]);
-  const [studentsInCourse, setStudentsInCourse] = useState<CourseStudents[]>(
-    []
-  );
+  const [studentIds, setStudentIds] = useState<number[]>([-1]);
+  const [studentsInCourse, setStudentsInCourse] = useState<number[]>([]);
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 
@@ -155,8 +153,9 @@ export default function Page() {
     subjNum,
   };
   const hwGenerationPrompt = MAIN_PROMPT(config);
-  const handleCourseIdSelect = async (courseId: string) => {
+  const handleCourseIdSelect = async (courseId: string, courseName: string) => {
     setCourseId(parseInt(courseId));
+    setCourseName(courseName);
   };
 
   const setEnrollmentsCallback = (enrollments) => {
@@ -188,11 +187,21 @@ export default function Page() {
     }
   };
 
-  console.log('in Homework/ : ', courseId, studentIds, enrollments);
   const [courseStudents]: CourseStudents[] = enrollments.filter(
     (enrollment) => enrollment.course_id === courseId
   );
-  console.log(courseStudents?.course_id, courseStudents?.student_ids);
+
+  const { data: students } = useQuery(
+    ['students', courseId, studentIds],
+    () =>
+      fetchStudentsByIdsFrontEnd(
+        supabaseUserClientComponentClient,
+        courseStudents.student_ids
+      ),
+    {
+      enabled: !!courseId && !!studentIds && !!courseStudents,
+    }
+  );
 
   return (
     <>
@@ -332,9 +341,7 @@ export default function Page() {
                             >
                               <Document
                                 file={file}
-                                onLoadProgress={({ loaded, total }) =>
-                                  console.log(loaded, total)
-                                }
+                                // onLoadProgress={({ loaded, total }) => null}
                                 onLoadSuccess={onDocumentLoadSuccess}
                                 options={options}
                               >
@@ -355,12 +362,11 @@ export default function Page() {
                                         setLoadedPages((prev) => prev + 1)
                                       }
                                       onItemClick={({
-                                        dest,
-                                        pageIndex,
+                                        // dest,
+                                        // pageIndex,
                                         pageNumber,
                                       }) =>
                                         setSelectedPages((prev) => {
-                                          console.log(dest, pageIndex);
                                           if (prev.includes(pageNumber)) {
                                             return prev.filter(
                                               (p) => p !== pageNumber
@@ -377,10 +383,6 @@ export default function Page() {
                           </div>
                         </div>
                         <div className="flex flex-col">
-                          {/* <Textarea
-                            id="instructions"
-                            placeholder="Fix the grammar."
-                          /> */}
                           <FileUpload onFileChange={onFileChange} />
                           {selectedPages.length === 1 && (
                             <span>{`${selectedPages.length} page selected`}</span>
@@ -397,9 +399,10 @@ export default function Page() {
                         <QuestionForm />
                         {!isCompletionLoading && (
                           <PDFPreview
+                            course_name={courseName}
                             questions={trycatch(JSON.parse, completion)}
                             assignment_template_id={uuidv4()}
-                            student_ids={courseStudents?.student_ids}
+                            students={students || []}
                           />
                         )}
                         {isCompletionLoading && <Loading />}
