@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef } from 'react';
 import * as XLSX from 'xlsx/xlsx.mjs';
-import { submitUserList } from '@/data/user/teachers';
+// import { submitUserList } from '@/data/user/teachers';
 import startBackgroundJob from '@/app/actions/start-background-job';
 
 interface TeacherSignupUser {
@@ -57,7 +57,7 @@ const TeacherDataUploader = () => {
       if (file) {
         const data = await readExcel(file);
         console.log('Data:', data);
-        setParsedData(data);
+        setParsedData(data as TeacherSignupUser[]);
         setShowModal(true);
       } else if (validateManualData()) {
         const data = processManualData();
@@ -146,6 +146,7 @@ const TeacherDataUploader = () => {
     });
     await startBackgroundJob(users);
 
+    console.log(userList);
     // await submitUserList(users);
     setUserList('');
     alert('User list submitted successfully!');

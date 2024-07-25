@@ -28,7 +28,7 @@ async function createUserProfile(email, temporaryPassword) {
   }
 }
 
-export async function GetHandler(req: NextRequest) {
+async function GetHandler(req: NextRequest) {
   const { email, pw } = Object.fromEntries(req.nextUrl.searchParams.entries());
   const user = await createUserProfile(email, pw);
   return new Response(JSON.stringify([user]));
@@ -46,7 +46,7 @@ export async function GetHandler(req: NextRequest) {
 // The function will return a JSON object with the user's email and ID.
 // The function will log the user's email and ID to the console.
 
-export async function PostHandler(request: NextRequest) {
+async function PostHandler(request: NextRequest) {
   const payload = await request.json();
 
   // for (let i = 0; i < 10; i++) {

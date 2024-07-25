@@ -51,6 +51,7 @@ export async function createGradeSections(prevState, formData) {
 
       // Find all sections for this grade
       let sectionIndex = 0;
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const subjects = [];
         for (const [subjectKey, subjectValue] of formData.entries()) {
@@ -86,7 +87,7 @@ export async function createGradeSections(prevState, formData) {
       });
     } else {
       console.log(errors);
-      errors.general = 'An unexpected error occurred';
+      (errors as { general: string }).general = 'An unexpected error occurred';
     }
     return { message: null, errors };
   }

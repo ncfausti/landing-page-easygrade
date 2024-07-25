@@ -233,7 +233,7 @@ export default function GradeForm() {
       {state.errors &&
         Object.entries(state.errors).map(([key, value]) => (
           <p key={key} className="mt-2 text-red-500">
-            {value}
+            {value as string}
           </p>
         ))}
     </form>

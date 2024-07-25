@@ -1,10 +1,6 @@
 'use server';
 import { Client } from '@upstash/qstash';
 
-const qstashClient = new Client({
-  token: process.env.UPSTASH_QSTASH_TOKEN!,
-});
-
 type UserSubmission = {
   name: string;
   email: string;

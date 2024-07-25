@@ -3,7 +3,6 @@ import { createSupabaseServerActionClient } from '@/supabase-clients/createSupab
 import { revalidatePath } from 'next/cache';
 import {
   InsertCourse,
-  InsertTeacher,
   InsertTeacherPayload,
   InsertTeacherCourse,
   InsertQuestion,
@@ -40,7 +39,7 @@ export async function insertTeachersAction(payload: {
   const { id: auth_id, email } = session.user;
 
   // add the currently logged in user_id and email to the teacher object
-  const teacherRows: InsertTeacher[] = { ...payload.teacher, auth_id, email };
+  const teacherRows = { ...payload.teacher, auth_id, email };
 
   const { data, error } = await supabaseClient
     .from('teachers')
@@ -69,7 +68,7 @@ export async function insertTeacherAndSetupCourseAction(payload: {
   const { id: auth_id, email } = session.user;
 
   // add the currently logged in user_id and email to the teacher object
-  const teacherRow: InsertTeacher = { ...payload.teacher, auth_id, email };
+  const teacherRow = { ...payload.teacher, auth_id, email };
 
   const { data: teacherInsertData, error: teacherInsertError } =
     await supabaseClient.from('teachers').insert(teacherRow).select('*');
@@ -79,6 +78,9 @@ export async function insertTeacherAndSetupCourseAction(payload: {
   const courseRow: InsertCourse = {
     course_name: `${teacherRecord.first_name}'s first course`,
     description: 'Description of course goes here. Change in dashboard.',
+    grade: 'N/A',
+    section: 'N/A',
+    subject: 'N/A',
   };
 
   const { data: courseInsertData, error: courseInsertError } =

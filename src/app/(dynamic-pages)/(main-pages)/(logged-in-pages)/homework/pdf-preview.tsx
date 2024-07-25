@@ -76,27 +76,20 @@ export const PDFPreview = ({
                 </Svg>
               </View>
 
-              {/* <Image style={styles.image} src="/images/quijote1.jpg" /> */}
               {questions.map((q, i) => (
                 <View key={i}>
                   <Text style={styles.question}>{q.question}</Text>
-                  {q.choices
-                    ? q.choices.map((answer) => (
-                      <Text style={styles.text}>{answer}</Text>
-                    ))
-                    : ' '}
+                  {q.choices ? qChoicesMap(q.choices, styles) : ' '}
                 </View>
               ))}
-              {/* <Text
-        style={styles.pageNumber}
-        render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-        fixed
-      /> */}
             </Page>
           ))}
         </Document>
       </PDFViewer>
-      {/* <QRCodeSVG value={`https://www.assistteacher.com/grade`} useRef={refQR} /> */}
     </>
   );
 };
+
+function qChoicesMap(qChoices: string[], styles: { text: object }) {
+  return qChoices.map((answer) => <Text style={styles.text}>{answer}</Text>);
+}

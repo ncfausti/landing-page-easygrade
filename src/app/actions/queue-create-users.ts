@@ -12,10 +12,10 @@ const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
   },
 });
 
-type UserSubmission = {
-  name: string;
-  email: string;
-};
+// type UserSubmission = {
+//   name: string;
+//   email: string;
+// };
 
 // export async function submitUserList(users: UserSubmission[]) {
 //   const { data, error } = await supabase

@@ -22,7 +22,7 @@ const SchoolOnboarding = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     alert('submitted!');
   };
 

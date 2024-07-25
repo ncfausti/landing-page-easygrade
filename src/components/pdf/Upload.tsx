@@ -165,6 +165,9 @@ export default function Upload() {
         </div>
 
         <Chat
+          setInsertedQuestions={() => {
+            ('');
+          }}
           setCompletion={handleCompletionChanged}
           text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
           images={

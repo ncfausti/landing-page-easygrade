@@ -20,6 +20,7 @@ export function LoginNavLink() {
     <>
       <NavLink href="/homework">Homework</NavLink>
       <NavLink href="/dashboard">Dashboard</NavLink>
+      <NavLink href="/course-list">Courses</NavLink>
       <SignOutButton />
     </>
   ) : (

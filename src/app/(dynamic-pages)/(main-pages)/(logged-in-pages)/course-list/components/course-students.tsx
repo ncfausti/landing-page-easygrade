@@ -28,7 +28,6 @@ const fetchStudents = async (studentIds) => {
     .in('id', studentIds);
 
   if (error) throw error;
-  console.log('fetchStudents: ', data);
   return data;
 };
 
@@ -43,7 +42,6 @@ function CourseSelector({ onSelectCourse }) {
       <option value="">Select a course</option>
       <option value="44">Course 1</option>
       <option value="45">Course 2</option>
-      {/* Add more course options as needed */}
     </select>
   );
 }
@@ -95,12 +93,18 @@ function CourseStudents() {
   if (enrollmentsQuery.isLoading) return <div>Loading enrollments...</div>;
   if (enrollmentsQuery.error)
     return (
-      <div>Error loading enrollments: {enrollmentsQuery.error.message}</div>
+      <div>
+        Error loading enrollments: {(enrollmentsQuery.error as Error).message}
+      </div>
     );
 
   if (studentsQuery.isLoading) return <div>Loading students...</div>;
   if (studentsQuery.error)
-    return <div>Error loading students: {studentsQuery.error.message}</div>;
+    return (
+      <div>
+        Error loading students: {(studentsQuery.error as Error).message}
+      </div>
+    );
 
   return (
     <div>

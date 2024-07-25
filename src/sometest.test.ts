@@ -12,7 +12,7 @@ global.supabase = createClient(
 
 beforeAll(async () => {
   // Set up test data
-  const { data: courseData, error: courseError } = await supabase
+  const { data: courseData } = await global.supabase
     .from('Courses')
     .insert({
       course_name: `Test Course ${uuidv4()}`,
@@ -24,7 +24,7 @@ beforeAll(async () => {
 
   courseId = courseData.course_id;
 
-  const { data: studentData, error: studentError } = await supabase
+  const { data: studentData } = await global.supabase
     .from('Students')
     .insert({
       first_name: 'Test',
@@ -38,7 +38,7 @@ beforeAll(async () => {
 
   studentId = studentData.student_id;
 
-  const { data: templateData, error: templateError } = await supabase
+  const { data: templateData } = await global.supabase
     .from('AssignmentTemplates')
     .insert({
       template_name: `Test Template ${uuidv4()}`,
@@ -52,7 +52,7 @@ beforeAll(async () => {
     { question_text: 'Explain gravity.' },
   ];
 
-  const { data: insertedQuestions, error: questionsError } = await supabase
+  const { data: insertedQuestions } = await global.supabase
     .from('Questions')
     .insert(questions)
     .select();
@@ -62,14 +62,14 @@ beforeAll(async () => {
     question_id: q.question_id,
   }));
 
-  await supabase.from('TemplateQuestions').insert(templateQuestions);
+  await global.supabase.from('TemplateQuestions').insert(templateQuestions);
 });
 
 afterAll(async () => {
   // Clean up test data
-  await supabase.from('Courses').delete().eq('course_id', courseId);
-  await supabase.from('Students').delete().eq('student_id', studentId);
-  await supabase
+  await global.supabase.from('Courses').delete().eq('course_id', courseId);
+  await global.supabase.from('Students').delete().eq('student_id', studentId);
+  await global.supabase
     .from('AssignmentTemplates')
     .delete()
     .eq('template_id', templateId);
@@ -84,7 +84,7 @@ describe('Assignment Creation', () => {
       feedback: [],
     };
 
-    const { data: assignment, error: assignmentError } = await supabase
+    const { data: assignment, error: assignmentError } = await global.supabase
       .from('Assignments')
       .insert(assignmentData)
       .single();
@@ -96,7 +96,7 @@ describe('Assignment Creation', () => {
     expect(assignment.student_id).toBe(studentId);
 
     // Fetch questions for the created assignment using the view
-    const { data: questions, error: questionsError } = await supabase
+    const { data: questions, error: questionsError } = await global.supabase
       .from('assignment_questions_view')
       .select('*')
       .eq('assignment_id', assignment.assignment_id);

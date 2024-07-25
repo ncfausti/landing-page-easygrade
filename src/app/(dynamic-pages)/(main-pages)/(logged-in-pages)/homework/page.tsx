@@ -85,7 +85,6 @@ export default function Page() {
   }, []);
   const [enrollments, setEnrollments] = useState<CourseStudents[]>([]);
   const [studentIds, setStudentIds] = useState<number[]>([-1]);
-  const [studentsInCourse, setStudentsInCourse] = useState<number[]>([]);
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 

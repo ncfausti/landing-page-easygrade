@@ -1,9 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 
+interface SchoolInfo {
+  schoolName: string;
+  numberOfTeachers: string;
+  homeworkPolicy: string;
+}
 const GradeSubjectSelect = () => {
-  const [configuration, setConfiguration] = useState({
+  const [configuration, setConfiguration] = useState<SchoolInfo>({
     schoolName: '',
     numberOfTeachers: '',
     homeworkPolicy: '',
@@ -12,11 +16,6 @@ const GradeSubjectSelect = () => {
   const [currentSubject, setCurrentSubject] = useState('');
   const [newSubject, setNewSubject] = useState('');
   const [studentNames, setStudentNames] = useState('');
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setConfiguration((prev) => ({ ...prev, [name]: value }));
-  // };
 
   const handleGradeChange = (e) => {
     setCurrentGrade(e.target.value);
@@ -253,11 +252,17 @@ const GradeSubjectSelect = () => {
                     key={`${grade}-${subject}`}
                     className="py-2 px-4 border-b text-center"
                   >
-                    {configuration[grade] && configuration[grade][subject]
+                    {getSubjectCount(
+                      grade,
+                      subject,
+                      configuration,
+                      defaultSubjects
+                    )}
+                    {/* {configuration[grade] && configuration[grade][subject]
                       ? configuration[grade][subject].length
                       : defaultSubjects[grade].includes(subject)
                         ? '0'
-                        : '-'}
+                        : '-'} */}
                   </td>
                 ))}
               </tr>
@@ -276,5 +281,25 @@ const GradeSubjectSelect = () => {
     </div>
   );
 };
+
+function getSubjectCount(
+  grade: string,
+  subject: string,
+  configuration: SchoolInfo,
+  defaultSubjects: object
+) {
+  const gradeConfig = configuration[grade];
+  const subjectConfig = gradeConfig?.[subject];
+
+  if (subjectConfig) {
+    return subjectConfig.length;
+  }
+
+  if (defaultSubjects[grade]?.includes(subject)) {
+    return '0';
+  }
+
+  return '-';
+}
 
 export default GradeSubjectSelect;

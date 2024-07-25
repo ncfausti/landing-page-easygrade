@@ -131,7 +131,8 @@ export default function TeacherClassesForm() {
     );
 
     if (classesData.length === 0) {
-      errors.general = 'Please add at least one complete class.';
+      (errors as { general: string }).general =
+        'Please add at least one complete class.';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -297,7 +298,7 @@ export default function TeacherClassesForm() {
           {state.errors &&
             Object.entries(state.errors).map(([key, value]) => (
               <p key={key} className="mt-2 text-red-500">
-                {value}
+                {value as string}
               </p>
             ))}
         </div>
