@@ -2,6 +2,7 @@
 import { createSupabaseServerActionClient } from '@/supabase-clients/createSupabaseServerActionClient';
 import { revalidatePath } from 'next/cache';
 import { InsertAssignment } from '@/types';
+import { redirect } from 'next/navigation';
 
 export const createAllAssignmentsForCourseAction = async ({
   assignment_template_id,
@@ -54,7 +55,7 @@ export const createAllAssignmentsForCourseAction = async ({
     assignment_template_id,
   }));
 
-  const { data, error } = await supabaseClient
+  const { error } = await supabaseClient
     .from('assignments')
     .insert(assignments);
 
@@ -62,8 +63,8 @@ export const createAllAssignmentsForCourseAction = async ({
     throw error;
   }
 
-  // revalidatePath('/homework');
-  return data;
+  revalidatePath('/homework');
+  redirect(`/course/${course_id}?aid=${assignment_template_id}`);
 };
 
 export async function fetchGradeData(
