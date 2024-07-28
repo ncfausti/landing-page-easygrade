@@ -81,3 +81,14 @@ export async function fetchGradeData(
   if (error) throw error;
   return data;
 }
+
+export async function fetchAssignmentData(assignment_template_id: string) {
+  const supabase = createSupabaseServerActionClient();
+  const { data, error } = await supabase
+    .from('assignments')
+    .select('*')
+    .eq('assignment_template_id', parseInt(assignment_template_id));
+
+  if (error) throw error;
+  return data;
+}

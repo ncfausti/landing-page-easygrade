@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import FileUpload from '@/components/ui/FileUpload';
 import Image from 'next/image';
 import { pdfjs, Document, Thumbnail } from 'react-pdf';
@@ -204,7 +204,7 @@ export default function Page() {
     }
   );
 
-  const assignmentTemplateId = uuidv4();
+  const [assignmentTemplateId, setAssignmentTemplateId] = useState(uuidv4());
 
   return (
     <>
@@ -324,7 +324,7 @@ export default function Page() {
                     )
                   }
                 >
-                  <span className="sr-only">Show history</span>
+                  <span className="sr-only">Create all homeworks</span>
                   Create all homeworks
                 </Button>
               </div>
