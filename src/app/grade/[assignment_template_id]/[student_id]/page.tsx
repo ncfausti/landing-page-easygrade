@@ -1,8 +1,8 @@
 import CameraInput from '@/components/ui/CameraInput';
 // import { useRouter } from 'next/navigation';
 // import { useQuery } from '@tanstack/react-query';
-
 import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
+const SUPABASE_HW_IMG_UPLOAD_BUCKET = process.env.SUPABASE_HW_IMG_UPLOAD_BUCKET;
 
 const fetchGradeData = async (assignmentTemplateId, studentId) => {
   const supabase = createSupabaseServerComponentClient();
@@ -28,7 +28,7 @@ export default async function Grade({ params }) {
     if (!assignmentData) {
       return <div>No assignment data found.</div>;
     }
-    const submitted_image_src = `https://eqdytqcvbpsqadodnoyl.supabase.co/storage/v1/object/public/homework/${assignmentData.upload_photo_url}`;
+    const submitted_image_src = `${SUPABASE_HW_IMG_UPLOAD_BUCKET}/${assignmentData.upload_photo_url}`;
     return (
       <div>
         <h1>Assignment Details</h1>

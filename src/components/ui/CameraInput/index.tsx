@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { uploadPhoto } from '../../../lib/sb';
-import { v4 as uuidv4 } from 'uuid';
 import { CameraIcon } from '../../../components/ui/Icons/Camera';
 import { ToggleIcon } from '../Icons/Toggle';
 import { saveImageUrlToAssignment } from '@/data/user/assignments';
@@ -68,7 +67,10 @@ const CameraInput = (params) => {
       const imageBlob = dataURLtoBlob(imageDataUrl);
 
       // Convert Blob to File
-      const imageFile = blobToFile(imageBlob, `${uuidv4()}.jpg`);
+      const imageFile = blobToFile(
+        imageBlob,
+        `${assignment_template_id}-${student_id}.jpg`
+      );
 
       // Use the file for further operations like uploading or saving
       const image_upload_path = await uploadPhoto(imageFile);

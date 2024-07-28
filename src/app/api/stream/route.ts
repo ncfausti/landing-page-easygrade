@@ -26,8 +26,6 @@
 import { openai } from '@ai-sdk/openai';
 import { StreamingTextResponse, streamText } from 'ai';
 
-// const prompt = `You are a grade 5 matb teacher. Generate grade 5 math homework questions based on this image. Use plaintext only. Separate questions with a new line.`;
-
 export async function POST(req) {
   const { messages } = await req.json();
   const result = await streamText({
@@ -37,7 +35,3 @@ export async function POST(req) {
 
   return new StreamingTextResponse(result.toAIStream());
 }
-
-// 1. get streaming sending and reading down first
-// 2. integerate with the gpt-4-vision model and images
-// 3. combine
