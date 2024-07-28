@@ -26,6 +26,10 @@ async function Course({
     assignmentId,
     (assignment, value) => assignment.assignment_template_id === value
   );
+
+  const headerText = assignmentId
+    ? `Assignment: ${assignmentId}`
+    : 'Assignments';
   return (
     <div className="space-y-2">
       <div className="space-y-4">
@@ -47,7 +51,7 @@ async function Course({
             </li>
           ))}
         </ul>
-        <T.H2>Assignments</T.H2>
+        <T.H2>{headerText}</T.H2>
         <ul className="space-y-2">
           {filteredAssignments &&
             filteredAssignments.map((assignment) => (
@@ -100,7 +104,10 @@ export default async function Page({
 const filterAssignments = (
   assignments: Assignment[],
   externalValue: string,
-  filterFunction: (assignment: Assignment, value: any) => boolean
+  filterFunction: (
+    assignment: Assignment,
+    value: string | null | undefined
+  ) => boolean
 ) => {
   if (externalValue !== null && externalValue !== undefined) {
     return assignments.filter((assignment) =>

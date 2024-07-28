@@ -93,3 +93,20 @@ export async function fetchAssignmentData(assignment_template_id: string) {
   if (error) throw error;
   return data;
 }
+
+export async function saveImageUrlToAssignment(
+  student_id: number,
+  assignment_template_id: number,
+  url: string,
+) {
+  const supabase = createSupabaseServerActionClient();
+  // TODO: do some checks for the assignment_id, template_id, student_id all match etc
+
+  const { error } = await supabase
+    .from('assignments')
+    .update({ upload_photo_url: url })
+    .eq('assignment_template_id', assignment_template_id)
+    .eq('student_id', student_id);
+
+  if (error) throw error;
+}

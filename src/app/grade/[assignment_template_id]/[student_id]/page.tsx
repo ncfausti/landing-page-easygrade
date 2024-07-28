@@ -1,6 +1,6 @@
-import ImageUploader from '../../components/image-uploader';
-import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import CameraInput from '@/components/ui/CameraInput';
+// import { useRouter } from 'next/navigation';
+// import { useQuery } from '@tanstack/react-query';
 
 import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 
@@ -28,18 +28,24 @@ export default async function Grade({ params }) {
     if (!assignmentData) {
       return <div>No assignment data found.</div>;
     }
-
+    const submitted_image_src = `https://eqdytqcvbpsqadodnoyl.supabase.co/storage/v1/object/public/homework/${assignmentData.upload_photo_url}`;
     return (
       <div>
         <h1>Assignment Details</h1>
-        <p>Assignment Template ID: {assignment_template_id}</p>
+        <p>Assignment: {assignment_template_id}</p>
         <p>Student ID: {student_id}</p>
         <p>Current Number Incorrect: {assignmentData.number_incorrect}</p>
+        <img src={submitted_image_src} height={300} width={150} />
         {/* <UpdateGradeForm
           assignment_template_id={assignment_template_id}
           student_id={student_id}
           initialNumberCorrect={assignmentData.number_correct}
         /> */}
+        <CameraInput
+          assignment_template_id={assignment_template_id}
+          student_id={student_id}
+        />
+        {/* <ImageUploader bucketName="homework" /> */}
       </div>
     );
   } catch (error) {

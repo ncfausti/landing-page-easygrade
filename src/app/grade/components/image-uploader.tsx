@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
@@ -11,6 +12,9 @@ const ImageUploader = ({ bucketName }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedUrl, setUploadedUrl] = useState(null);
   const [error, setError] = useState(null);
+
+  // TODO: implement checks on the assignment ID, student ID, and assignment_template ID
+  // make sure the QR code matches the url and the assignment ID
 
   const uploadImage = async (file) => {
     setIsUploading(true);
@@ -31,6 +35,11 @@ const ImageUploader = ({ bucketName }) => {
       const {
         data: { publicUrl },
       } = supabase.storage.from(bucketName).getPublicUrl(fileName);
+
+      // upsert the file URL to the 'assignment' table for the given assignment ID
+      await supabase
+        .from('assignment')
+        .upsert({ id: assignmentId, fileUrl: publicUrl });
 
       setUploadedUrl(publicUrl);
     } catch (err) {

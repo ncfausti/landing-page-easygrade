@@ -4,8 +4,10 @@ import { uploadPhoto } from '../../../lib/sb';
 import { v4 as uuidv4 } from 'uuid';
 import { CameraIcon } from '../../../components/ui/Icons/Camera';
 import { ToggleIcon } from '../Icons/Toggle';
+import { saveImageUrlToAssignment } from '@/data/user/assignments';
 
-const CameraInput = () => {
+const CameraInput = (params) => {
+  const { assignment_template_id, student_id } = params;
   const [facingMode, setFacingMode] = useState('environment');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -69,7 +71,13 @@ const CameraInput = () => {
       const imageFile = blobToFile(imageBlob, `${uuidv4()}.jpg`);
 
       // Use the file for further operations like uploading or saving
-      await uploadPhoto(imageFile);
+      const image_upload_path = await uploadPhoto(imageFile);
+      // store the image_upload_path in the database
+      await saveImageUrlToAssignment(
+        student_id,
+        assignment_template_id,
+        image_upload_path.path
+      );
       const gptResponse = await fetch('/api', {
         method: 'POST',
         body: imageDataUrl,
