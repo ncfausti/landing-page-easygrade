@@ -4,9 +4,11 @@ import { revalidatePath } from 'next/cache';
 import { InsertAssignment } from '@/types';
 
 export const createAllAssignmentsForCourseAction = async ({
+  assignment_template_id,
   course_id,
   question_ids = [],
 }: {
+  assignment_template_id: string;
   course_id: number;
   question_ids: number[];
 }) => {
@@ -49,6 +51,7 @@ export const createAllAssignmentsForCourseAction = async ({
     assignment_name: 'Homework',
     due_date: oneWeekFromNowISO,
     question_ids,
+    assignment_template_id,
   }));
 
   const { data, error } = await supabaseClient
@@ -59,6 +62,22 @@ export const createAllAssignmentsForCourseAction = async ({
     throw error;
   }
 
-  revalidatePath('/homework');
+  // revalidatePath('/homework');
   return data;
 };
+
+export async function fetchGradeData(
+  assignment_template_id: string,
+  student_id: string
+) {
+  const supabase = createSupabaseServerActionClient();
+  const { data, error } = await supabase
+    .from('assignments')
+    .select('*')
+    .eq('assignment_template_id', assignment_template_id)
+    .eq('student_id', parseInt(student_id))
+    .single();
+
+  if (error) throw error;
+  return data;
+}

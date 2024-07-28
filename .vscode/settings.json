@@ -27,7 +27,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "cSpell.words": ["Reflio", "signup"],
-  "workbench.colorTheme": "Flatland Monokai",
+  "workbench.colorTheme": "SynthWave '84",
   "eslint.lintTask.enable": true,
   "eslint.debug": false
 }

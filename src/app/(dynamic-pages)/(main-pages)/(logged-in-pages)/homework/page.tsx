@@ -163,6 +163,7 @@ export default function Page() {
   };
 
   const handleCreateAllHomeworks = async (
+    assignment_template_id: string,
     course_id: number,
     question_ids: number[] = []
   ) => {
@@ -173,6 +174,7 @@ export default function Page() {
       const toastId = toast.loading('Creating assignments for students');
       toastRef.current = toastId;
       await createAllAssignmentsForCourseAction({
+        assignment_template_id,
         course_id,
         question_ids,
       });
@@ -201,6 +203,8 @@ export default function Page() {
       enabled: !!courseId && !!studentIds && !!courseStudents,
     }
   );
+
+  const assignmentTemplateId = uuidv4();
 
   return (
     <>
@@ -314,6 +318,7 @@ export default function Page() {
                   className={courseId === -1 ? 'disabled' : ''}
                   onClick={() =>
                     handleCreateAllHomeworks(
+                      assignmentTemplateId,
                       courseId,
                       insertedQuestions.map((q: Question) => q.question_id)
                     )
@@ -400,7 +405,7 @@ export default function Page() {
                           <PDFPreview
                             course_name={courseName}
                             questions={trycatch(JSON.parse, completion)}
-                            assignment_template_id={uuidv4()}
+                            assignment_template_id={assignmentTemplateId}
                             students={students || []}
                           />
                         )}

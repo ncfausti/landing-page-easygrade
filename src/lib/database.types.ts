@@ -14,6 +14,7 @@ export type Database = {
           assignment_id: number
           assignment_name: string | null
           assignment_number: number | null
+          assignment_template_id: string
           course_id: number
           created_at: string
           due_date: string | null
@@ -30,6 +31,7 @@ export type Database = {
           assignment_id?: number
           assignment_name?: string | null
           assignment_number?: number | null
+          assignment_template_id?: string
           course_id: number
           created_at?: string
           due_date?: string | null
@@ -46,6 +48,7 @@ export type Database = {
           assignment_id?: number
           assignment_name?: string | null
           assignment_number?: number | null
+          assignment_template_id?: string
           course_id?: number
           created_at?: string
           due_date?: string | null
