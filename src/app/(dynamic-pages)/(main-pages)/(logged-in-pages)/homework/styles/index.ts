@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 4,
     fontFamily: 'Oswald',
+    marginTop: 20,
   },
   text: {
     margin: 4,

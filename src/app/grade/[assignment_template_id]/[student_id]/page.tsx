@@ -28,6 +28,7 @@ export default async function Grade({ params }) {
     if (!assignmentData) {
       return <div>No assignment data found.</div>;
     }
+    const { subject } = assignmentData;
     const submitted_image_src = `${SUPABASE_HW_IMG_UPLOAD_BUCKET}/${assignmentData.upload_photo_url}`;
     return (
       <div>
@@ -44,6 +45,7 @@ export default async function Grade({ params }) {
         <CameraInput
           assignment_template_id={assignment_template_id}
           student_id={student_id}
+          subject={subject}
         />
         {/* <ImageUploader
           bucketName="homework"

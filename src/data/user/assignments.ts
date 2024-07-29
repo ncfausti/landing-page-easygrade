@@ -99,7 +99,7 @@ export async function fetchAssignmentData(assignment_template_id: string) {
 
 export async function saveImageUrlToAssignment(
   student_id: number,
-  assignment_template_id: number,
+  assignment_template_id: string,
   url: string
 ) {
   const supabase = createSupabaseServerActionClient();
@@ -108,6 +108,22 @@ export async function saveImageUrlToAssignment(
   const { error } = await supabase
     .from('assignments')
     .update({ upload_photo_url: url })
+    .eq('assignment_template_id', assignment_template_id)
+    .eq('student_id', student_id);
+
+  if (error) throw error;
+}
+
+export async function saveGradeToAssignment(
+  student_id: number,
+  assignment_template_id: string,
+  number_incorrect: number
+) {
+  const supabase = createSupabaseServerActionClient();
+
+  const { error } = await supabase
+    .from('assignments')
+    .update({ number_incorrect })
     .eq('assignment_template_id', assignment_template_id)
     .eq('student_id', student_id);
 

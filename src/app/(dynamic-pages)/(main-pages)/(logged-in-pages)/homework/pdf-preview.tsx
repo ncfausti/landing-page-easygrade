@@ -45,6 +45,8 @@ function getQRPath(assignment_template_id: string, student_id: number): string {
   return goodPath;
 }
 
+const az = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 export const PDFPreview = ({
   course_name = '<Course Name>',
   questions,
@@ -84,7 +86,9 @@ export const PDFPreview = ({
 
               {questions.map((q, i) => (
                 <View key={i}>
-                  <Text style={styles.question}>{q.question}</Text>
+                  <Text style={styles.question}>
+                    {`${i + 1}.`} {q.question}
+                  </Text>
                   {q.choices ? qChoicesMap(q.choices, styles) : ' '}
                 </View>
               ))}
@@ -97,5 +101,10 @@ export const PDFPreview = ({
 };
 
 function qChoicesMap(qChoices: string[], styles: { text: object }) {
-  return qChoices.map((answer) => <Text style={styles.text}>{answer}</Text>);
+  return qChoices.map((answer, i) => (
+    <Text style={styles.text}>
+      {`${az[i]}) `}
+      {answer}
+    </Text>
+  ));
 }

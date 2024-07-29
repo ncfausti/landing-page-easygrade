@@ -6,12 +6,13 @@ import { ToggleIcon } from '../Icons/Toggle';
 import { saveImageUrlToAssignment } from '@/data/user/assignments';
 
 const CameraInput = (params) => {
-  const { assignment_template_id, student_id } = params;
+  const { assignment_template_id, student_id, subject } = params;
   const [facingMode, setFacingMode] = useState('environment');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [gptResponseJson, setGptResponseJson] = useState({ choices: [] });
   const [useMobile, setUseMobile] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const startVideo = async () => {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -51,6 +52,7 @@ const CameraInput = (params) => {
   }, [facingMode]);
 
   const handleCapture = async () => {
+    setLoading(true);
     const canvas = canvasRef.current;
     const video = videoRef.current;
     if (canvas && video) {
@@ -81,11 +83,15 @@ const CameraInput = (params) => {
         image_upload_path.path
       );
       // Send the image to the API
-      const gptResponse = await fetch('/api', {
-        method: 'POST',
-        body: imageDataUrl,
-      });
+      const gptResponse = await fetch(
+        `/api?subject=${subject}&aid=${assignment_template_id}&sid=${student_id}`,
+        {
+          method: 'POST',
+          body: imageDataUrl,
+        }
+      );
       const gptResponseJson = await gptResponse.json();
+      setLoading(false);
       setGptResponseJson(gptResponseJson);
     }
   };
@@ -135,6 +141,7 @@ const CameraInput = (params) => {
             {gptResponseJson.choices.map((c) => c.message.content)}
           </code>
 
+          {loading && <h3>Loading...</h3>}
           <div className="p-3">
             <button
               className="btn border-2 border-black rounded-full p-1"
@@ -142,7 +149,7 @@ const CameraInput = (params) => {
             >
               <CameraIcon />
             </button>
-            <button className="pl-3" onClick={toggleCamera}>
+            <button className="hidden pl-3" onClick={toggleCamera}>
               <ToggleIcon />
             </button>
           </div>
