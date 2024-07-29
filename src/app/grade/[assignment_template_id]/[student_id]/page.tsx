@@ -1,6 +1,7 @@
 import CameraInput from '@/components/ui/CameraInput';
 // import { useRouter } from 'next/navigation';
 // import { useQuery } from '@tanstack/react-query';
+// import ImageUploader from '@/app/grade/components/image-uploader';
 import { createSupabaseServerComponentClient } from '@/supabase-clients/createSupabaseServerComponentClient';
 const SUPABASE_HW_IMG_UPLOAD_BUCKET = process.env.SUPABASE_HW_IMG_UPLOAD_BUCKET;
 
@@ -12,7 +13,6 @@ const fetchGradeData = async (assignmentTemplateId, studentId) => {
     .eq('assignment_template_id', assignmentTemplateId)
     .eq('student_id', studentId)
     .single();
-
   if (error) throw error;
   return data;
 };
@@ -45,7 +45,11 @@ export default async function Grade({ params }) {
           assignment_template_id={assignment_template_id}
           student_id={student_id}
         />
-        {/* <ImageUploader bucketName="homework" /> */}
+        {/* <ImageUploader
+          bucketName="homework"
+          assignment_template_id={assignment_template_id}
+          student_id={student_id}
+        /> */}
       </div>
     );
   } catch (error) {

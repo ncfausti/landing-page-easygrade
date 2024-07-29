@@ -1,5 +1,3 @@
-// THIS FILE IS NOT CURRENTLY USED -- OR is it?
-
 export const maxDuration = 30;
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
@@ -7,6 +5,8 @@ const openai = new OpenAI();
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const { body } = req;
+  const requestUrl = new URL(req.url);
+  const subject = requestUrl.searchParams.get('subject');
   const reader = body.getReader();
   const decoder = new TextDecoder('utf-8');
   let result = '';
@@ -25,24 +25,27 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new Response(JSON.stringify(res), { status: 400 });
   }
 
+  const PROMPT = `
+            You are a ${subject} teacher. Use the submitted image to grade the homework assignment.
+            Iterate through each question, thinking step-by-step whether the answer is correct or incorrect. If incorrect, state why in the 'reason' field. If unsure, mark the question as correct, but give the reason as "TEACHER REVIEW".
+
+            EXAMPLE JSON RESPONSE:
+
+            [ { correct: true}, { correct: false, reason: "1+1 = 2"}, {correct: true}, {correct: true, reason: "TEACHER REVIEW"}]
+
+            RETURN WELL-FORMED JSON  ONLY
+            `;
+  console.log(PROMPT);
   const response = await openai.chat.completions.create({
-    // model: 'gpt-4-turbo',
-    model: 'gpt-4o-2024-05-13',
+    model: 'gpt-4o-mini',
+    temperature: 0,
     messages: [
       {
         role: 'user',
         content: [
           {
             type: 'text',
-            text: `You are a Math Teacher. Grade this homework. If unsure of an answer, add the question number to 'teacher_review' field and do not include it in the total number of questions.
-
-            Response format examples:
-            { incorrect_questions: [1, 3], total_questions: 5, teacher_review: [2] }
-            { incorrect_questions: [9], total_questions: 10, teacher_review: [1, 4] }
-            { incorrect_questions: [], total_questions: 8, teacher_review: [] }
-
-            RETURN ONLY THE RESPONSE OBJECT AS PROPER JSON. DO NOT RETURN ANYTHING ELSE.
-            `,
+            text: PROMPT,
           },
           {
             type: 'image_url',

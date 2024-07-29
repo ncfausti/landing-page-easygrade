@@ -8,7 +8,7 @@
 // // Initialize the Supabase client
 // const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// const ImageUploader = ({ bucketName }) => {
+// const ImageUploader = ({ bucketName, assignment_template_id, student_id }) => {
 //   const [isUploading, setIsUploading] = useState(false);
 //   const [uploadedUrl, setUploadedUrl] = useState(null);
 //   const [error, setError] = useState(null);
@@ -37,10 +37,10 @@
 //       } = supabase.storage.from(bucketName).getPublicUrl(fileName);
 
 //       // upsert the file URL to the 'assignment' table for the given assignment ID
-//       await supabase
+//       const response = await supabase
 //         .from('assignment')
-//         .upsert({ id: assignmentId, fileUrl: publicUrl });
-
+//         .upsert({ assignment_template_id, student_id, fileUrl: publicUrl });
+//       console.log(response);
 //       setUploadedUrl(publicUrl);
 //     } catch (err) {
 //       console.error('Error uploading file:', err);

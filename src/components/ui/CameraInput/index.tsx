@@ -80,6 +80,7 @@ const CameraInput = (params) => {
         assignment_template_id,
         image_upload_path.path
       );
+      // Send the image to the API
       const gptResponse = await fetch('/api', {
         method: 'POST',
         body: imageDataUrl,
