@@ -8,10 +8,12 @@ export const createAllAssignmentsForCourseAction = async ({
   assignment_template_id,
   course_id,
   question_ids = [],
+  subject,
 }: {
   assignment_template_id: string;
   course_id: number;
   question_ids: number[];
+  subject: string;
 }) => {
   if (!course_id) {
     throw new Error('No course_id provided');
@@ -53,6 +55,7 @@ export const createAllAssignmentsForCourseAction = async ({
     due_date: oneWeekFromNowISO,
     question_ids,
     assignment_template_id,
+    subject,
   }));
 
   const { error } = await supabaseClient
@@ -97,7 +100,7 @@ export async function fetchAssignmentData(assignment_template_id: string) {
 export async function saveImageUrlToAssignment(
   student_id: number,
   assignment_template_id: number,
-  url: string,
+  url: string
 ) {
   const supabase = createSupabaseServerActionClient();
   // TODO: do some checks for the assignment_id, template_id, student_id all match etc

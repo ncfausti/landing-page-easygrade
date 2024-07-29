@@ -55,27 +55,6 @@ export default function QuestionForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    // const response = await fetch('/api/questions', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     question_text: questionText,
-    //     answer_choices: answerChoices,
-    //     correct_answer: correctAnswer,
-    //     hints,
-    //     question_type: questionType,
-    //   }),
-    // });
-
-    // if (response.ok) {
-    //   setStatus('Question submitted successfully!');
-    // } else {
-    //   const error = await response.json();
-    //   setStatus(`Error: ${ error.error }`);
-    // }
     insertQuestions([
       {
         question_text: questionText,
@@ -85,8 +64,6 @@ export default function QuestionForm() {
         question_type: questionType,
       },
     ]);
-
-    // console.log(JSON.stringify());
   };
 
   return (

@@ -25,10 +25,10 @@ Font.register({
   src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf',
 });
 
-const baseGradeURL = 'https://www.assistteacher.com/grade';
-// process.env.NODE_ENV === 'development'
-//   ? 'https://f906-2-139-165-61.ngrok-free.app/grade'
-//   : 'https://www.assistteacher.com/grade';
+const baseGradeURL =
+  process.env.NODE_ENV === 'development'
+    ? 'https://f906-2-139-165-61.ngrok-free.app/grade'
+    : 'https://www.assistteacher.com/grade';
 
 function getQRPath(assignment_template_id: string, student_id: number): string {
   const qrCodesArrayWithUndefineds = QRCodeSVG({

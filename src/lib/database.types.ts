@@ -23,6 +23,7 @@ export type Database = {
           pdf_url: string | null
           question_ids: number[] | null
           student_id: number
+          subject: string | null
           submission_date: string | null
           submitted_answers: string[] | null
           upload_photo_url: string | null
@@ -40,6 +41,7 @@ export type Database = {
           pdf_url?: string | null
           question_ids?: number[] | null
           student_id: number
+          subject?: string | null
           submission_date?: string | null
           submitted_answers?: string[] | null
           upload_photo_url?: string | null
@@ -57,6 +59,7 @@ export type Database = {
           pdf_url?: string | null
           question_ids?: number[] | null
           student_id?: number
+          subject?: string | null
           submission_date?: string | null
           submitted_answers?: string[] | null
           upload_photo_url?: string | null

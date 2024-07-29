@@ -165,18 +165,21 @@ export default function Page() {
   const handleCreateAllHomeworks = async (
     assignment_template_id: string,
     course_id: number,
-    question_ids: number[] = []
+    question_ids: number[] = [],
+    subject
   ) => {
     if (course_id === -1) {
       return;
     }
     try {
+      console.log(subject);
       const toastId = toast.loading('Creating assignments for students');
       toastRef.current = toastId;
       await createAllAssignmentsForCourseAction({
         assignment_template_id,
         course_id,
         question_ids,
+        subject,
       });
       toast.success(`New assignments created`, {
         id: toastRef.current,
@@ -320,7 +323,8 @@ export default function Page() {
                     handleCreateAllHomeworks(
                       assignmentTemplateId,
                       courseId,
-                      insertedQuestions.map((q: Question) => q.question_id)
+                      insertedQuestions.map((q: Question) => q.question_id),
+                      subject
                     )
                   }
                 >
