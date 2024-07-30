@@ -209,6 +209,7 @@ export default function Page() {
 
   const [assignmentTemplateId] = useState(uuidv4());
 
+  console.log('trycatch: ', trycatch(JSON.parse, completion));
   return (
     <>
       <div className="md:hidden">
@@ -405,14 +406,14 @@ export default function Page() {
                         className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]"
                       >
                         <QuestionForm />
-                        {!isCompletionLoading && (
+                        {/* {!isCompletionLoading && (
                           <PDFPreview
                             course_name={courseName}
                             questions={trycatch(JSON.parse, completion)}
                             assignment_template_id={assignmentTemplateId}
                             students={students || []}
                           />
-                        )}
+                        )} */}
                         {isCompletionLoading && <Loading />}
                       </div>
                     </div>

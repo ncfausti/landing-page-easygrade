@@ -68,7 +68,7 @@ export default function Chat(props: {
           correct_answer: q.answer,
           answer_choices: q.choices,
           question_type: q.type,
-          hints: [], // fill in later with form or adjust prompt to include
+          hints: [],
         };
       });
 
@@ -76,7 +76,6 @@ export default function Chat(props: {
     },
   });
 
-  // test 1: are the images causing a problem because the POST is too large? <--- NO
   // test 2: are the images causing a problem simply by being in the page
   // (even if not sent, i.e. toDataURL causing issues)? <--- ITS THIS ONE
   // could also be that the constant re-rendering combined with toDataURL is causing the issue
@@ -84,18 +83,9 @@ export default function Chat(props: {
   // it is also because of the larger input size to the openai endpoint
 
   useEffect(() => {
-    // if (images) {
-    //   // console.log('useEffect: ', images.length);
-    // }
-    // setInput(JSON.stringify({ text, images: images }));
     setInput(JSON.stringify({ text, images }));
   }, [text, images]);
 
-  // useEffect(() => {
-  //   if (completion) {
-  //     props.setCompletion(completion, isLoading);
-  //   }
-  // }, [completion, isLoading]);
   useEffect(() => {
     if (completion) {
       props.setCompletion(completion, isLoading);
@@ -108,15 +98,14 @@ export default function Chat(props: {
         <input
           type="hidden"
           name="prompt"
-          value={input} // JSON.stringify({ text, images[] or pdf })
+          value={input}
           onChange={handleInputChange}
           id="input"
         />
         <button
           disabled={isLoading}
-          className={`${
-            isLoading ? 'bg-gray-200' : 'bg-white'
-          } w-full btn  border-2 p-3 mt-3 rounded-xl border-black`}
+          className={`${isLoading ? 'bg-gray-200' : 'bg-white'
+            } w-full btn  border-2 p-3 mt-3 rounded-xl border-black`}
           type="submit"
         >
           {isLoading ? <Loading /> : 'Generate'}
