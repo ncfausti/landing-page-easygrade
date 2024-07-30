@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { InsertQuestion, Question } from '@/types';
 import { useRouter } from 'next/navigation';
+import QuestionItem from './question-item';
 
 export default function QuestionForm() {
   const [questionText, setQuestionText] = useState('');
@@ -65,6 +66,18 @@ export default function QuestionForm() {
         question_type: questionType,
       },
     ]);
+  };
+
+  const updateQuestion = async (updatedQuestion: Question) => {
+    // Implement your server action to update the question
+    // This should make an API call to your backend
+    console.log(updatedQuestion);
+  };
+
+  const deleteQuestion = async (questionId: string) => {
+    // Implement your server action to delete the question
+    // This should make an API call to your backend
+    console.log(questionId);
   };
 
   return (
@@ -186,18 +199,24 @@ export default function QuestionForm() {
         </div>
       </form>
       {questions.map((question, index) => (
-        <div key={index}>
-          <h3>Question {index + 1}</h3>
-          <p>{question.question_text}</p>
-          <ul>
-            {question.answer_choices.map((choice, choiceIndex) => (
-              <li key={choiceIndex}>{choice}</li>
-            ))}
-          </ul>
-          <p>Correct Answer: {question.correct_answer}</p>
-          <p>Hints: {question.hints.join(', ')}</p>
-          <p>Type: {question.question_type}</p>
-        </div>
+        // <div key={index}>
+        //   <h3>Question {index + 1}</h3>
+        //   <p>{question.question_text}</p>
+        //   <ul>
+        //     {question.answer_choices.map((choice, choiceIndex) => (
+        //       <li key={choiceIndex}>{choice}</li>
+        //     ))}
+        //   </ul>
+        //   <p>Correct Answer: {question.correct_answer}</p>
+        //   <p>Hints: {question.hints.join(', ')}</p>
+        //   <p>Type: {question.question_type}</p>
+        // </div>
+        <QuestionItem
+          key={question.question_id}
+          question={question}
+          onUpdate={updateQuestion}
+          onDelete={deleteQuestion}
+        />
       ))}
     </div>
   );
