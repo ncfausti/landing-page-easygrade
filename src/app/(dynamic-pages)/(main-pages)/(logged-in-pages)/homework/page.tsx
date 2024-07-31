@@ -210,6 +210,13 @@ export default function Page() {
   const [assignmentTemplateId] = useState(uuidv4());
 
   console.log('trycatch: ', trycatch(JSON.parse, completion));
+
+  function handleFormAddQuestion(newQuestions: Question[]) {
+    setInsertedQuestions((prevQuestions) => [
+      ...prevQuestions,
+      ...newQuestions,
+    ]);
+  }
   return (
     <>
       <div className="md:hidden">
@@ -310,7 +317,7 @@ export default function Page() {
                   text={hwGenerationPrompt}
                   images={allImages}
                   totalQuestions={totalQuestions}
-                  setInsertedQuestions={setInsertedQuestions}
+                  setInsertedQuestions={handleFormAddQuestion}
                 />
                 <CourseSelectDropdown
                   handleCourseSelect={handleCourseIdSelect}
@@ -340,6 +347,15 @@ export default function Page() {
                       <div className="flex flex-col space-y-4">
                         <div className="flex flex-1 flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
+                          {!isCompletionLoading && (
+                            <PDFPreview
+                              course_name={courseName}
+                              questions={insertedQuestions}
+                              // questions={trycatch(JSON.parse, completion)}
+                              assignment_template_id={assignmentTemplateId}
+                              students={students || []}
+                            />
+                          )}
                           <div className="Example__container min-h-[400px] lg:min-h-[700px] ">
                             <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
                               <input onChange={onFileChange} type="file" />
@@ -405,15 +421,11 @@ export default function Page() {
                         id="pdf-preview-container"
                         className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]"
                       >
-                        <QuestionForm />
-                        {/* {!isCompletionLoading && (
-                          <PDFPreview
-                            course_name={courseName}
-                            questions={trycatch(JSON.parse, completion)}
-                            assignment_template_id={assignmentTemplateId}
-                            students={students || []}
-                          />
-                        )} */}
+                        <QuestionForm
+                          generatedQuestions={insertedQuestions}
+                          addManualQuestion={handleFormAddQuestion}
+                        />
+
                         {isCompletionLoading && <Loading />}
                       </div>
                     </div>

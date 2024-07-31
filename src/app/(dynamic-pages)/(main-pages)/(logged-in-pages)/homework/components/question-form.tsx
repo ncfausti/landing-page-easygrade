@@ -8,17 +8,19 @@ import { InsertQuestion, Question } from '@/types';
 import { useRouter } from 'next/navigation';
 import QuestionItem from './question-item';
 
-export default function QuestionForm() {
+export default function QuestionForm(params) {
+  const { generatedQuestions, addManualQuestion } = params;
   const [questionText, setQuestionText] = useState('');
   const [answerChoices, setAnswerChoices] = useState<string[]>(['']);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [hints, setHints] = useState<string[]>(['']);
   const [questionType, setQuestionType] = useState('');
   const router = useRouter();
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<Question[]>(generatedQuestions);
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
 
+  console.log('qs in form:', generatedQuestions);
   const { mutate: insertQuestions } = useMutation(
     async (questions: InsertQuestion[]) => {
       return insertQuestionsAction(questions);
@@ -40,7 +42,11 @@ export default function QuestionForm() {
         router.refresh();
         queryClient.invalidateQueries(['questions']);
         // setStatus('Question submitted successfully!');
-        setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+        // setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+        // instead of above, send to callback and pass back to parent
+        addManualQuestion(newQuestions);
+
+
         // Clear the form fields after successful submission
         setQuestionText('');
         setAnswerChoices(['']);
@@ -74,7 +80,7 @@ export default function QuestionForm() {
     console.log(updatedQuestion);
   };
 
-  const deleteQuestion = async (questionId: string) => {
+  const deleteQuestion = async (questionId: number) => {
     // Implement your server action to delete the question
     // This should make an API call to your backend
     console.log(questionId);
@@ -198,19 +204,16 @@ export default function QuestionForm() {
           </button>
         </div>
       </form>
-      {questions.map((question, index) => (
-        // <div key={index}>
-        //   <h3>Question {index + 1}</h3>
-        //   <p>{question.question_text}</p>
-        //   <ul>
-        //     {question.answer_choices.map((choice, choiceIndex) => (
-        //       <li key={choiceIndex}>{choice}</li>
-        //     ))}
-        //   </ul>
-        //   <p>Correct Answer: {question.correct_answer}</p>
-        //   <p>Hints: {question.hints.join(', ')}</p>
-        //   <p>Type: {question.question_type}</p>
-        // </div>
+      {/* {questions.map((question) => (
+        <QuestionItem
+          key={question.question_id}
+          question={question}
+          onUpdate={updateQuestion}
+          onDelete={deleteQuestion}
+        />
+      ))} */}
+
+      {generatedQuestions.map((question) => (
         <QuestionItem
           key={question.question_id}
           question={question}

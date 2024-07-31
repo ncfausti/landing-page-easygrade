@@ -57,16 +57,16 @@ export const MAIN_PROMPT = (promptConfig: PromptConfig): string => {
   JSON object format:
   [
       {
-        "question": "What is the capital of France?",
-        "answer": "Paris",
-        "type": "mc",
-        "choices": ["Paris", "London", "Berlin", "Madrid"]
+        "question_text": "What is the capital of France?",
+        "correct_answer": "Paris",
+        "question_type": "mc",
+        "answer_choices": ["Paris", "London", "Berlin", "Madrid"]
       },
       {
-        "question": "150 + 300",
-        "answer": "450",
-        "type": "short_answer",
-        "choices": []
+        "question_text": "150 + 300",
+        "correct_answer": "450",
+        "question_type": "short_answer",
+        "answer_choices": []
       }
     ]
   `;

@@ -35,6 +35,7 @@ export default function Chat(props: {
         toast.success('Questions created', { id: toastRef.current });
         toastRef.current = null;
 
+        // after the questions are created in DB
         // call back to parent component to update state
         setInsertedQuestions(questions);
 
@@ -62,12 +63,12 @@ export default function Chat(props: {
     },
     onFinish: (prompt, completion) => {
       console.log('Finished json completion.');
-      const questions = JSON.parse(completion).map((q) => {
+      const questions = JSON.parse(completion).map((q: InsertQuestion) => {
         return {
-          question_text: q.question,
-          correct_answer: q.answer,
-          answer_choices: q.choices,
-          question_type: q.type,
+          question_text: q.question_text,
+          correct_answer: q.correct_answer,
+          answer_choices: q.answer_choices,
+          question_type: q.question_type,
           hints: [],
         };
       });
@@ -104,7 +105,7 @@ export default function Chat(props: {
         />
         <button
           disabled={isLoading}
-          className={`${isLoading ? 'bg-gray-200' : 'bg-white'
+          className={`${isLoading ? 'bg-yellow-300' : 'bg-white'
             } w-full btn  border-2 p-3 mt-3 rounded-xl border-black`}
           type="submit"
         >

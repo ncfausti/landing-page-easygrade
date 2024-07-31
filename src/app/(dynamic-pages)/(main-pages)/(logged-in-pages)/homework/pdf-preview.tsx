@@ -12,12 +12,12 @@ import {
 import { styles } from './styles';
 // import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
-interface Question {
-  question: string;
-  type: string;
-  choices: string[];
-}
-
+// interface Question {
+//   question: string;
+//   type: string;
+//   choices: string[];
+// }
+import { Question } from '@/types';
 import { Student } from '@/types';
 
 Font.register({
@@ -87,9 +87,11 @@ export const PDFPreview = ({
               {questions.map((q, i) => (
                 <View key={i}>
                   <Text style={styles.question}>
-                    {`${i + 1}.`} {q.question}
+                    {`${i + 1}.`} {q.question_text}
                   </Text>
-                  {q.choices ? qChoicesMap(q.choices, styles) : ' '}
+                  {q.answer_choices
+                    ? qChoicesMap(q.answer_choices, styles)
+                    : ' '}
                 </View>
               ))}
             </Page>
