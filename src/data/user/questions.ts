@@ -24,3 +24,24 @@ export const insertQuestionsAction = async (questions: InsertQuestion[]) => {
   revalidatePath('/');
   return data;
 };
+
+export const deleteQuestionAction = async (questionId: number) => {
+  'use server';
+  const supabaseClient = createSupabaseServerActionClient();
+
+  if (!questionId) {
+    throw new Error('No questionID provided');
+  }
+
+  const { data, error } = await supabaseClient
+    .from('questions')
+    .delete()
+    .eq('question_id', questionId);
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/homework');
+  return { success: true };
+};

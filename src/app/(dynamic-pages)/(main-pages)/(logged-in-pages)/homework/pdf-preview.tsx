@@ -58,6 +58,7 @@ export const PDFPreview = ({
   assignment_template_id: string;
   students: Student[];
 }) => {
+  console.log('pdfpreview questions:', questions);
   return (
     <>
       <PDFViewer>

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 'use client';
 
 import { insertQuestionsAction } from '@/data/user/questions';
@@ -7,6 +8,8 @@ import { toast } from 'react-hot-toast';
 import { InsertQuestion, Question } from '@/types';
 import { useRouter } from 'next/navigation';
 import QuestionItem from './question-item';
+import { deleteQuestionAction } from '@/data/user/questions';
+// import { AddQuestionDialog } from './add-question-dialog';
 
 export default function QuestionForm(params) {
   const { generatedQuestions, addManualQuestion } = params;
@@ -46,7 +49,6 @@ export default function QuestionForm(params) {
         // instead of above, send to callback and pass back to parent
         addManualQuestion(newQuestions);
 
-
         // Clear the form fields after successful submission
         setQuestionText('');
         setAnswerChoices(['']);
@@ -77,20 +79,28 @@ export default function QuestionForm(params) {
   const updateQuestion = async (updatedQuestion: Question) => {
     // Implement your server action to update the question
     // This should make an API call to your backend
+    console.log('updated question:', updatedQuestion);
     console.log(updatedQuestion);
   };
 
   const deleteQuestion = async (questionId: number) => {
     // Implement your server action to delete the question
     // This should make an API call to your backend
-    console.log(questionId);
+    console.log('deleting :', questionId);
+    await deleteQuestionAction(questionId);
+    const result = await deleteQuestionAction(questionId)
+      if (result.success) {
+        router.refresh() // This will trigger a re-render of the page
+      } else {
+        alert('Failed to delete question')
+      }
   };
 
   return (
-    <div>
+    <div className="flex">
       <form
         onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
+        className="max-w-2xl mx-2 my-2 p-6 bg-white rounded-lg shadow-md"
       >
         <div className="mb-4">
           <label
@@ -212,15 +222,23 @@ export default function QuestionForm(params) {
           onDelete={deleteQuestion}
         />
       ))} */}
+      {/* <AddQuestionDialog /> */}
 
-      {generatedQuestions.map((question) => (
-        <QuestionItem
-          key={question.question_id}
-          question={question}
-          onUpdate={updateQuestion}
-          onDelete={deleteQuestion}
-        />
-      ))}
+      <div
+        className={`flex ${generatedQuestions.length !== 0 && 'flex-col'} grow justify-center max-h-[600px] overflow-y-scroll m-2 p-6 bg-white rounded-lg shadow-md`}
+      >
+        {generatedQuestions.length === 0 && (
+          <p className="flex items-center">No questions added yet</p>
+        )}
+        {generatedQuestions.map((question) => (
+          <QuestionItem
+            key={question.question_id}
+            question={question}
+            onUpdate={updateQuestion}
+            onDelete={deleteQuestion}
+          />
+        ))}
+      </div>
     </div>
   );
 }

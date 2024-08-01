@@ -50,12 +50,15 @@ import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
 import { CourseStudents, Question } from '@/types';
 import QuestionForm from './components/question-form';
+// import QuestionList from './components/question-list';
+// import AddQuestionModal from './components/add-question-modal';
 import { createAllAssignmentsForCourseAction } from '@/data/user/assignments';
 import { toast } from 'react-hot-toast';
 import { CourseSelectDropdown } from './components/course-select-dropdown';
 import { useQuery } from '@tanstack/react-query';
 import { fetchStudentsByIdsFrontEnd } from '@/utils/supabase-queries';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
+
 // Force the page to be dynamic and allow streaming responses up to 30 seconds
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -264,18 +267,18 @@ export default function Page() {
                       Choose the interface that best suits your teaching task.
                     </HoverCardContent>
                   </HoverCard>
-                  <TabsList className="grid grid-cols-3">
-                    <TabsTrigger disabled value="complete">
-                      <span className="sr-only">Complete</span>
-                      <CompleteIcon />
-                    </TabsTrigger>
-                    <TabsTrigger disabled value="insert">
+                  <TabsList className="grid grid-cols-2">
+                    {/* <TabsTrigger value="insert">
                       <span className="sr-only">Insert</span>
                       <InsertIcon />
-                    </TabsTrigger>
+                    </TabsTrigger> */}
                     <TabsTrigger value="edit">
-                      <span className="sr-only">Edit</span>
                       <EditIcon />
+                      <span className="">Edit</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="preview">
+                      <CompleteIcon />
+                      <span className="">Preview</span>
                     </TabsTrigger>
                   </TabsList>
                 </div>
@@ -343,19 +346,11 @@ export default function Page() {
               <div className="md:order-1">
                 <TabsContent value="edit" className="mt-0 border-0 p-0">
                   <div className="flex flex-col space-y-4">
-                    <div className="grid h-full gap-6 lg:grid-cols-2">
+                    <div className="h-full">
                       <div className="flex flex-col space-y-4">
-                        <div className="flex flex-1 flex-col space-y-2">
+                        {/* <div className="flex flex-1 flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
-                          {!isCompletionLoading && (
-                            <PDFPreview
-                              course_name={courseName}
-                              questions={insertedQuestions}
-                              // questions={trycatch(JSON.parse, completion)}
-                              assignment_template_id={assignmentTemplateId}
-                              students={students || []}
-                            />
-                          )}
+
                           <div className="Example__container min-h-[400px] lg:min-h-[700px] ">
                             <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
                               <input onChange={onFileChange} type="file" />
@@ -406,8 +401,8 @@ export default function Page() {
                               </Document>
                             </div>
                           </div>
-                        </div>
-                        <div className="flex flex-col">
+                        </div> */}
+                        {/* <div className="flex flex-col">
                           <FileUpload onFileChange={onFileChange} />
                           {selectedPages.length === 1 && (
                             <span>{`${selectedPages.length} page selected`}</span>
@@ -415,12 +410,14 @@ export default function Page() {
                           {selectedPages.length >= 2 && (
                             <span>{`${selectedPages.length} pages selected`}</span>
                           )}
-                        </div>
+                        </div> */}
                       </div>
-                      <div
-                        id="pdf-preview-container"
-                        className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]"
-                      >
+                      <div className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px] w-full">
+                        {/* <QuestionList
+                          questions={insertedQuestions}
+                          addManualQuestion={handleFormAddQuestion}
+                        /> */}
+                        {/* <AddQuestionModal isOpen={isModalOpen}  /> */}
                         <QuestionForm
                           generatedQuestions={insertedQuestions}
                           addManualQuestion={handleFormAddQuestion}
@@ -436,7 +433,29 @@ export default function Page() {
                         <span className="sr-only">Show history</span>
                         <CounterClockwiseClockIcon className="h-4 w-4" />
                       </Button> */}
+                      {/* {!isCompletionLoading && (
+                        <PDFPreview
+                          course_name={courseName}
+                          questions={insertedQuestions}
+                          // questions={trycatch(JSON.parse, completion)}
+                          assignment_template_id={assignmentTemplateId}
+                          students={students || []}
+                        />
+                      )} */}
                     </div>
+                  </div>
+                </TabsContent>
+                <TabsContent value="preview" className="mt-0 border-0 p-0">
+                  <div id="pdf-preview-container">
+                    {!isCompletionLoading && (
+                      <PDFPreview
+                        course_name={courseName}
+                        questions={insertedQuestions}
+                        // questions={trycatch(JSON.parse, completion)}
+                        assignment_template_id={assignmentTemplateId}
+                        students={students || []}
+                      />
+                    )}
                   </div>
                 </TabsContent>
               </div>

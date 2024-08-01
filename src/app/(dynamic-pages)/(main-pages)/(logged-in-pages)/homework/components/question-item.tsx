@@ -30,15 +30,15 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
     },
   });
 
-  const deleteMutation = useMutation(onDelete, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['questions']);
-      toast.success('Question deleted successfully');
-    },
-    onError: () => {
-      toast.error('Failed to delete question');
-    },
-  });
+  // const deleteMutation = useMutation(onDelete, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['questions']);
+  //     toast.success('Question deleted successfully');
+  //   },
+  //   onError: () => {
+  //     toast.error('Failed to delete question');
+  //   },
+  // });
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -64,8 +64,12 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
   };
 
   const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this question?')) {
-      deleteMutation.mutate(question.question_id);
+    if (
+      window.confirm(
+        'Are you sure you want to delete this question? ' + question.question_id
+      )
+    ) {
+      onDelete(question.question_id);
     }
   };
 
