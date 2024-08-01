@@ -220,6 +220,12 @@ export default function Page() {
       ...newQuestions,
     ]);
   }
+
+  function handleFormDeleteQuestion(questionId: number) {
+    setInsertedQuestions((prevQuestions) =>
+      prevQuestions.filter((q) => q.question_id !== questionId)
+    );
+  }
   return (
     <>
       <div className="md:hidden">
@@ -421,6 +427,7 @@ export default function Page() {
                         <QuestionForm
                           generatedQuestions={insertedQuestions}
                           addManualQuestion={handleFormAddQuestion}
+                          deleteQuestion={handleFormDeleteQuestion}
                         />
 
                         {isCompletionLoading && <Loading />}

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { Question } from '@/types';
+import { deleteQuestionAction } from '@/data/user/questions';
+import { startTransition } from 'react';
 
 interface QuestionItemProps {
   question: Question;
-  onUpdate: (updatedQuestion: Question) => Promise<void>;
-  onDelete: (questionId: number) => Promise<void>;
+  onUpdate: (updatedQuestion: Question) => void;
+  onDelete: (questionId: number) => void;
 }
 
 const QuestionItem: React.FC<QuestionItemProps> = ({
@@ -17,18 +19,18 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState<Question>(question);
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const updateMutation = useMutation(onUpdate, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['questions']);
-      toast.success('Question updated successfully');
-      setIsEditing(false);
-    },
-    onError: () => {
-      toast.error('Failed to update question');
-    },
-  });
+  // const updateMutation = useMutation(onUpdate, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['questions']);
+  //     toast.success('Question updated successfully');
+  //     setIsEditing(false);
+  //   },
+  //   onError: () => {
+  //     toast.error('Failed to update question');
+  //   },
+  // });
 
   // const deleteMutation = useMutation(onDelete, {
   //   onSuccess: () => {
@@ -63,14 +65,29 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
     updateMutation.mutate(editedQuestion);
   };
 
+  // const handleDelete = () => {
+  //   if (
+  //     window.confirm(
+  //       'Are you sure you want to delete this question? ' + question.question_id
+  //     )
+  //   ) {
+  //     onDelete(question.question_id);
+  //   }
+  // };
+
   const handleDelete = () => {
-    if (
-      window.confirm(
-        'Are you sure you want to delete this question? ' + question.question_id
-      )
-    ) {
-      onDelete(question.question_id);
-    }
+    startTransition(async () => {
+      const result = await deleteQuestionAction(question.question_id);
+      if (result.success) {
+        // Handle successful deletion (e.g., update UI, show notification)
+        // callback to remove the question from the list
+        onDelete(question.question_id);
+        console.log('Question deleted successfully');
+      } else {
+        // Handle error
+        console.error('Failed to delete question:', result.error);
+      }
+    });
   };
 
   return (

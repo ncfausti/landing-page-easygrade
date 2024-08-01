@@ -8,22 +8,19 @@ import { toast } from 'react-hot-toast';
 import { InsertQuestion, Question } from '@/types';
 import { useRouter } from 'next/navigation';
 import QuestionItem from './question-item';
-import { deleteQuestionAction } from '@/data/user/questions';
 // import { AddQuestionDialog } from './add-question-dialog';
 
 export default function QuestionForm(params) {
-  const { generatedQuestions, addManualQuestion } = params;
+  const { generatedQuestions, addManualQuestion, deleteQuestion } = params;
   const [questionText, setQuestionText] = useState('');
   const [answerChoices, setAnswerChoices] = useState<string[]>(['']);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [hints, setHints] = useState<string[]>(['']);
   const [questionType, setQuestionType] = useState('');
   const router = useRouter();
-  const [questions, setQuestions] = useState<Question[]>(generatedQuestions);
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
 
-  console.log('qs in form:', generatedQuestions);
   const { mutate: insertQuestions } = useMutation(
     async (questions: InsertQuestion[]) => {
       return insertQuestionsAction(questions);
@@ -83,18 +80,13 @@ export default function QuestionForm(params) {
     console.log(updatedQuestion);
   };
 
-  const deleteQuestion = async (questionId: number) => {
-    // Implement your server action to delete the question
-    // This should make an API call to your backend
-    console.log('deleting :', questionId);
-    await deleteQuestionAction(questionId);
-    const result = await deleteQuestionAction(questionId)
-      if (result.success) {
-        router.refresh() // This will trigger a re-render of the page
-      } else {
-        alert('Failed to delete question')
-      }
-  };
+  // const deleteQuestion = (questionId: number) => {
+  //   deleteQuestion(questionId);
+  // };
+
+  const inputClassNames = `shadow appearance-none border rounded w-full
+              py-2 px-3 text-gray-700 leading-tight
+              focus:outline-none focus:shadow-outline mb-2`
 
   return (
     <div className="flex">
@@ -134,13 +126,14 @@ export default function QuestionForm(params) {
                 setAnswerChoices(newChoices);
               }}
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+              className={inputClassNames}
             />
           ))}
           <button
             type="button"
             onClick={() => setAnswerChoices([...answerChoices, ''])}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white
+            font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Add Choice
           </button>
@@ -159,7 +152,7 @@ export default function QuestionForm(params) {
             value={correctAnswer}
             onChange={(e) => setCorrectAnswer(e.target.value)}
             required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={inputClassNames}
           />
         </div>
 
@@ -177,13 +170,14 @@ export default function QuestionForm(params) {
                 newHints[index] = e.target.value;
                 setHints(newHints);
               }}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+              className={inputClassNames}
             />
           ))}
           <button
             type="button"
             onClick={() => setHints([...hints, ''])}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-green-500 hover:bg-green-700 text-white
+            font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Add Hint
           </button>
@@ -201,14 +195,15 @@ export default function QuestionForm(params) {
             type="text"
             value={questionType}
             onChange={(e) => setQuestionType(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={inputClassNames}
           />
         </div>
 
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-purple-500 hover:bg-purple-700 text-white
+            font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Submit
           </button>

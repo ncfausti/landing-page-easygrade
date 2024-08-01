@@ -33,13 +33,13 @@ export const deleteQuestionAction = async (questionId: number) => {
     throw new Error('No questionID provided');
   }
 
-  const { data, error } = await supabaseClient
+  const { error } = await supabaseClient
     .from('questions')
     .delete()
     .eq('question_id', questionId);
 
   if (error) {
-    throw error;
+    return { success: false, error };
   }
 
   revalidatePath('/homework');
