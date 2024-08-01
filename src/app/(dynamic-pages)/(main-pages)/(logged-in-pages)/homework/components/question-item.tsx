@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { Question } from '@/types';
-import { deleteQuestionAction } from '@/data/user/questions';
+import {
+  updateQuestionAction,
+  deleteQuestionAction,
+} from '@/data/user/questions';
 import { startTransition } from 'react';
 
 interface QuestionItemProps {
@@ -19,7 +22,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState<Question>(question);
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   // const updateMutation = useMutation(onUpdate, {
   //   onSuccess: () => {
@@ -62,7 +65,24 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
   };
 
   const handleSave = () => {
-    updateMutation.mutate(editedQuestion);
+    console.log(editedQuestion);
+    startTransition(async () => {
+      const result = await updateQuestionAction(editedQuestion);
+      if (result.success) {
+        // Handle successful deletion (e.g., update UI, show notification)
+        // callback to remove the question from the list
+
+        // need to update the question in the parent component
+        onUpdate(editedQuestion);
+        console.log('Question updated successfully');
+      } else {
+        // Handle error
+        console.error('Failed to update question.');
+      }
+    });
+
+    setIsEditing(false);
+    // updateMutation.mutate(editedQuestion);
   };
 
   // const handleDelete = () => {

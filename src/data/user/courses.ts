@@ -196,8 +196,6 @@ export async function addCourse(formData) {
   if (error) {
     throw error;
   }
-
   revalidatePath('/courses');
-  console.log('data: ', data);
   return data;
 }

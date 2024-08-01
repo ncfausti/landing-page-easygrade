@@ -64,8 +64,8 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
 export default function Page() {
-  const [grade, setGrade] = useState(5);
-  const [subjNum, setSubjNum] = useState(7);
+  const [grade, setGrade] = useState(8);
+  const [subjNum, setSubjNum] = useState(0);
   const [mcqNum, setMcqNum] = useState(3);
   const [subject, setSubject] = useState<Subject>('Math');
   const [courseId, setCourseId] = useState<number>(-1);
@@ -218,6 +218,16 @@ export default function Page() {
     setInsertedQuestions((prevQuestions) => [
       ...prevQuestions,
       ...newQuestions,
+    ]);
+  }
+
+  function handleFormUpdateQuestion(updatedQuestion: Question) {
+    setInsertedQuestions((prevQuestions) => [
+      ...prevQuestions.map((question) =>
+        question.question_id === updatedQuestion.question_id
+          ? { ...question, ...updatedQuestion }
+          : question
+      ),
     ]);
   }
 
@@ -428,6 +438,7 @@ export default function Page() {
                           generatedQuestions={insertedQuestions}
                           addManualQuestion={handleFormAddQuestion}
                           deleteQuestion={handleFormDeleteQuestion}
+                          updateQuestion={handleFormUpdateQuestion}
                         />
 
                         {isCompletionLoading && <Loading />}

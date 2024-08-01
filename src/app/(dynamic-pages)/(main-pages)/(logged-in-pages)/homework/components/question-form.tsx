@@ -11,7 +11,7 @@ import QuestionItem from './question-item';
 // import { AddQuestionDialog } from './add-question-dialog';
 
 export default function QuestionForm(params) {
-  const { generatedQuestions, addManualQuestion, deleteQuestion } = params;
+  const { generatedQuestions, addManualQuestion, updateQuestion, deleteQuestion } = params;
   const [questionText, setQuestionText] = useState('');
   const [answerChoices, setAnswerChoices] = useState<string[]>(['']);
   const [correctAnswer, setCorrectAnswer] = useState('');
@@ -73,12 +73,9 @@ export default function QuestionForm(params) {
     ]);
   };
 
-  const updateQuestion = async (updatedQuestion: Question) => {
-    // Implement your server action to update the question
-    // This should make an API call to your backend
-    console.log('updated question:', updatedQuestion);
-    console.log(updatedQuestion);
-  };
+  // const handleUpdateQuestion = async (updatedQuestion: Question) => {
+  //   updateQuestion(updatedQuestion);
+  // };
 
   // const deleteQuestion = (questionId: number) => {
   //   deleteQuestion(questionId);
@@ -220,7 +217,7 @@ export default function QuestionForm(params) {
       {/* <AddQuestionDialog /> */}
 
       <div
-        className={`flex ${generatedQuestions.length !== 0 && 'flex-col'} grow justify-center max-h-[600px] overflow-y-scroll m-2 p-6 bg-white rounded-lg shadow-md`}
+        className={`flex ${generatedQuestions.length !== 0 && 'flex-col'} grow max-h-[600px] justify-center overflow-y-scroll m-2 p-6 bg-white rounded-lg shadow-md`}
       >
         {generatedQuestions.length === 0 && (
           <p className="flex items-center">No questions added yet</p>
