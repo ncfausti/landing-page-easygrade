@@ -187,6 +187,19 @@ Promise<Array<Table<'students'>>> => {
   return data;
 };
 
+export const getAllCourses = async (): // supabase: AppSupabaseClient
+Promise<Array<Table<'courses'>>> => {
+  const supabase = createSupabaseServerComponentClient();
+
+  const { data, error } = await supabase.from('courses').select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
 export const insertPrivateItem = async (
   supabase: AppSupabaseClient,
   item: { name: string; description: string }
@@ -341,17 +354,6 @@ export async function getCourseEnrollmentsFromFrontend(
   }
   return { data, error };
 }
-
-export const getAllCourses = async (): Promise<Array<Table<'courses'>>> => {
-  const supabase = createSupabaseServerComponentClient();
-  const { data, error } = await supabase.from('courses').select('*');
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-};
 
 export async function fetchStudentsByIds(studentIds: number[]) {
   if (!studentIds || studentIds.length === 0) return [];

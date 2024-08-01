@@ -180,3 +180,24 @@ export async function setupTeacherClassesAction(classes) {
     }
   }
 }
+
+export async function addCourse(formData) {
+  console.log('Adding course:', formData);
+  const supabaseClient = createSupabaseServerActionClient();
+  const { data, error } = await supabaseClient
+    .from('courses')
+    .insert({
+      course_name: formData.get('course_name'),
+      description: formData.get('description'),
+    })
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/courses');
+  console.log('data: ', data);
+  return data;
+}
