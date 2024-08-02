@@ -11,12 +11,14 @@ import QuestionItem from './question-item';
 // import { AddQuestionDialog } from './add-question-dialog';
 
 export default function QuestionForm(params) {
+  const defaultQuestionType = "mc";
+
   const { generatedQuestions, addManualQuestion, updateQuestion, deleteQuestion } = params;
   const [questionText, setQuestionText] = useState('');
-  const [answerChoices, setAnswerChoices] = useState<string[]>(['']);
+  const [answerChoices, setAnswerChoices] = useState<string[]>(['', '', '', '']);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [hints, setHints] = useState<string[]>(['']);
-  const [questionType, setQuestionType] = useState('');
+  const [questionType, setQuestionType] = useState(defaultQuestionType);
   const router = useRouter();
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
@@ -51,7 +53,7 @@ export default function QuestionForm(params) {
         setAnswerChoices(['']);
         setCorrectAnswer('');
         setHints(['']);
-        setQuestionType('');
+        setQuestionType(defaultQuestionType);
       },
       onError: () => {
         toast.error('Failed to create question', { id: toastRef.current });
@@ -81,15 +83,17 @@ export default function QuestionForm(params) {
   //   deleteQuestion(questionId);
   // };
 
-  const inputClassNames = `shadow appearance-none border rounded w-full
+  const inputClassNames = `shadow appearance-none border rounded w-2/3
               py-2 px-3 text-gray-700 leading-tight
               focus:outline-none focus:shadow-outline mb-2`
 
+  const MAX_CHOICES = 7;
+  const MAX_CHOICES_ADDED = answerChoices.length >= MAX_CHOICES;
   return (
-    <div className="flex">
+    <div className="flex p-2 max-h-[800px]">
       <form
         onSubmit={handleSubmit}
-        className="max-w-2xl mx-2 my-2 p-6 bg-white rounded-lg shadow-md"
+        className="max-w-xs mx-2 my-2 p-6 bg-white rounded-lg shadow-md"
       >
         <div className="mb-4">
           <label
@@ -113,24 +117,36 @@ export default function QuestionForm(params) {
             Answer Choices:
           </label>
           {answerChoices.map((choice, index) => (
-            <input
-              key={index}
-              type="text"
-              value={choice}
-              onChange={(e) => {
-                const newChoices = [...answerChoices];
-                newChoices[index] = e.target.value;
-                setAnswerChoices(newChoices);
-              }}
-              required
-              className={inputClassNames}
-            />
+            <>
+              <input
+                key={index}
+                type="text"
+                value={choice}
+                onChange={(e) => {
+                  const newChoices = [...answerChoices];
+                  newChoices[index] = e.target.value;
+                  setAnswerChoices(newChoices);
+                }}
+                required
+                className={inputClassNames}
+              />
+              <button className="inline ml-4 rounded-full bg-red-500 text-white text-xl font-semibold w-8 h-8" onClick={
+                () => {
+                  const newChoices = [...answerChoices];
+                  newChoices.splice(index, 1);
+                  setAnswerChoices(newChoices);
+                }
+              }>x</button>
+            </>
           ))}
+          <br />
           <button
+            disabled={MAX_CHOICES_ADDED}
             type="button"
             onClick={() => setAnswerChoices([...answerChoices, ''])}
-            className="bg-blue-500 hover:bg-blue-700 text-white
-            font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className={`bg-blue-500 hover:bg-blue-700 text-white
+            font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
+            ${MAX_CHOICES_ADDED && 'bg-gray-500 hover:bg-gray-500 cursor-not-allowed'}`}
           >
             Add Choice
           </button>
@@ -180,20 +196,38 @@ export default function QuestionForm(params) {
           </button>
         </div>
 
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="questionType"
-          >
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
             Question Type:
           </label>
-          <input
-            id="questionType"
-            type="text"
-            value={questionType}
-            onChange={(e) => setQuestionType(e.target.value)}
-            className={inputClassNames}
-          />
+          <div className="mt-2 space-y-2">
+            <div className="flex items-center">
+              <input
+                id="questionTypeMC"
+                type="radio"
+                value="mc"
+                checked={questionType === "mc"}
+                onChange={(e) => setQuestionType(e.target.value)}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 cursor-pointer"
+              />
+              <label htmlFor="questionTypeMC" className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                Multiple Choice
+              </label>
+            </div>
+            <div className="flex items-center">
+              <input
+                id="questionTypeSubjective"
+                type="radio"
+                value="short_answer"
+                checked={questionType === "short_answer"}
+                onChange={(e) => setQuestionType(e.target.value)}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 cursor-pointer"
+              />
+              <label htmlFor="questionTypeSubjective" className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                Subjective
+              </label>
+            </div>
+          </div>
         </div>
 
         <div className="flex items-center justify-between">
@@ -205,7 +239,7 @@ export default function QuestionForm(params) {
             Submit
           </button>
         </div>
-      </form>
+      </form >
       {/* {questions.map((question) => (
         <QuestionItem
           key={question.question_id}
@@ -217,7 +251,7 @@ export default function QuestionForm(params) {
       {/* <AddQuestionDialog /> */}
 
       <div
-        className={`flex ${generatedQuestions.length !== 0 && 'flex-col'} grow max-h-[600px] justify-center overflow-y-scroll m-2 p-6 bg-white rounded-lg shadow-md`}
+        className={`flex ${generatedQuestions.length !== 0 && 'flex-col'} grow justify-center overflow-y-scroll m-2 p-6 bg-white rounded-lg shadow-md`}
       >
         {generatedQuestions.length === 0 && (
           <p className="flex items-center">No questions added yet</p>
@@ -231,6 +265,6 @@ export default function QuestionForm(params) {
           />
         ))}
       </div>
-    </div>
+    </div >
   );
 }

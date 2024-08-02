@@ -105,8 +105,7 @@ export default function Chat(props: {
         />
         <button
           disabled={isLoading}
-          className={`${isLoading ? 'bg-yellow-300' : 'bg-white'
-            } w-full btn  border-2 p-3 mt-3 rounded-xl border-black`}
+          className={`bg-white w-full btn border-2 p-3 mt-3 font-semibold rounded-xl border-black`}
           type="submit"
         >
           {isLoading ? <Loading /> : 'Generate'}
