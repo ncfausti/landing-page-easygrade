@@ -267,7 +267,7 @@ h2, h3 {
 
 .react-pdf__Document {
   display: flex;
-  justify-content: center;
+  justify-content: start;
 }
 
 #nav-logo-text {

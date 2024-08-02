@@ -43,8 +43,8 @@ async function Course({
         <T.Subtle>Course: {description}</T.Subtle>
       </div>
       <div className="space-y-4">
-        <T.H2>Students</T.H2>
-        <ul className="space-y-2">
+        <T.H2 className="hidden">Students</T.H2>
+        <ul className="space-y-2 hidden">
           {students.map((student) => (
             <li key={student.id}>
               {student.first_name} {student.last_name}
@@ -52,7 +52,7 @@ async function Course({
           ))}
         </ul>
         <T.H2>{headerText}</T.H2>
-        <ul className="space-y-2">
+        {/* <ul className="space-y-2">
           {filteredAssignments &&
             filteredAssignments.map((assignment) => (
               <li key={assignment.assignment_id}>
@@ -68,7 +68,81 @@ async function Course({
                 ))}
               </li>
             ))}
-        </ul>
+        </ul> */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Student
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Assignment
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Dates
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Files
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Incorrect
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Question IDs
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {assignments.map((assignment) => (
+                <tr key={assignment.assignment_id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900">
+                      {student[assignment.student_id].first_name}{' '}
+                      {student[assignment.student_id].last_name}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {assignment.assignment_number}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {assignment.assignment_name}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      Due: {assignment.due_date}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Submitted: {assignment.submission_date}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <a
+                      href={assignment.upload_photo_url}
+                      className="text-indigo-600 hover:text-indigo-900 mr-2"
+                    >
+                      Photo
+                    </a>
+                    <a
+                      href={assignment.pdf_url}
+                      className="text-indigo-600 hover:text-indigo-900"
+                    >
+                      PDF
+                    </a>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {assignment.number_incorrect}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {assignment.question_ids.join(', ')}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

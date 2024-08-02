@@ -211,7 +211,7 @@ export default function Page() {
 
   const [assignmentTemplateId] = useState(uuidv4());
 
-  console.log('trycatch: ', trycatch(JSON.parse, completion));
+  // console.log('trycatch: ', trycatch(JSON.parse, completion));
 
   function handleFormAddQuestion(newQuestions: Question[]) {
     setInsertedQuestions((prevQuestions) => [
@@ -365,8 +365,7 @@ export default function Page() {
                       <div className="flex flex-col space-y-4">
                         <div className="flex flex-1 flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
-
-                          <div className="Example__container min-h-[400px] lg:min-h-[700px] ">
+                          <div className="Example__container min-h-[400px] lg:min-h-[700px] max-w-sm">
                             <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
                               <input onChange={onFileChange} type="file" />
                             </div>

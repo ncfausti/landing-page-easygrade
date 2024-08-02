@@ -11,10 +11,13 @@ export default async function CoursesLoader() {
       {courses &&
         courses.map((course) => (
           <div key={course.course_id}>
-            <Link href={`/course/${course.course_id}`}>
+            <Link
+              href={`/course/${course.course_id}`}
+              className={'text-blue-500 font-semibold hover:text-blue-700'}
+            >
               {course.course_name}
             </Link>
-            <div className="text-sm">{course.course_description}</div>
+            {/* <div className="text-sm">{course.course_description}</div> */}
           </div>
         ))}
     </>

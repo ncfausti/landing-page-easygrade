@@ -1,6 +1,6 @@
 'use client';
 import { useRef, useEffect } from 'react';
-import { useCompletion } from 'ai/react';
+import { useCompletion } from '@ai-sdk/react';
 import Loading from '@/components/Loading';
 import { progress } from '@/lib/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
