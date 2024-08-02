@@ -36,7 +36,6 @@ import {
 } from '@/components/ui/select';
 import Chat from '@/components/ui/Streaming/Chat';
 import { CompleteIcon } from '@/components/ui/Icons/Complete';
-import { InsertIcon } from '@/components/ui/Icons/Insert';
 import { EditIcon } from '@/components/ui/Icons/Edit';
 import './homework.css';
 import { subjects } from '@/constants';
@@ -364,7 +363,7 @@ export default function Page() {
                   <div className="flex flex-col space-y-4">
                     <div className="h-full">
                       <div className="flex flex-col space-y-4">
-                        {/* <div className="flex flex-1 flex-col space-y-2">
+                        <div className="flex flex-1 flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
 
                           <div className="Example__container min-h-[400px] lg:min-h-[700px] ">
@@ -417,8 +416,8 @@ export default function Page() {
                               </Document>
                             </div>
                           </div>
-                        </div> */}
-                        {/* <div className="flex flex-col">
+                        </div>
+                        <div className="flex flex-col">
                           <FileUpload onFileChange={onFileChange} />
                           {selectedPages.length === 1 && (
                             <span>{`${selectedPages.length} page selected`}</span>
@@ -426,7 +425,7 @@ export default function Page() {
                           {selectedPages.length >= 2 && (
                             <span>{`${selectedPages.length} pages selected`}</span>
                           )}
-                        </div> */}
+                        </div>
                       </div>
                       <div className="mt-[21px] rounded-md border bg-muted w-full">
                         {/* <QuestionList

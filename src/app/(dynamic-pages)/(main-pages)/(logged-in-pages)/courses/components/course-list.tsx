@@ -50,10 +50,8 @@ export default function CourseList({ courses }: CourseListProps) {
       </form>
       <div>
         {optimisticCourses.map((course) => (
-          <div key={course.course_id}>
-            <strong>
-              {course.course_name} : {course.course_id}
-            </strong>
+          <div key={Math.random()}>
+            <strong>{course.course_name}</strong>
             <p>{course.description}</p>
           </div>
         ))}

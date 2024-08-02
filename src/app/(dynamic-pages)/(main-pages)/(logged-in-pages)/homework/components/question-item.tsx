@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
+// import { useMutation, useQueryClient } from '@tanstack/react-query';
+// import { toast } from 'react-hot-toast';
 import { Question } from '@/types';
 import {
   updateQuestionAction,
@@ -22,7 +22,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState<Question>(question);
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   // const updateMutation = useMutation(onUpdate, {
   //   onSuccess: () => {
