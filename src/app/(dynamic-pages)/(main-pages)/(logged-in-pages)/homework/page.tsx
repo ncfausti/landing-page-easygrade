@@ -2,7 +2,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import FileUpload from '@/components/ui/FileUpload';
 import Image from 'next/image';
-import { pdfjs, Document, Thumbnail } from 'react-pdf';
+import { pdfjs, Document, Thumbnail, Page as PDFPage } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
   import.meta.url
@@ -235,6 +235,11 @@ export default function Page() {
       prevQuestions.filter((q) => q.question_id !== questionId)
     );
   }
+
+  const handleGetPageText = ({ items, styles }) => {
+    console.log('Now displaying ' + items.length + ' text layer items!');
+  };
+
   return (
     <>
       <div className="md:hidden">
@@ -382,34 +387,42 @@ export default function Page() {
                                 {Array.from(
                                   new Array(numPages),
                                   (el, index) => (
-                                    <Thumbnail
-                                      key={`page_${index + 1}`}
-                                      pageNumber={index + 1}
-                                      className={
-                                        selectedPages.includes(index + 1)
-                                          ? 'selected-page'
-                                          : ''
-                                      }
-                                      canvasRef={refs[index]}
-                                      width={widthToSendToOpenAI}
-                                      onRenderSuccess={() =>
-                                        setLoadedPages((prev) => prev + 1)
-                                      }
-                                      onItemClick={({
-                                        // dest,
-                                        // pageIndex,
-                                        pageNumber,
-                                      }) =>
-                                        setSelectedPages((prev) => {
-                                          if (prev.includes(pageNumber)) {
-                                            return prev.filter(
-                                              (p) => p !== pageNumber
-                                            );
-                                          }
-                                          return [...prev, pageNumber];
-                                        })
-                                      }
-                                    />
+                                    <>
+                                      <Thumbnail
+                                        key={`page_${index + 1}`}
+                                        pageNumber={index + 1}
+                                        className={
+                                          selectedPages.includes(index + 1)
+                                            ? 'selected-page'
+                                            : ''
+                                        }
+                                        canvasRef={refs[index]}
+                                        width={widthToSendToOpenAI}
+                                        onRenderSuccess={() =>
+                                          setLoadedPages((prev) => prev + 1)
+                                        }
+                                        onItemClick={({
+                                          // dest,
+                                          // pageIndex,
+                                          pageNumber,
+                                        }) =>
+                                          setSelectedPages((prev) => {
+                                            if (prev.includes(pageNumber)) {
+                                              return prev.filter(
+                                                (p) => p !== pageNumber
+                                              );
+                                            }
+                                            return [...prev, pageNumber];
+                                          })
+                                        }
+                                      />
+                                      <PDFPage
+                                        key={`pdfpage_${index + 1}`}
+                                        pageNumber={index + 1}
+                                        onLoadSuccess={console.log}
+                                        onGetTextSuccess={handleGetPageText}
+                                      />
+                                    </>
                                   )
                                 )}
                               </Document>
