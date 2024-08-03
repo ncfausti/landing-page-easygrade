@@ -44,7 +44,7 @@ import { subjects } from '@/constants';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
 import { PDFPreview } from './pdf-preview';
-import type { PDFFile, Subject } from '@/components/pdf/types';
+import type { PDFFile, Subject } from '@/types';
 import DifficultySelector from './components/difficulty-selector';
 import Loading from '@/components/Loading';
 const resizeObserverOptions = {};
