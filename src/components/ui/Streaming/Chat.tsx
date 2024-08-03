@@ -8,15 +8,23 @@ import { InsertQuestion, Question } from '@/types';
 import { toast } from 'react-hot-toast';
 import { insertQuestionsAction } from '@/data/user/questions';
 import { useRouter } from 'next/navigation';
+import { PromptConfig } from '@/types';
 
 export default function Chat(props: {
-  text: string;
+  promptConfig: PromptConfig;
+  userMessage: string;
   images: string[];
   setCompletion: (completionText: string, isLoading: boolean) => void;
   totalQuestions: number;
   setInsertedQuestions: (questions: Question[]) => void;
 }) {
-const { text, images = [], setInsertedQuestions, totalQuestions } = props;
+  const {
+    promptConfig,
+    userMessage,
+    images = [],
+    setInsertedQuestions,
+    totalQuestions,
+  } = props;
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
   const router = useRouter();
@@ -78,8 +86,8 @@ const { text, images = [], setInsertedQuestions, totalQuestions } = props;
   });
 
   useEffect(() => {
-    setInput(JSON.stringify({ text, images }));
-  }, [text, images]);
+    setInput(JSON.stringify({ promptConfig, images, userMessage }));
+  }, [promptConfig, images, userMessage]);
 
   useEffect(() => {
     if (completion) {

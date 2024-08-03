@@ -42,9 +42,10 @@ export function progress(completion: string, totalQuestions: number): string {
 export const MAIN_PROMPT = (promptConfig: PromptConfig): string => {
   const { grade, subject, totalQuestions, mcqNum, subjNum, supplementalText } =
     promptConfig;
-  return `You are a grade ${grade} ${subject}. GENERATE
-  GRADE ${grade} ${subject} HOMEWORK QUESTIONS and ANSWERS based on the
-  attached images.
+  return `You are a grade ${grade} ${subject} teacher that generates VALID JSON ONLY.
+
+  Generate GRADE ${grade} ${subject} HOMEWORK QUESTIONS and ANSWERS based on the
+  attached supplemental text. Structure the response as VALID JSON.
 
   There should be exactly ${totalQuestions} questions and answers returned.
   ${mcqNum} questions should be multiple choice. ${subjNum} questions
@@ -69,11 +70,12 @@ export const MAIN_PROMPT = (promptConfig: PromptConfig): string => {
         "question_type": "short_answer",
         "answer_choices": []
       }
-    ]
+  ]
 
+  SUPPLEMENTAL TEXT to BASE QUESTION STYLE AND CONTENT ON:
   ${supplementalText}
 
-  DO NOT RETURN ANYTHING ELSE, ONLY THE JSON OBJECT.
+  DO NOT RETURN ANYTHING ELSE, ONLY THE VALID JSON OBJECT.
   `;
 };
 

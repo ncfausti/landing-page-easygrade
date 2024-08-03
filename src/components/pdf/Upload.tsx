@@ -7,7 +7,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import Spinner from './Spinner';
 import './Upload.css';
-import Chat from '../ui/Streaming/Chat';
+// import Chat from '../ui/Streaming/Chat';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 // import { set } from 'nprogress';
 // import { useCompletion } from 'ai/react';
@@ -115,11 +115,11 @@ export default function Upload() {
   const disableButton =
     loadedPages === 0 || loadedPages !== numPages || showSpinner;
 
-  const [completion, setCompletion] = useState('');
+  // const [completion, setCompletion] = useState('');
 
-  const handleCompletionChanged = (completion: string) => {
-    setCompletion(completion);
-  };
+  // const handleCompletionChanged = (completion: string) => {
+  //   setCompletion(completion);
+  // };
 
   console.log();
   return (
@@ -164,17 +164,18 @@ export default function Upload() {
           </Select>
         </div>
 
-        <Chat
+        {/* <Chat
+          // promptConfig={ }
           setInsertedQuestions={() => {
             ('');
           }}
           setCompletion={handleCompletionChanged}
-          text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
+          userMessage={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
           images={
             [] //refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)
           }
           totalQuestions={10}
-        />
+        /> */}
       </div>
       <div id="generate-main" className="w-3/5">
         <div className="Example__container">
@@ -251,12 +252,12 @@ export default function Upload() {
         )}
         Completion:{' '}
         <div className="drop-shadow-lg ">
-          <p className="bg-white m-12 p-3 drop-shadow-lg">
+          {/* <p className="bg-white m-12 p-3 drop-shadow-lg">
             {completion &&
               `Name: _______________ Section : ________________  Date: ___________________`}
             <br className="leading-5"></br>
             {completion}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

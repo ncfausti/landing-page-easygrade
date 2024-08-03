@@ -41,7 +41,6 @@ import { CompleteIcon } from '@/components/ui/Icons/Complete';
 import { EditIcon } from '@/components/ui/Icons/Edit';
 import './homework.css';
 import { subjects } from '@/constants';
-import { MAIN_PROMPT } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
 import { PDFPreview } from './pdf-preview';
@@ -59,6 +58,7 @@ import { CourseSelectDropdown } from './components/course-select-dropdown';
 import { useQuery } from '@tanstack/react-query';
 import { fetchStudentsByIdsFrontEnd } from '@/utils/supabase-queries';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/supabaseUserClientComponentClient';
+import { PromptConfig } from '@/types';
 
 // Force the page to be dynamic and allow streaming responses up to 30 seconds
 export const dynamic = 'force-dynamic';
@@ -73,6 +73,7 @@ export default function Page() {
   const [courseName, setCourseName] = useState<string>('');
   const [insertedQuestions, setInsertedQuestions] = useState<Question[]>([]);
   const [pageText, setPageText] = useState('');
+  const [userMessage, setUserMessage] = useState('');
   const [, setCompletion] = useState('');
   const [isCompletionLoading, setIsCompletionLoading] = useState(false);
   const [file, setFile] = useState<PDFFile>();
@@ -149,7 +150,7 @@ export default function Page() {
 
   const totalQuestions = mcqNum + subjNum;
 
-  const config = {
+  const config: PromptConfig = {
     grade,
     subject,
     totalQuestions,
@@ -157,7 +158,8 @@ export default function Page() {
     subjNum,
     supplementalText: pageText,
   };
-  const hwGenerationPrompt = MAIN_PROMPT(config);
+
+  // const hwGenerationPrompt = MAIN_PROMPT(config);
   const handleCourseIdSelect = async (courseId: string, courseName: string) => {
     setCourseId(parseInt(courseId));
     setCourseName(courseName);
@@ -245,6 +247,10 @@ export default function Page() {
     );
   };
 
+  function handleUserMessageChange(e) {
+    console.log(e.target.value);
+    setUserMessage(e.target.value);
+  }
   return (
     <>
       <div className="md:hidden">
@@ -342,8 +348,9 @@ export default function Page() {
 
                 <Chat
                   setCompletion={setCompletionCallback}
-                  text={hwGenerationPrompt}
+                  promptConfig={config}
                   // images={allImages}
+                  userMessage={userMessage}
                   images={[]}
                   totalQuestions={totalQuestions}
                   setInsertedQuestions={handleFormAddQuestion}
@@ -374,15 +381,15 @@ export default function Page() {
                   <div className="flex flex-col space-y-4">
                     <div className="flex h-full">
                       <div className="flex flex-col space-y-4">
-                        <div className="flex flex-1 flex-col space-y-2">
+                        <div className="flex flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
                           {/* <p>{pageText}</p> */}
-                          <div className="Example__container min-h-[400px] lg:min-h-[700px] max-w-sm">
-                            <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
+                          <div className="Example__container min-h-[400px] lg:min-h-[500px] max-w-sm">
+                            <div className="hidden Example__container__load min-h-[400px] lg:min-h-[500px] ">
                               <input onChange={onFileChange} type="file" />
                             </div>
                             <div
-                              className="border rounded-md Example__container__document bg-gray-100 min-h-[400px] lg:min-h-[700px] "
+                              className="border rounded-md Example__container__document bg-gray-100 min-h-[400px] lg:min-h-[500px] "
                               ref={setContainerRef}
                             >
                               <Document
@@ -437,6 +444,13 @@ export default function Page() {
                             </div>
                           </div>
                         </div>
+                        <textarea
+                          placeholder={'Enter additional instructions here'}
+                          className="shadow appearance-none border rounded w-full
+              py-2 px-3 text-gray-700 leading-tight
+              focus:outline-none focus:shadow-outline mb-2 min-h-[100px]"
+                          onChange={handleUserMessageChange}
+                        />
                         <div className="flex flex-col">
                           <FileUpload onFileChange={onFileChange} />
                           {selectedPages.length === 1 && (
