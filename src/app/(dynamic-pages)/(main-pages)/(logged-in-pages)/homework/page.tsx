@@ -127,13 +127,13 @@ export default function Page() {
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
   const refs = Array.from({ length: MAX_PAGES }, () => useRef(null));
 
-  const trycatch = (fn, arg) => {
-    try {
-      return fn(arg);
-    } catch (e) {
-      return [];
-    }
-  };
+  // const trycatch = (fn, arg) => {
+  //   try {
+  //     return fn(arg);
+  //   } catch (e) {
+  //     return [];
+  //   }
+  // };
 
   // if ref.current is not null, map it to a dataURL
   const allImages = refs
@@ -235,8 +235,11 @@ export default function Page() {
       prevQuestions.filter((q) => q.question_id !== questionId)
     );
   }
-
+  const [pageText, setPageText] = useState('');
   const handleGetPageText = ({ items, styles }) => {
+    setPageText((prev) =>
+      [prev + ' ' + items.map((item) => item.str).join('')].join(' ')
+    );
     console.log('Now displaying ' + items.length + ' text layer items!');
   };
 
@@ -370,6 +373,7 @@ export default function Page() {
                       <div className="flex flex-col space-y-4">
                         <div className="flex flex-1 flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
+                          <p>{pageText}</p>
                           <div className="Example__container min-h-[400px] lg:min-h-[700px] max-w-sm">
                             <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
                               <input onChange={onFileChange} type="file" />
