@@ -7,6 +7,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
   import.meta.url
 ).toString();
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
 const options = {
   cMapUrl: '/cmaps/',
   standardFontDataUrl: '/standard_fonts/',
@@ -70,7 +72,8 @@ export default function Page() {
   const [courseId, setCourseId] = useState<number>(-1);
   const [courseName, setCourseName] = useState<string>('');
   const [insertedQuestions, setInsertedQuestions] = useState<Question[]>([]);
-  const [completion, setCompletion] = useState('');
+  const [pageText, setPageText] = useState('');
+  const [, setCompletion] = useState('');
   const [isCompletionLoading, setIsCompletionLoading] = useState(false);
   const [file, setFile] = useState<PDFFile>();
   const [numPages, setNumPages] = useState<number>(0);
@@ -136,13 +139,13 @@ export default function Page() {
   // };
 
   // if ref.current is not null, map it to a dataURL
-  const allImages = refs
-    .filter((ref) => ref.current)
-    .map((ref) => {
-      if (ref.current) {
-        return ref.current.toDataURL('image/jpeg', 0.7);
-      }
-    });
+  // const allImages = refs
+  //   .filter((ref) => ref.current)
+  //   .map((ref) => {
+  //     if (ref.current) {
+  //       return ref.current.toDataURL('image/jpeg', 0.7);
+  //     }
+  //   });
 
   const totalQuestions = mcqNum + subjNum;
 
@@ -152,6 +155,7 @@ export default function Page() {
     totalQuestions,
     mcqNum,
     subjNum,
+    supplementalText: pageText,
   };
   const hwGenerationPrompt = MAIN_PROMPT(config);
   const handleCourseIdSelect = async (courseId: string, courseName: string) => {
@@ -235,12 +239,10 @@ export default function Page() {
       prevQuestions.filter((q) => q.question_id !== questionId)
     );
   }
-  const [pageText, setPageText] = useState('');
-  const handleGetPageText = ({ items, styles }) => {
+  const handleGetPageText = ({ items }) => {
     setPageText((prev) =>
       [prev + ' ' + items.map((item) => item.str).join('')].join(' ')
     );
-    console.log('Now displaying ' + items.length + ' text layer items!');
   };
 
   return (
@@ -341,7 +343,8 @@ export default function Page() {
                 <Chat
                   setCompletion={setCompletionCallback}
                   text={hwGenerationPrompt}
-                  images={allImages}
+                  // images={allImages}
+                  images={[]}
                   totalQuestions={totalQuestions}
                   setInsertedQuestions={handleFormAddQuestion}
                 />
@@ -369,11 +372,11 @@ export default function Page() {
               <div className="md:order-1">
                 <TabsContent value="edit" className="mt-0 border-0 p-0">
                   <div className="flex flex-col space-y-4">
-                    <div className="h-full">
+                    <div className="flex h-full">
                       <div className="flex flex-col space-y-4">
                         <div className="flex flex-1 flex-col space-y-2">
                           <Label htmlFor="input">Upload preview:</Label>
-                          <p>{pageText}</p>
+                          {/* <p>{pageText}</p> */}
                           <div className="Example__container min-h-[400px] lg:min-h-[700px] max-w-sm">
                             <div className="hidden Example__container__load min-h-[400px] lg:min-h-[700px] ">
                               <input onChange={onFileChange} type="file" />
@@ -425,6 +428,7 @@ export default function Page() {
                                         pageNumber={index + 1}
                                         onLoadSuccess={console.log}
                                         onGetTextSuccess={handleGetPageText}
+                                        className={'hidden'}
                                       />
                                     </>
                                   )
@@ -443,7 +447,7 @@ export default function Page() {
                           )}
                         </div>
                       </div>
-                      <div className="mt-[21px] rounded-md border bg-muted w-full">
+                      <div className="ml-[21px] mt-[21px] rounded-md border bg-muted w-full">
                         {/* <QuestionList
                           questions={insertedQuestions}
                           addManualQuestion={handleFormAddQuestion}

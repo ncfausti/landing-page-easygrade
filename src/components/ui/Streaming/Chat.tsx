@@ -16,7 +16,7 @@ export default function Chat(props: {
   totalQuestions: number;
   setInsertedQuestions: (questions: Question[]) => void;
 }) {
-  const { text, images, setInsertedQuestions, totalQuestions } = props;
+const { text, images = [], setInsertedQuestions, totalQuestions } = props;
   const queryClient = useQueryClient();
   const toastRef = useRef<string | null>(null);
   const router = useRouter();
@@ -76,12 +76,6 @@ export default function Chat(props: {
       insertQuestions(questions);
     },
   });
-
-  // test 2: are the images causing a problem simply by being in the page
-  // (even if not sent, i.e. toDataURL causing issues)? <--- ITS THIS ONE
-  // could also be that the constant re-rendering combined with toDataURL is causing the issue
-  // in any case, should get rid of both
-  // it is also because of the larger input size to the openai endpoint
 
   useEffect(() => {
     setInput(JSON.stringify({ text, images }));

@@ -7,6 +7,7 @@ export type PromptConfig = {
   totalQuestions: number;
   mcqNum: number;
   subjNum: number;
+  supplementalText: string;
 };
 
 export type AppSupabaseClient = SupabaseClient<Database>;

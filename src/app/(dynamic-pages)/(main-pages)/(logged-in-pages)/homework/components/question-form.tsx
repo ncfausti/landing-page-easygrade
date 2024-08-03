@@ -117,9 +117,9 @@ export default function QuestionForm(params) {
             Answer Choices:
           </label>
           {answerChoices.map((choice, index) => (
-            <>
+            <span key={`anshower-choice-set-${index}`}>
               <input
-                key={index}
+                key={`text-input-${index}`}
                 type="text"
                 value={choice}
                 onChange={(e) => {
@@ -130,14 +130,14 @@ export default function QuestionForm(params) {
                 required
                 className={inputClassNames}
               />
-              <button className="inline ml-4 rounded-full bg-red-500 text-white text-xl font-semibold w-8 h-8" onClick={
+              <button key={`delete-${index}`} className="inline ml-4 rounded-full bg-red-500 text-white text-xl font-semibold w-8 h-8" onClick={
                 () => {
                   const newChoices = [...answerChoices];
                   newChoices.splice(index, 1);
                   setAnswerChoices(newChoices);
                 }
               }>x</button>
-            </>
+            </span>
           ))}
           <br />
           <button
@@ -175,7 +175,7 @@ export default function QuestionForm(params) {
           </label>
           {hints.map((hint, index) => (
             <input
-              key={index}
+              key={`hint-${index}`}
               type="text"
               value={hint}
               onChange={(e) => {
@@ -251,10 +251,10 @@ export default function QuestionForm(params) {
       {/* <AddQuestionDialog /> */}
 
       <div
-        className={`flex ${generatedQuestions.length !== 0 && 'flex-col'} grow justify-center overflow-y-scroll m-2 p-6 bg-white rounded-lg shadow-md`}
+        className={`flex ${generatedQuestions.length !== 0 && 'flex-col'} grow justify-start overflow-y-scroll m-2 p-6 bg-white rounded-lg shadow-md`}
       >
         {generatedQuestions.length === 0 && (
-          <p className="flex items-center">No questions added yet</p>
+          <p className="flex items-center mx-auto">No questions added yet</p>
         )}
         {generatedQuestions.map((question) => (
           <QuestionItem

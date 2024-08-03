@@ -40,7 +40,8 @@ export function progress(completion: string, totalQuestions: number): string {
 }
 
 export const MAIN_PROMPT = (promptConfig: PromptConfig): string => {
-  const { grade, subject, totalQuestions, mcqNum, subjNum } = promptConfig;
+  const { grade, subject, totalQuestions, mcqNum, subjNum, supplementalText } =
+    promptConfig;
   return `You are a grade ${grade} ${subject}. GENERATE
   GRADE ${grade} ${subject} HOMEWORK QUESTIONS and ANSWERS based on the
   attached images.
@@ -69,6 +70,10 @@ export const MAIN_PROMPT = (promptConfig: PromptConfig): string => {
         "answer_choices": []
       }
     ]
+
+  ${supplementalText}
+
+  DO NOT RETURN ANYTHING ELSE, ONLY THE JSON OBJECT.
   `;
 };
 

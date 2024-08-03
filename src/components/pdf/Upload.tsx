@@ -124,8 +124,8 @@ export default function Upload() {
   console.log();
   return (
     <div className="flex">
-      {refs[0].current &&
-        refs[0].current.toDataURL('image/jpeg', 0.9).slice(0, 40)}
+      {/* {refs[0].current &&
+        refs[0].current.toDataURL('image/jpeg', 0.9).slice(0, 40)} */}
       <div
         id="generate-sidebar"
         className="sidebar flex flex-col items-center justify-between w-1/5 min-h-[800px] bg-gray-100"
@@ -171,7 +171,7 @@ export default function Upload() {
           setCompletion={handleCompletionChanged}
           text={`You are a grade ${grade} ${subject}. Generate grade ${grade} ${subject} homework questions.`}
           images={
-            refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)
+            [] //refs[0].current && refs[0].current.toDataURL('image/jpeg', 0.9)
           }
           totalQuestions={10}
         />
