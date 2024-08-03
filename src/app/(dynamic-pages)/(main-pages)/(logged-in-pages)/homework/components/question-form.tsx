@@ -83,7 +83,7 @@ export default function QuestionForm(params) {
   //   deleteQuestion(questionId);
   // };
 
-  const inputClassNames = `shadow appearance-none border rounded w-2/3
+  const inputClassNames = `shadow appearance-none border rounded
               py-2 px-3 text-gray-700 leading-tight
               focus:outline-none focus:shadow-outline mb-2`
 
@@ -130,7 +130,7 @@ export default function QuestionForm(params) {
                 required
                 className={inputClassNames}
               />
-              <button key={`delete-${index}`} className="inline ml-4 rounded-full bg-red-500 text-white text-xl font-semibold w-8 h-8" onClick={
+              <button key={`delete-${index}`} className="inline ml-4 rounded-full bg-red-400 hover:bg-red-500 text-white text-xl font-semibold w-8 h-8" onClick={
                 () => {
                   const newChoices = [...answerChoices];
                   newChoices.splice(index, 1);

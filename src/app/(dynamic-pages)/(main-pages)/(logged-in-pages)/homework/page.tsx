@@ -176,7 +176,7 @@ export default function Page() {
     question_ids: number[] = [],
     subject
   ) => {
-    if (course_id === -1) {
+    if (course_id === -1 || question_ids.length === 0) {
       return;
     }
     try {
@@ -362,7 +362,12 @@ export default function Page() {
 
                 <Button
                   variant="secondary"
-                  className={courseId === -1 ? 'disabled' : ''}
+                  disabled={courseId === -1 || insertedQuestions.length === 0}
+                  className={
+                    courseId === -1 || insertedQuestions.length === 0
+                      ? 'disabled bg-gray-500 hover:bg-gray-500 font-semibold cursor-not-allowed text-white'
+                      : 'text-white bg-green-500 hover:bg-green-600 font-semibold'
+                  }
                   onClick={() =>
                     handleCreateAllHomeworks(
                       assignmentTemplateId,
@@ -372,8 +377,10 @@ export default function Page() {
                     )
                   }
                 >
-                  <span className="sr-only">Create all homeworks</span>
-                  Create all homeworks
+                  <span className="sr-only">
+                    Create all {students?.length} homeworks
+                  </span>
+                  Create all {students?.length} homeworks
                 </Button>
               </div>
               <div className="md:order-1">

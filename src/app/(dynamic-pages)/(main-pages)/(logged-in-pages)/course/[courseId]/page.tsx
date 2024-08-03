@@ -86,7 +86,7 @@ async function Course({
                   Files
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Incorrect
+                  # Incorrect
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Question IDs
@@ -119,12 +119,16 @@ async function Course({
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <a
-                      href={assignment.upload_photo_url}
-                      className="text-indigo-600 hover:text-indigo-900 mr-2"
-                    >
-                      Photo
-                    </a>
+                    {assignment.upload_photo_url && (
+                      <a
+                        target="_blank"
+                        href={`https://eqdytqcvbpsqadodnoyl.supabase.co/storage/v1/object/public/homework/${assignment.upload_photo_url}`}
+                        className="text-indigo-600 hover:text-indigo-900 mr-2"
+                      >
+                        Photo
+                      </a>
+                    )}
+
                     <a
                       href={assignment.pdf_url}
                       className="text-indigo-600 hover:text-indigo-900"
