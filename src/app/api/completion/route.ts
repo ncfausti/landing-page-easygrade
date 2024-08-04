@@ -6,7 +6,8 @@ import { MAIN_PROMPT } from '@/lib/utils';
 export async function POST(req: NextRequest) {
   try {
     const { prompt } = await req.json();
-    const { promptConfig, userMessage, images } = JSON.parse(prompt);
+    // const { promptConfig, userMessage, images } = JSON.parse(prompt);
+    const { promptConfig, userMessage } = JSON.parse(prompt);
     const hwGenerationPrompt = MAIN_PROMPT(promptConfig);
 
     // console.log(images.length); // 2 (if 2 images are provided
@@ -16,12 +17,12 @@ export async function POST(req: NextRequest) {
     // 2. can I provide streamText with a pdf?
     // 3. can I provide streamText with a pdf and images?
 
-    const imageToObject = images.map((image) => {
-      return {
-        type: 'image',
-        image: new URL(image),
-      };
-    });
+    // const imageToObject = images.map((image) => {
+    //   return {
+    //     type: 'image',
+    //     image: new URL(image),
+    //   };
+    // });
     console.log(userMessage);
     console.log(
       'api/completion/route.ts: calling openAI with text and images now...'
@@ -41,18 +42,18 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: 'system',
-          content: hwGenerationPrompt,
+          content: hwGenerationPrompt + ' ' + userMessage,
         },
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'text',
-              text: userMessage,
-            },
-            ...imageToObject.slice(0, 3),
-          ],
-        },
+        // {
+        //   role: 'user',
+        //   content: [
+        //     {
+        //       type: 'text',
+        //       text: userMessage,
+        //     },
+        //     ...imageToObject.slice(0, 3),
+        //   ],
+        // },
       ],
     });
 
