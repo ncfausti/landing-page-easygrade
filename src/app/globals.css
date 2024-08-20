@@ -14,7 +14,7 @@ body {
 } */
 
 .bg-main {
-  background-color: #7eaecd;
+  /* background-color: #7eaecd; */
 }
 
 /* @font-face {  font-family: YAFcfiBJMjY-0;  src: url(fonts/c0011f49814fabeca5e5d07e85811cb7.woff2);  font-style: normal;  font-weight: 500;} */
@@ -30,7 +30,11 @@ body {
   font-style: normal;
   }
 h1, h2, h3, h4, h5 {
-  font-family: YAFcfiBJMjY-0;
+  /* font-family: YAFcfiBJMjY-0; */
+  font-family: 'komet';
+}
+h1, h2 {
+  font-weight: 700;
 }
 
 h1 {
@@ -273,5 +277,21 @@ h2, h3 {
 #nav-logo-text {
   font-family: "inter-variable", sans-serif;
   font-variation-settings: "slnt" 0, "wght" 6f00;
+}
+
+#nav-logo-text {
+  font-family: "inter-variable", sans-serif;
+  font-variation-settings: "slnt" 0, "wght" 6f00;
+}
+
+.komet {
+  font-family: "komet", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.komet-bold {
+  font-family: "komet", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
 

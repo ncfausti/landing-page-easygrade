@@ -69,18 +69,18 @@ export const ExternalNavigation = () => {
         {/* <MountainIcon className="h-6 w-6" /> */}
         <span className="hidden lg:block ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           <Image
-            src="/images/logo-nav.png"
-            alt="AssistTeacher Logo"
+            src="/images/autolectual-logo-komet.png"
+            alt="autolectual Logo"
             width={250}
             height={175}
             className="inline-block"
           />
           {/* <span id="nav-logo-text" className=" text-[#1A3CB8] text-2xl mx-2">
-            AssistTeacher
+            autolectual
           </span> */}
         </span>
         <span className="block lg:hidden ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-          AssistTeacher
+          autolectual
         </span>
       </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6 items-center">

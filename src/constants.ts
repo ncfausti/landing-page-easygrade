@@ -1,6 +1,6 @@
 import { Subject } from '@/types';
 export const DEV_PORT = 3000;
-export const PRODUCT_NAME = 'AssistTeacher';
+export const PRODUCT_NAME = 'autolectual';
 export const subjects: Subject[] = [
   'English',
   'Math',

@@ -28,7 +28,7 @@ export default function Component() {
             />
             <div className="flex flex-col justify-center items-center space-y-4">
               <div className="space-y-2 text-center">
-                <h1 className="text-5xl">AssistTeacher</h1>
+                <h1 className="text-5xl">autolectual</h1>
                 <h3 className="max-w-[400px] font-bold text-gray-900 md:text-xl dark:text-gray-400">
                   Homework Management System
                 </h3>
@@ -79,7 +79,7 @@ export default function Component() {
                 Streamlined Homework Management
               </h2>
               <h4 className="max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                With AssistTeacher seamlessly integrated into your LMS, offer
+                With autolectual seamlessly integrated into your LMS, offer
                 schools the ability to effortlessly generate adaptive homework
                 assignments.
               </h4>
@@ -134,9 +134,9 @@ export default function Component() {
               Automated Grading Solutions
             </h2>
             <p className="text-center text-xl py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Revolutionize homework grading with AssistTeacher's OCR
-              technology. By automating the grading process, our tool eliminates
-              the time-consuming task of manual assessment. Students can scan
+              Revolutionize homework grading with autolectual's OCR technology.
+              By automating the grading process, our tool eliminates the
+              time-consuming task of manual assessment. Students can scan
               completed worksheets, receiving instant feedback on their
               performance. This not only boosts learning outcomes by 75% but
               also reduces administrative burden, all without the need for
@@ -191,7 +191,7 @@ export default function Component() {
               Efficient Management Dashboards
             </h2>
             <p className="text-center text-xl py-2 max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Enhance LMS functionality with AssistTeacher's intuitive teacher
+              Enhance LMS functionality with autolectual's intuitive teacher
               dashboard. Empower educators to effortlessly track homework
               submissions, grades, and generate remedial assignments with a
               single click. By streamlining administrative tasks, our tool
@@ -214,10 +214,10 @@ export default function Component() {
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container flex flex-col items-center px-4 md:px-6 lg:gap-10">
           <h2 className="text-center lg:leading-tighter text-3xl tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-            Fuel Your Business Growth with AssistTeacher
+            Fuel Your Business Growth with autolectual
           </h2>
           <p className="text-center py-2 text-2xl max-w-[900px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-            With <strong>AssistTeacher</strong> as your ally, give AI wings to
+            With <strong>autolectual</strong> as your ally, give AI wings to
             your LMS offerings. Drive <strong>differentiation</strong>, enhance{' '}
             <strong>customer satisfaction</strong>, and{' '}
             <strong>future-proof</strong> your business against industry shifts.

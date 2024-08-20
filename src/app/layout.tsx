@@ -18,7 +18,7 @@ const roboto_mono = Roboto_Mono({
 });
 
 export const metadata = {
-  title: 'AssistTeacher',
+  title: 'autolectual',
   description: 'Homework made simple',
 };
 
