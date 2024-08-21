@@ -69,7 +69,7 @@ export const ExternalNavigation = () => {
         {/* <MountainIcon className="h-6 w-6" /> */}
         <span className="hidden lg:block ml-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           <Image
-            src="/images/autolectual-logo-komet.png"
+            src="/images/autolectual-logo.png"
             alt="autolectual Logo"
             width={250}
             height={175}
