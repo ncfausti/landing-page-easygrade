@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48.985813mm"
+   height="10.228785mm"
+   viewBox="0 0 48.985813 10.228785"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient34">
+      <stop
+         style="stop-color:#ffcf54;stop-opacity:1;"
+         offset="0"
+         id="stop34" />
+      <stop
+         style="stop-color:#ffe98b;stop-opacity:1;"
+         offset="1"
+         id="stop35" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient32">
+      <stop
+         style="stop-color:#c1a100;stop-opacity:0.19215687;"
+         offset="0"
+         id="stop32" />
+      <stop
+         style="stop-color:#f8e1b9;stop-opacity:0.50354612;"
+         offset="1"
+         id="stop33" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient28">
+      <stop
+         style="stop-color:#303030;stop-opacity:0.98823529;"
+         offset="0"
+         id="stop28" />
+      <stop
+         style="stop-color:#3d3d3d;stop-opacity:1;"
+         offset="1"
+         id="stop29" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient26">
+      <stop
+         style="stop-color:#ffdd3d;stop-opacity:1;"
+         offset="0"
+         id="stop26" />
+      <stop
+         style="stop-color:#f8d577;stop-opacity:1;"
+         offset="1"
+         id="stop27" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient9">
+      <stop
+         style="stop-color:#333333;stop-opacity:1;"
+         offset="0"
+         id="stop9" />
+      <stop
+         style="stop-color:#333333;stop-opacity:1;"
+         offset="1"
+         id="stop10" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2">
+      <stop
+         style="stop-color:#ffc73d;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+      <stop
+         style="stop-color:#ffe560;stop-opacity:1;"
+         offset="1"
+         id="stop3" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient2"
+       id="linearGradient3"
+       x1="29.104168"
+       y1="207.78641"
+       x2="38.796627"
+       y2="207.78641"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient9"
+       id="linearGradient10"
+       x1="31.031273"
+       y1="201.66481"
+       x2="35.187305"
+       y2="201.66481"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient26"
+       id="linearGradient27"
+       x1="30.096958"
+       y1="203.72826"
+       x2="36.090405"
+       y2="203.72826"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient28"
+       id="linearGradient29"
+       x1="31.021271"
+       y1="201.66481"
+       x2="35.197449"
+       y2="201.66481"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient32"
+       id="linearGradient33"
+       x1="30.090179"
+       y1="203.72845"
+       x2="36.095402"
+       y2="203.72845"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient34"
+       id="linearGradient35"
+       x1="29.104168"
+       y1="207.78641"
+       x2="38.796627"
+       y2="207.78641"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-29.099164,-200.54417)">
+    <path
+       style="fill:url(#linearGradient10);stroke:url(#linearGradient29);stroke-width:0.02;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 34.718214,202.70777 c -0.191042,-0.0333 -1.090748,-0.15288 -1.999346,-0.26579 -0.908598,-0.11291 -1.664852,-0.21685 -1.680563,-0.23099 -0.07413,-0.0667 0.454787,-0.86955 0.783128,-1.18869 0.615561,-0.59831 1.078038,-0.61953 1.835964,-0.0842 0.542641,0.38325 1.743177,1.85652 1.497078,1.83716 -0.0489,-0.004 -0.245219,-0.0342 -0.436261,-0.0675 z"
+       id="path2-7-8" />
+    <path
+       style="fill:url(#linearGradient27);fill-opacity:0.431472;stroke:url(#linearGradient33);stroke-width:0.01;stroke-dasharray:none;stroke-opacity:0.0280561"
+       d="m 30.198239,204.27554 c 0.117614,-0.40381 0.26742,-0.85199 0.400528,-1.19826 0.08641,-0.2248 0.09983,-0.24392 0.171223,-0.24397 0.226682,-1.5e-4 3.128063,0.3664 4.180298,0.52812 0.37513,0.0576 0.694877,0.10482 0.710548,0.10482 0.03241,0 0.450226,0.73738 0.428768,0.75669 -0.07204,0.0648 -2.974394,0.27149 -4.913476,0.34986 -0.378819,0.0153 -0.776605,0.0329 -0.883966,0.0392 l -0.195203,0.0112 z"
+       id="path3-5-0" />
+    <path
+       style="fill:url(#linearGradient3);stroke:url(#linearGradient35);stroke-width:0.01;stroke-dasharray:none;stroke-opacity:1"
+       d="m 38.224955,210.70251 c -0.274039,-0.035 -1.315976,-0.1642 -2.315416,-0.28715 -3.929814,-0.48343 -6.79995,-0.83815 -6.804991,-0.84105 -0.01191,-0.007 0.258722,-1.63014 0.371941,-2.23096 0.113649,-0.60312 0.377144,-1.81987 0.440209,-2.03278 l 0.02791,-0.0942 0.842903,-0.0319 c 1.989995,-0.0754 3.634687,-0.1848 5.446203,-0.36211 l 0.17763,-0.0174 0.222828,0.47139 c 0.49205,1.04093 0.976863,2.19638 1.444047,3.44162 0.276113,0.73595 0.71826,1.98961 0.71826,2.03654 0,0.022 0.02483,0.0242 -0.571526,-0.0519 z"
+       id="path4-5-2" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;line-height:1;font-family:AppleGothic;-inkscape-font-specification:AppleGothic;letter-spacing:-0.351896px;word-spacing:0px;fill:none;stroke:#000000;stroke-width:0.3;stroke-dasharray:none"
+       x="37.343681"
+       y="220.09889"
+       id="text4-1-5-2"
+       transform="scale(1.0605708,0.94288848)"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;line-height:1;font-family:'Stevie Sans';-inkscape-font-specification:'Stevie Sans';letter-spacing:-0.351896px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-dasharray:none"
+         x="37.343681"
+         y="220.09889"
+         id="tspan34-4-6-7">autolectual</tspan></text>
+  </g>
+</svg>
